@@ -2,7 +2,8 @@ package edu.coo.cs.cs141.final_prog_assignment;
 
 public class characters {
 	private int ammo;
-	private int hp;
+	private boolean isAlive;
+	private boolean isInvincible;
 	public int locationX, locationY;
 	
 	characters(int x, int y){
