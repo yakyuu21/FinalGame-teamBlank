@@ -3,12 +3,13 @@ package edu.coo.cs.cs141.final_prog_assignment;
 public class characters {
 	private int ammo;
 	private boolean isAlive;
-	private boolean isInvincible;
+	private int invincibleCount;
 	public int locationX, locationY;
 	
 	characters(int x, int y){
 		ammo = 1;
-		hp = 1;
+		isAlive = true;
+		invincibleCount = 0;
 		locationX = x;//spawns on left bottom most block
 		locationY = y; 
 	}
@@ -59,6 +60,9 @@ public class characters {
 	public int getAmmo(){
 		return ammo;
 	}
+	
+	
+	//lookahead
 	
 	
 }
