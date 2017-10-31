@@ -45,32 +45,55 @@ public class Characters {
 		return locationY;
 	}
 	//gun
-	public void shoot() {
+	
+	public void decAmmo() {
 		ammo--;
-		this.decLife();
 	}
 	public int getAmmo(){
 		return ammo;
 	}
+	
+	
 	//health
-	public void decLife(){
-		hp--;
+	public void dead(){
+		isAlive = false;
 	}
-	public int getLife(){
-		return hp;
+	public boolean getLife(){
+		return isAlive;
 	}
-<<<<<<< HEAD:characters.java
-	public int getAmmo(){
-		return ammo;
+	public void damaged() {
+		if(invincibleCount != 0)
+			invincibleCount--;
+		this.dead();
 	}
+	
+	
+	
+	public void item(String item) {
+		switch(item) {
+		case "ammo":
+			if(ammo == 1)
+				ammo = 1;
+			ammo++;
+			break;
+		case "invincible":
+			invincibleCount = 5;
+			break;
+		case "radar":
+			
+			break;
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	//lookahead
-	
-	
-=======
-
-
-
->>>>>>> origin/master:Characters.java
 }
