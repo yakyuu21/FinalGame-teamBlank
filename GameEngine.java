@@ -1,6 +1,9 @@
+/*
+ * 
+ */
 package edu.coo.cs.cs141.final_prog_assignment;
 
-public class gameEngine {
+public class GameEngine {
 	private int playerX, playerY;
 	private boolean wall;
 	public void play() {

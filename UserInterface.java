@@ -1,15 +1,13 @@
-//Jon editing this!!!
-//justen test
 package edu.coo.cs.cs141.final_prog_assignment;
 
 import java.util.Scanner;
 
 public class UserInterface {
-	private gameEngine currentGame;
+	private GameEngine currentGame;
 	private Scanner scan = null;
-	private board gameBoard;
+	private Board gameBoard;
 	
-	public UserInterface(gameEngine game) {
+	public UserInterface(GameEngine game) {
 		this.currentGame = game;
 		scan = new Scanner(System.in);		
 	}
@@ -52,6 +50,15 @@ public class UserInterface {
 		}
 	}
 
+		public void startGame() {
+		gameBoard = new Board();
+		Characters player = new Characters(0,8);
+		gameBoard.overWrite(player.getY(), player.getX());
+		gameBoard.displayBoard();
+		player.move("W");
+		gameBoard.overWrite(player.getY(), player.getX());
+		gameBoard.displayBoard();
+	}
 	
 	
 	public void mainMenu() {
@@ -80,16 +87,7 @@ public class UserInterface {
 	}
 	
 	
-	public void startGame() {
-		gameBoard = new board();
-		characters Player = new characters(0,8);
-		gameBoard.overWrite(Player.getY(), Player.getX());
-		gameBoard.displayBoard();
-		Player.move("W");
-		gameBoard.overWrite(Player.getY(), Player.getX());
-		gameBoard.displayBoard();
-	}
-	
+
 	
 	
 }
