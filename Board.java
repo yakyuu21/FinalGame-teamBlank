@@ -89,4 +89,16 @@ public class Board {
 		default:
 			System.out.println("Error - Board.reveal()");
 		}
+	// Creating 9 rooms in random spots
+	// Still needs work: room cannot be at the top of the grid or on top of each other
+	public void createRoom(){
+		int i = 0;
+		while(i < 9) {
+			int row = rand.nextInt(9);
+			int col = rand.nextInt(9);
+
+			grid[row][col] = "[_]";
+			i++;
+		}
+}
 }
