@@ -7,9 +7,6 @@ public class Board {
 	final int vertical = 9;
 	String[][] board = new String [horizontal][vertical];
 	Random random = new Random();
-	private PowerUp radar = null;
-	private PowerUp invincible = null;
-	private PowerUp ammo = null;
 
 	private int depth;
 
@@ -31,42 +28,7 @@ public class Board {
 					board[x][y] = "O";
 			}
 		}
-		createPowerUp();
-	}
-	
-	private void createPowerUp() {
-		int x, y;
-		while(radar == null) {
-			x = getRandom();
-			y = getRandom();
-			if(Board[x][y] != "O") {}
-			else {
-				radar = new PowerUp("radar", x, y);
-				Board[x][y] = "r";
-			}
-		}
-		while(invincible == null) {
-			x = getRandom();
-			y = getRandom();
-			if(Board[x][y] != "O") {}
-			else {
-				invincible = new PowerUp("invincible", x, y);
-				Board[x][y] = "i";
-			}
-		}
-		while(ammo == null) {
-			x = getRandom();
-			y = getRandom();
-			if(Board[x][y] != "O") {}
-			else {
-				ammo = new PowerUp("ammo", x, y);
-				Board[x][y] = "a";
-			}
-		}	
-	}
-	
-	public int getRandom(){
-		return random.nextInt(9);
+		spawnBriefcase();
 	}
 
 	public void overWrite(int x, int y) {
@@ -83,14 +45,20 @@ public class Board {
 		}
 
 		System.out.println("\n");		
-	}
-	
-
+	}	
 	
 	public void spawnBriefcase()
 	{
 		board[briefcaseX[random.nextInt(2)]][briefcaseY[random.nextInt(2)]] = "B";
-		displayBoard();//Don't have to show.
+	}
+	
+	public String at(int x, int y) {
+		return board[x][y];
+	}
+
+	public void overWrite(int x, int y, String s) {
+		board[x][y] = s;
+		return;
 	}
 	
 }
