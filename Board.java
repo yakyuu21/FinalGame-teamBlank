@@ -1,4 +1,3 @@
-
 package edu.cpp.cs.cs141.final_prog_assignment;
 import java.util.Random;
 

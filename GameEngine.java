@@ -74,7 +74,7 @@ public class GameEngine {
 	}
 	
 	public String look(String direction){
-		return board.reveal(direction);
+		return board.reveal(direction,player.getX(), player.getY());
 	}
 }
 
