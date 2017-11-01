@@ -61,17 +61,32 @@ public class Board {
 		return;
 	}
 	
-	public String reveal(String direction, int axis){
-		switch(direction){
+	//This is the "look" option, returning a string to the UserInterface
+	//This method needs exception handling for outofbounds array access
+	//Also are we suppose to print the board with revealed spaces?
+	public String reveal(String direction, int x, int y){
+		switch(direction) {
 		case "w":
-			break;
+			if(board[x][y-1] == "N" || board[x][y-2] == "N")
+				return "Ninja ahead!";
+			else
+				return "Clear!";
 		case "a":
-			break;
+			if(board[x-1][y] == "N" || board[x-2][y] == "N")
+				return "Ninja ahead!";
+			else
+				return "Clear!";
 		case "s":
-			break;
+			if(board[x][y+1] == "N" || board[x][y+2] == "N")
+				return "Ninja ahead!";
+			else
+				return "Clear!";
 		case "d":
-			break;
+			if(board[x+1][y] == "N" || board[x+2][y] == "N")
+				return "Ninja ahead!";
+			else
+				return "Clear!";
 		default:
 			System.out.println("Error - Board.reveal()");
-	}
+		}
 }
