@@ -49,10 +49,19 @@ public class UserInterface {
 		}
 	}
 
-		public void startGame() {
+	public void startGame() {
 		currentGame.createBoard();
+		playGame();
 	}
 	
+	public void playGame(){
+		String direction;
+		currentGame.displayBoard();
+		System.out.print("Choose direction to look: ");
+		direction = scan.nextLine();
+		currentGame.look(direction);
+		
+	}
 	
 	public void mainMenu() {
 		System.out.println(	"1) How to Play\n" + 
