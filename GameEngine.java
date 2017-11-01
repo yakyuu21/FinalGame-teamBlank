@@ -73,6 +73,9 @@ public class GameEngine {
 		board.displayBoard();
 	}
 	
+	public void look(String direction){
+		board.reveal(direction);
+	}
 }
 
 
