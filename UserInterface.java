@@ -59,7 +59,7 @@ public class UserInterface {
 		currentGame.displayBoard();
 		System.out.print("Choose direction to look: ");
 		direction = scan.nextLine();
-		currentGame.look(direction);
+		System.out.println(currentGame.look(direction));
 		
 	}
 	
