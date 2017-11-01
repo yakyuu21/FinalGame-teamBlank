@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class UserInterface {
 	private GameEngine currentGame;
 	private Scanner scan = null;
-	private Board gameBoard;
 	
 	public UserInterface(GameEngine game) {
 		this.currentGame = game;
@@ -51,13 +50,7 @@ public class UserInterface {
 	}
 
 		public void startGame() {
-		gameBoard = new Board();
-		Characters player = new Characters(0,8);
-		gameBoard.overWrite(player.getY(), player.getX());
-		gameBoard.displayBoard();
-		player.move("W");
-		gameBoard.overWrite(player.getY(), player.getX());
-		gameBoard.displayBoard();
+		currentGame.createBoard();
 	}
 	
 	
