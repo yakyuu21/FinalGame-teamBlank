@@ -61,4 +61,17 @@ public class Board {
 		return;
 	}
 	
+	public String reveal(String direction, int axis){
+		switch(direction){
+		case "w":
+			break;
+		case "a":
+			break;
+		case "s":
+			break;
+		case "d":
+			break;
+		default:
+			System.out.println("Error - Board.reveal()");
+	}
 }
