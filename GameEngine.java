@@ -69,6 +69,10 @@ public class GameEngine {
 		return random.nextInt(9);
 	}
 	
+	public void displayBoard(){
+		board.displayBoard();
+	}
+	
 }
 
 
