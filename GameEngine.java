@@ -40,6 +40,10 @@ public class GameEngine {
 
 	private void createPowerUp() {
 		int x, y;
+		//Items weren't populated when the player chose to start another new game.  Items are initialized as null to act as a reset.
+		radar = null;
+		invincible = null;
+		ammo = null;
 		while(radar == null) {
 			x = getRandom();
 			y = getRandom();
