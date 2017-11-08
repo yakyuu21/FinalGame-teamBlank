@@ -27,19 +27,51 @@ public class Square{
 		hide = true;
 		display = "   ";
 	}
-	public void setCharacter(Character charac) { //set character in location
-		player = charac;
-		isPlayer = true;
-		display = " P ";
-		hide = false;
+	public void setCharacter(Character charac, int x, int y) { //set character in location
+		if ((x == 1 ||
+				x == 4 ||
+				x == 7)&&
+				(y == 1 ||
+				y == 4 ||
+				y == 7))
+		{
+			player = null;
+			isPlayer = false;
+			hide = false;
+			isRoom = true;
+			display = "[P]";
+		}
+		else
+		{
+			player = charac;
+			isPlayer = true;
+			display = " P ";
+			hide = false;
+		}
 	}
 
 
-	public void playerMoved() {
-		player = null;
-		isPlayer = false;
-		hide = true;
-		display = "   ";
+	public void playerMoved(int x, int y) {
+		if ((x == 1 ||
+				x == 4 ||
+				x == 7)&&
+				(y == 1 ||
+				y == 4 ||
+				y == 7))
+		{
+			player = null;
+			isPlayer = false;
+			hide = false;
+			isRoom = true;
+			display = "[_]";
+		}
+		else
+		{
+			player = null;
+			isPlayer = false;
+			hide = true;
+			display = "   ";
+		}
 	}
 
 

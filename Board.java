@@ -66,12 +66,12 @@ public class Board {
 	
 	
 	public void set(Character player, int x, int y) {	
-		room[x][y].setCharacter(player);
+		room[x][y].setCharacter(player, x, y);
 		player.setX(x);
 		player.setY(y);
 	}
 	public void move(int x, int y) {	
-		room[x][y].playerMoved();
+		room[x][y].playerMoved(x, y);
 	}
 	
 	public void setNinja(Character player, int x, int y) {
