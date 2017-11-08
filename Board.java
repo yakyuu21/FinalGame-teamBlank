@@ -34,8 +34,9 @@ public class Board {
 				if((y==1 || y==4 || y==7) && (x==1 || x==4 || x==7)) {
 					if(x == briefcaseX && y == briefcaseY) {
 						room[x][y] = new Square(); //with briefcase
-						room[x][y].setRoom();
-						room[x][y].briefExist();
+						
+						System.out.println(debugMode);
+						room[x][y].briefExist(debugMode);
 					}
 					else {
 						room[x][y] = new Square();//without briefcase
@@ -105,6 +106,7 @@ public class Board {
 	
 	public void debugMode() {
 		debugMode = !debugMode;
+		room[briefcaseX][briefcaseY].briefExist(debugMode);
 		
 	}
 
