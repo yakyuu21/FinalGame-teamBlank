@@ -6,8 +6,13 @@ public class Board {
 	private final int vertical = 9;
 	private Square[][] room = new Square[vertical][horizontal];
 	private Random random = new Random();
-	private int[] briefcaseX = {1,4,7};
-	private int[] briefcaseY = {1,4,7};
+
+	private int[] briefcaseArrayX = {1,4,7};
+	private int[] briefcaseArrayY = {1,4,7};
+	
+	private int briefcaseX;
+	private int briefcaseY;
+	
 	private boolean debugMode = false;
 	
 	/**
@@ -21,8 +26,8 @@ public class Board {
 	 * Creates board with room and briefcase.
 	 */
 	public void createBoard() {
-		int i = briefcaseX[random.nextInt(3)];
-		int j = briefcaseY[random.nextInt(3)];
+		briefcaseX = briefcaseArrayX[random.nextInt(3)];
+		briefcaseY = briefcaseArrayY[random.nextInt(3)];
 
 		for(int x=0;x<horizontal;x++) {
 			for(int y=0;y<vertical;y++) {
@@ -80,6 +85,24 @@ public class Board {
 		room[x][y].setItem(radar);
 	}
 
+	/**
+	 * used in GameEngine's checkPlayerIsBriefcase function
+	 * @return x-coordinate of briefcase
+	 */
+	public int getBriefcaseX()
+	{
+		return briefcaseX;
+	}
+	
+	/**
+	 * used in GameEngine's checkPlayerIsBriefcase function
+	 * @return y-coordinate of briefcase
+	 */
+	public int getBriefcaseY()
+	{
+		return briefcaseY;
+	}
+	
 	public void debugMode() {
 		debugMode = !debugMode;
 		
