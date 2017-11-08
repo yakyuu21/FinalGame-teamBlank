@@ -5,6 +5,7 @@ import java.util.Random;
 public class GameEngine {
 
 	private Random random = new Random();
+	private Square square = new Square();
 
 	private Character player;
 	private Board board;
