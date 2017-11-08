@@ -10,6 +10,7 @@ public class Square{
 	
 	private boolean isBrief;
 	private boolean hide;
+	private boolean reveal;
 	private Character player;
 	private Character ninja;
 	private Item itemPresent;
@@ -22,7 +23,9 @@ public class Square{
 		isNinja = false;
 		isRoom = false;
 		isItem = false;
-		display = " * ";
+		reveal = false;
+		hide = true;
+		display = "   ";
 	}
 	public void setCharacter(Character charac) { //set character in location
 		player = charac;
@@ -35,7 +38,8 @@ public class Square{
 	public void playerMoved() {
 		player = null;
 		isPlayer = false;
-		display = " * ";
+		hide = true;
+		display = "   ";
 	}
 	
 	
@@ -95,29 +99,20 @@ public class Square{
 	public boolean getBrief() {
 		return isBrief;
 	}
-	
-	
-	
-	
-	
+
 	public String display() {
-		/*
-		 * if(isPlayer)
-			return " P ";
-		else if(isRoom)
-			return "[_]";
-		else // isEmpty
-			return " * ";
-			*/
 		if(!hide) //if something visible
 			return display;
+		else if(reveal) {
+			reveal();
+			return display;
+		}
 		else 
 			return " * ";
 	}
 	
-	public String reveal() {
-		return display;
+	public void reveal() {
+		reveal = !reveal;
 	}
-
 
 }

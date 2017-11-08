@@ -8,6 +8,7 @@ public class Board {
 	private Random random = new Random();
 	private int[] briefcaseX = {1,4,7};
 	private int[] briefcaseY = {1,4,7};
+	private boolean debugMode = false;
 	
 	/**
 	 * Creates board with room and briefcase.
@@ -46,15 +47,14 @@ public class Board {
 	 * 
 	 */
 	public String displayBoard(int x, int y) {
-		return room[x][y].display();	
+		if(debugMode) {
+			room[x][y].reveal();
+			return room[x][y].display();
+		}
+		else
+			return room[x][y].display();
 	}	
-	public String show(int x, int y) {
-		return room[x][y].reveal();
 
-	}
-	
-	
-	
 	public Square at(int x, int y) {
 		return room[x][y];
 	}
@@ -78,6 +78,11 @@ public class Board {
 
 	public void set(Item radar, int x, int y) {
 		room[x][y].setItem(radar);
+	}
+
+	public void debugMode() {
+		debugMode = !debugMode;
+		
 	}
 
 	

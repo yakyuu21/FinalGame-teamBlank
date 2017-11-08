@@ -72,37 +72,56 @@ public class GameEngine {
 		return board.displayBoard(x, y);
 	}
 
-	public String look(String direction) {
+	public boolean look(String direction) {
+		Square[] s = new Square[3];
+		boolean clear = true;
 		switch(direction.toLowerCase()) {
 			case "w":
-				for(int i = 0;i < 2; i++) {
-					if(player.getX() > 0) 
-						return board.show(player.getX(), player.getY()-i);		
+				for(int i = 1;i < 3; i++) {
+					if(player.getX()-i >= 0) {
+						s[i] = board.at(player.getX()-i, player.getY());
+					}			
 				}
 				break;
 			case "a":
-				for(int i = 0;i < 2;i++) {
-					if(player.getY()>0) 
-						return board.show(player.getX()-i, player.getY());
+				for(int i = 1;i < 3; i++) {
+					if(player.getY()-i >= 0) {
+						s[i] = board.at(player.getX(), player.getY()-i);
+					}			
 				}
 				break;
 			case "s":
-				for(int i = 0;i < 2;i++) {
-					if(player.getX() < 8) 
-						return board.show(player.getX(), player.getY()+i);
+				for(int i = 1;i < 3; i++) {
+					if(player.getX()+i <= 8) {
+						s[i] = board.at(player.getX()+i, player.getY());
+					}			
 				}
 				break;
 
 			case "d":
-				for(int i = 0;i < 2;i++) {
-					if(player.getY()<8) 
-						return board.show(player.getX()+i, player.getY());				
-				}	
+				for(int i = 1;i < 3; i++) {
+					if(player.getY()+i >= 0) {
+						s[i] = board.at(player.getX(), player.getY()+i);
+					}			
+				}
 				break;
 			default:
-				return "Error: GameEngine-look-switch";
+				System.out.print("Error: GameEngine-look-switch");
 		}	
-		return "   ";
+		for(int i = 1; i < 3; i++) {
+			if(s[i] != null) {
+				if(s[i].getRoom()) {
+					break;
+				}
+				else if(s[i].getNinja()) {
+					s[i].reveal();
+					clear = false;
+				}
+				else
+					s[i].reveal();
+			}
+		}
+		return clear;
 	}
 
 	public boolean move(String direction) {
@@ -264,6 +283,11 @@ public class GameEngine {
 		}
 	}
 	 */
+
+	public void debugMode() {
+		board.debugMode();
+		
+	}
 
 
 }

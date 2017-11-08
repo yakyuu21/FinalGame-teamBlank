@@ -65,11 +65,13 @@ public class UserInterface {
 	public void playGame(){
 		String direction;
 		while(gameStatus == status.CONTINUE) {
-			displayBoard();
-			System.out.print("Choose direction to look(WASD): ");
-			direction = scan.next().toLowerCase();
 			
-			System.out.println(game.look(direction));
+			direction = look();
+			
+			if(game.look(direction))
+				System.out.println("Ninja Ahead!");
+			else
+				System.out.println("All Clear!");
 			
 			boolean valid = false;
 			while(!valid) {
@@ -82,9 +84,9 @@ public class UserInterface {
 					direction = scan.next();
 					//game.shoot(direction);
 					valid = true;
-				}
+				} 
 				else if(direction.equals("w")|| direction.equals("a") || direction.equals("s") || direction.equals("d")){
-					valid = game.move(direction);
+					valid = game.move(direction); //CHANGED TO move() to BOOLEAN TO ALLOW PLAYER CONTROLS TO LOOP (GameEngine -> move())
 					//valid = true;
 				}
 				else {
@@ -103,6 +105,21 @@ public class UserInterface {
 			 */
 		}
 		
+	}
+
+	private String look() {
+		boolean valid = false;
+		String direction = "";
+		while(!valid) {
+			displayBoard();
+			System.out.print("Choose direction to look(WASD): ");
+			direction = scan.next().toLowerCase();
+			if(direction.equals("r"))
+				game.debugMode();
+			else if(direction.equals("w")||direction.equals("a")||direction.equals("s")||direction.equals("d"))
+				valid = true;
+		}
+		return direction;
 	}
 
 	private void displayBoard() {
