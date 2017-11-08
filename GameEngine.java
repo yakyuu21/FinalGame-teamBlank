@@ -246,7 +246,7 @@ public class GameEngine {
 	{
 		if(player.getX() == board.getBriefcaseX() && player.getY() == board.getBriefcaseY())
 		{
-			return true;
+			return square.getBrief();;
 
 		}
 		else 
