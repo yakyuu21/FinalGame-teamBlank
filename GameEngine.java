@@ -79,7 +79,6 @@ public class GameEngine {
 			case "w":
 				for(int i = 1;i < 3; i++) {
 					if(player.getX()-i >= 0) {
-						System.out.println(player.getX()-i);
 						s[i] = board.at(player.getX()-i, player.getY());
 					}			
 				}

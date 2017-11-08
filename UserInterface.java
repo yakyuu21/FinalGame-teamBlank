@@ -64,6 +64,7 @@ public class UserInterface {
 	
 	public void playGame(){
 		String direction;
+		gameStatus = status.CONTINUE;
 		while(gameStatus == status.CONTINUE) {
 			
 			direction = look();
