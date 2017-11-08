@@ -1,22 +1,22 @@
 package edu.cpp.cs.cs141.final_prog_assignment;
 
 public class Square{
-	
+
 	private boolean isNinja;
 	private boolean isPlayer;
 	private boolean isRoom;
 	private boolean isItem;
 	private boolean isEmpty;
-	
+
 	private boolean isBrief;
 	private boolean hide;
 	private boolean reveal;
 	private Character player;
 	private Character ninja;
 	private Item itemPresent;
-	
+
 	private String display;
-	
+
 	public Square() { //default constructor
 		isEmpty = true;
 		isPlayer = false;
@@ -33,16 +33,16 @@ public class Square{
 		display = " P ";
 		hide = false;
 	}
-	
-	
+
+
 	public void playerMoved() {
 		player = null;
 		isPlayer = false;
 		hide = true;
 		display = "   ";
 	}
-	
-	
+
+
 	public void setItem(Item item) {
 		itemPresent = item;
 		hide = true;
@@ -59,15 +59,27 @@ public class Square{
 		display = "[_]";
 		hide = false;
 		isRoom = true;
+		isBrief = false;
 	}
-	public void briefExist() {
-		display = "[_]";
-		hide = false;
-		isRoom = true;
-		isBrief = true;
+	public void briefExist(boolean isDebugOn) {
+		if (isDebugOn == false)
+		{
+			display = "[_]";
+			hide = false;
+			isRoom = true;
+			isBrief = true;
+		}
+		else 
+		{
+			display = "[#]";
+			hide = true;
+			isRoom = true;
+			isBrief = true;
+		}
+
 	}
-	
-	
+
+
 	public boolean getNinja() {
 		if(isNinja) //ninja exists
 			return true; 
@@ -87,7 +99,7 @@ public class Square{
 		return isRoom;
 	}
 
-	
+
 	public Character getPlayerObj() {
 		return player;
 	}
@@ -110,7 +122,7 @@ public class Square{
 		else 
 			return " * ";
 	}
-	
+
 	public void reveal() {
 		reveal = !reveal;
 	}
