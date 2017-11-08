@@ -98,7 +98,12 @@ public class UserInterface {
 				displayBoard();
 				if (game.checkPlayerIsBriefcase() == true)
 				{
+					System.out.println("YOU WIN!");
 					gameStatus = status.WON;
+				}
+				else
+				{
+					gameStatus = status.CONTINUE;
 				}
 			}
 			
