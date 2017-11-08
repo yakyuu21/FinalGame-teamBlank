@@ -134,6 +134,12 @@ public class GameEngine {
 				break;
 			case"a":
 				if((player.getY() == 0) ||
+						(player.getX() == 1 ||
+						player.getX() == 4 ||
+						player.getX() == 7) &&
+						(player.getY() == 1 ||
+						player.getY() == 4 ||
+						player.getY() == 7) ||
 						(player.getY() == 1+1 ||
 						player.getY() == 4+1 ||
 						player.getY() == 7+1) &&
@@ -159,6 +165,12 @@ public class GameEngine {
 						player.getX() == 7) &&
 						(player.getY() == 1 ||
 						player.getY() == 4 ||
+						player.getY() == 7) ||
+						(player.getX() == 1 ||
+						player.getX() == 4 ||
+						player.getX() == 7) &&
+						(player.getY() == 1 ||
+						player.getY() == 4 ||
 						player.getY() == 7))
 				{
 					System.out.println("WALL!");
@@ -174,6 +186,12 @@ public class GameEngine {
 				break;
 			case"d":
 				if((player.getY() == 8) ||
+						(player.getX() == 1 ||
+						player.getX() == 4 ||
+						player.getX() == 7) &&
+						(player.getY() == 1 ||
+						player.getY() == 4 ||
+						player.getY() == 7) ||
 						(player.getY() == 1-1 ||
 						player.getY() == 4-1 ||
 						player.getY() == 7-1) &&
