@@ -237,6 +237,22 @@ public class GameEngine {
 		return moved;
 
 	}
+	
+	/**
+	 * checks if the player location is the same as the briefcase location
+	 * @return boolean is true if they're the same, false if they're not
+	 */
+	public boolean checkPlayerIsBriefcase()
+	{
+		if(player.getX() == board.getBriefcaseX() && player.getY() == board.getBriefcaseY())
+		{
+			return true;
+
+		}
+		else 
+			return false;
+	}
+	
 	/*	
 	public String shoot(String direction) {
 		int value = 0;
