@@ -2,94 +2,87 @@ package edu.cpp.cs.cs141.final_prog_assignment;
 import java.util.Random;
 
 public class Board {
-	final int horizontal = 9;
-	final int vertical = 9;
-	String[][] board = new String [horizontal][vertical];
-	Random random = new Random();
-
-	private int depth;
-
-	int[] briefcaseX = {1,4,7};
-	int[] briefcaseY = {1,4,7};
+	private final int horizontal = 9;
+	private final int vertical = 9;
+	private Square[][] room = new Square[vertical][horizontal];
+	private Random random = new Random();
+	private int[] briefcaseX = {1,4,7};
+	private int[] briefcaseY = {1,4,7};
 	
+	/**
+	 * Creates board with room and briefcase.
+	 */
 	Board() {
 		createBoard();
 	}
 
+	/**
+	 * Creates board with room and briefcase.
+	 */
 	public void createBoard() {
+		int i = briefcaseX[random.nextInt(3)];
+		int j = briefcaseY[random.nextInt(3)];
 
 		for(int x=0;x<horizontal;x++) {
 			for(int y=0;y<vertical;y++) {
 				if((y==1 || y==4 || y==7) && (x==1 || x==4 || x==7)) {
-					board[x][y] = "?";
+					if(x == i && y == j) {
+						room[x][y] = new Square(); //with briefcase
+						room[x][y].setRoom();
+						room[x][y].briefExist();
+					}
+					else {
+						room[x][y] = new Square();//without briefcase
+						room[x][y].setRoom();
+					}
 				}
-				else 
-					board[x][y] = "O";
+				else
+					room[x][y] = new Square();
 			}
 		}
-		spawnBriefcase();
 	}
 
-	public void overWrite(int x, int y) {
-		createBoard();
-		board[x][y] = "P";
-	}
-
-	public void displayBoard() {
-		for(int x=0;x<horizontal;x++) {
-			System.out.println("");
-			for(int y=0;y<vertical;y++) {
-				System.out.print(board[x][y] + " ");
-			}
-		}
-
-		System.out.println("\n");		
+	/**
+	 * 
+	 */
+	public String displayBoard(int x, int y) {
+		return room[x][y].display();	
 	}	
-	
-	public void spawnBriefcase()
-	{
-		board[briefcaseX[random.nextInt(2)]][briefcaseY[random.nextInt(2)]] = "B";
+	public String show(int x, int y) {
+		return room[x][y].reveal();
+
 	}
 	
-	public String at(int x, int y) {
-		return board[x][y];
+	
+	
+	public Square at(int x, int y) {
+		return room[x][y];
+	}
+	
+	
+	public void set(Character player, int x, int y) {	
+		room[x][y].setCharacter(player);
+		player.setX(x);
+		player.setY(y);
+	}
+	public void move(int x, int y) {	
+		room[x][y].playerMoved();
+	}
+	
+	public void setNinja(Character player, int x, int y) {
+		room[x][y].setNinja(player);
+		player.setX(x);
+		player.setY(y);
+		
 	}
 
-	public void overWrite(int x, int y, String s) {
-		board[x][y] = s;
-		return;
+	public void set(Item radar, int x, int y) {
+		room[x][y].setItem(radar);
 	}
+
 	
-	//This is the "look" option, returning a string to the UserInterface
-	//This method needs exception handling for outofbounds array access
-	//Also are we suppose to print the board with revealed spaces?
-	public String reveal(String direction, int x, int y){
-		switch(direction) {
-		case "w":
-			if(board[x][y-1] == "N" || board[x][y-2] == "N")
-				return "Ninja ahead!";
-			else
-				return "Clear!";
-		case "a":
-			if(board[x-1][y] == "N" || board[x-2][y] == "N")
-				return "Ninja ahead!";
-			else
-				return "Clear!";
-		case "s":
-			if(board[x][y+1] == "N" || board[x][y+2] == "N")
-				return "Ninja ahead!";
-			else
-				return "Clear!";
-		case "d":
-			if(board[x+1][y] == "N" || board[x+2][y] == "N")
-				return "Ninja ahead!";
-			else
-				return "Clear!";
-		default:
-			return "Error - Board.reveal()";
-		}
-	}
-	// Creating 9 rooms in random spots
-	// Still needs work: room cannot be at the top of the grid or on top of each other
+	
+	
+
 
 }
