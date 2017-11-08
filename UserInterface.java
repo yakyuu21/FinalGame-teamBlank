@@ -84,7 +84,7 @@ public class UserInterface {
 					valid = true;
 				}
 				else if(direction.equals("w")|| direction.equals("a") || direction.equals("s") || direction.equals("d")){
-					valid = game.move(direction); //CHANGED TO move() to BOOLEAN TO ALLOW PLAYER CONTROLS TO LOOP (GameEngine -> move())
+					valid = game.move(direction);
 					//valid = true;
 				}
 				else {
