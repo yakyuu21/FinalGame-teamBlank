@@ -99,7 +99,7 @@ public class UserInterface {
 				displayBoard();
 				if (game.checkPlayerIsBriefcase() == true)
 				{
-					System.out.println("YOU WIN!");
+					System.out.println("YOU FOUND THE BRIEFCASE!");
 					gameStatus = status.WON;
 				}
 				else
