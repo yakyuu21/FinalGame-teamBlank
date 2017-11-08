@@ -79,6 +79,7 @@ public class GameEngine {
 			case "w":
 				for(int i = 1;i < 3; i++) {
 					if(player.getX()-i >= 0) {
+						System.out.println(player.getX()-i);
 						s[i] = board.at(player.getX()-i, player.getY());
 					}			
 				}
@@ -100,7 +101,7 @@ public class GameEngine {
 
 			case "d":
 				for(int i = 1;i < 3; i++) {
-					if(player.getY()+i >= 0) {
+					if(player.getY()+i <= 8) {
 						s[i] = board.at(player.getX(), player.getY()+i);
 					}			
 				}
