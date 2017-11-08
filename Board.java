@@ -32,7 +32,7 @@ public class Board {
 		for(int x=0;x<horizontal;x++) {
 			for(int y=0;y<vertical;y++) {
 				if((y==1 || y==4 || y==7) && (x==1 || x==4 || x==7)) {
-					if(x == i && y == j) {
+					if(x == briefcaseX && y == briefcaseY) {
 						room[x][y] = new Square(); //with briefcase
 						room[x][y].setRoom();
 						room[x][y].briefExist();
