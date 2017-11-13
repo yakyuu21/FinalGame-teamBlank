@@ -91,7 +91,7 @@ public class UserInterface {
 				if(direction.equals("f")) {
 					System.out.print("Choose direction to fire: ");
 					direction = scan.next();
-					//game.shoot(direction);
+					System.out.print(game.shoot(direction));
 					valid = true;
 				}
 				else if(direction.equals("w")|| direction.equals("a") || direction.equals("s") || direction.equals("d")){
