@@ -158,5 +158,15 @@ public class Square{
 	public void reveal() {
 		reveal = !reveal;
 	}
+	
+	public void setEmpty(){
+		isEmpty = true;
+		isPlayer = false;
+		isNinja = false;
+		isRoom = false;
+		isItem = false;
+		player = null;
+		ninja = null;
+	}
 
 }
