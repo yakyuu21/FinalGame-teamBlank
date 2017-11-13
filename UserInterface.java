@@ -69,13 +69,20 @@ public class UserInterface {
 			
 			direction = look();
 			
-			if(game.look(direction))
+			if(game.look(direction) == 0)
+				System.out.println("Room Ahead!");
+			
+			else if(game.look(direction) == 2)
 				System.out.println("Ninja Ahead!");
-			else
+			
+			else if(game.look(direction) == 1)
 				System.out.println("All Clear!");
+			else
+				System.out.println("Invalid !");
 			
 			boolean valid = false;
 			displayBoard();
+		
 
 			while(!valid) {
 				System.out.print("Move(WASD) or shoot(F): ");
@@ -96,6 +103,12 @@ public class UserInterface {
 					System.out.println("Invalid Input!");
 				}
 				
+				
+				if(game.checkSpy()) {
+					System.out.println("The Spy is dead!!!");
+					
+				}
+				
 				displayBoard();
 				if (game.checkPlayerIsBriefcase() == true)
 				{
@@ -106,20 +119,27 @@ public class UserInterface {
 				{
 					gameStatus = status.CONTINUE;
 				}
-			}
 			
-			//implement ninja movement
-			/*
-			 * if(player.getAlive){
-			 * 		decLives();
-			 * }
-			 * if(player.checkGameOver(){
-			 * 		startGame();
-			 * }
-			 */
+				//int direction = random.nextInt(4);
+				//game.ninjaMovement();
+			//public void nijaMovement(){
+				
+			}
 		}
-		
 	}
+	
+				
+			
+			  /**if(player.getAlive()){
+			  		decLives();
+			  }
+			  if(player.checkGameOver(){
+			  		startGame();
+			  }
+			  **/
+		
+		
+	
 
 	private String look() {
 		boolean valid = false;
@@ -130,7 +150,7 @@ public class UserInterface {
 			direction = scan.next().toLowerCase();
 			if(direction.equals("r"))
 				game.debugMode();
-			else if(direction.equals("w")||direction.equals("a")||direction.equals("s")||direction.equals("d"))
+			if(direction.equals("w")||direction.equals("a")||direction.equals("s")||direction.equals("d"))
 				valid = true;
 		}
 		return direction;

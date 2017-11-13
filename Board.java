@@ -74,11 +74,13 @@ public class Board {
 		room[x][y].playerMoved(x, y);
 	}
 	
-	public void setNinja(Character player, int x, int y) {
-		room[x][y].setNinja(player);
-		player.setX(x);
-		player.setY(y);
+	public void setNinja(Character ninjas, int x, int y) {
+		//room[x][y].setNinja(ninjas[]);
 		
+		for( int count = 0; count<=5; count++) {
+			room[x][y].setNinja(ninjas);
+			
+		}
 	}
 
 	public void set(Item radar, int x, int y) {
@@ -108,10 +110,10 @@ public class Board {
 		room[briefcaseX][briefcaseY].briefExist(debugMode);
 		
 	}
-
 	
-	
-	
+	public void setEmpty( int x, int y) {
+		room[x][y]=new Square();
+	}
 
 
 }

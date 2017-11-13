@@ -21,21 +21,34 @@ public class GameEngine {
 		createPowerUp();	
 		createNinjas();
 	}
-
-	private void createNinjas() {
-		int count = 6;
-		int i = 0;
-		while(count > 0){
-			int x = random.nextInt(5) + 4; //staying 3 units away from player initial position
-			int y = random.nextInt(5) + 4; //staying 3 units away from player initial position
-			if(!board.at(x, y).getNinja() && board.at(x, y).getEmpty() && !board.at(x, y).getRoom()) {//if ninja does not already exist in room
-				ninjas[i] = new Ninja(x,y);
-				board.setNinja(ninjas[i],x,y);
-				i++;
-				count--;//dec count until create 6 ninjas
+					
+	public void createNinjas() {
+		int x,y;
+		int count = 0;
+		
+		while( count <= 5 ) {
+		
+		do {
+			x = getRandom();
+			y = getRandom();
+		}
+		while  (x >= 5 && y <= 3);
+				
+		if(!board.at(x, y).getNinja() 
+					&& board.at(x, y).getEmpty() 
+					&& !board.at(x, y).getRoom()
+					&& !board.at(x, y).getItem()){ 
+				
+					ninjas[count] = new Ninja(x,y);
+					
+					board.setNinja(ninjas[count],x,y);
+					
+					ninjas[count].setX(x);
+					ninjas[count].setY(y);
+				
+					count ++;
 			}
 		}
-
 	}
 
 	private void createPowerUp() {
@@ -76,9 +89,9 @@ public class GameEngine {
 		return board.displayBoard(x, y);
 	}
 
-	public boolean look(String direction) {
+	public int look(String direction) {
 		Square[] s = new Square[3];
-		boolean clear = true;
+		int clear = 1;
 		switch(direction.toLowerCase()) {
 			case "w":
 				for(int i = 1;i < 3; i++) {
@@ -113,18 +126,20 @@ public class GameEngine {
 				System.out.print("Error: GameEngine-look-switch");
 		}	
 		for(int i = 1; i < 3; i++) {
-			if(s[i] != null) {
 				if(s[i].getRoom()) {
+					clear = 0;
 					break;
 				}
 				else if(s[i].getNinja()) {
 					s[i].reveal();
-					clear = false;
+					clear = 2;
+					break;
 				}
-				else
+				else {
 					s[i].reveal();
+					clear = 1;
+				}
 			}
-		}
 		return clear;
 	}
 
@@ -257,8 +272,51 @@ public class GameEngine {
 			return false;
 	}
 	
-	/*	
-	public String shoot(String direction) {
+	public boolean checkSpy(){
+		int x = player.getX();
+		int y = player.getY();
+		int a = 0;
+		int b = 0;
+		boolean value = false;
+		
+		for( int count = 0; count <= 5; count ++) {
+			a = ninjas[count].getX();
+			b= ninjas[count].getY();
+
+		
+			if( y == b) {
+				if(	 x+1 == a) {
+					board.setEmpty(x, y);
+					return (!value);
+				}
+				else if (x-1 == a ) {
+					board.setEmpty(x, y);
+					return (!value);
+				}
+			}
+		 
+			if ( x == a ) {
+				if( y + 1 == b) {
+					board.setEmpty(x, y);
+					return (!value);
+				}
+				else if (y - 1 == b) {
+					board.setEmpty(x, y);
+					return (!value);
+				}
+			}
+			
+		}
+		return value;
+		
+	}
+	
+	public void debugMode() {
+		board.debugMode();
+		
+	}
+
+	/**public String shoot(String direction) {
 		int value = 0;
 		if(player.getAmmo() == 0)
 		if(direction.equals("w") || direction.equals("s"))
@@ -302,12 +360,35 @@ public class GameEngine {
 				ninjas[i].die();
 		}
 	}
-	 */
+	 **/
 
-	public void debugMode() {
-		board.debugMode();
+	/**public void ninjaMovement() {
+		int num = random.nextInt(4);
 		
+		
+		if( num == 0 ) { 
+			for(int i = 1; i <= 6; i++) {
+				int a= ninjas[i].getX();
+			
+				int b = (ninjas[i].getY()-1);
+			
+			board.setNinja( ninjas[i], a, b);
+			}
+		}
+		else if(num == 1) {
+		}
+		else if (num ==2 ) {
+		}
+		else if (num == 3) {
+		}
+		System.out.println("Ninjas got Number: " + num );
+	
+	
 	}
+	**/
+
+	
+	
 
 
 }
