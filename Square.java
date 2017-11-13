@@ -167,6 +167,7 @@ public class Square{
 		isItem = false;
 		player = null;
 		ninja = null;
+		display = "   ";
 	}
 	
 	public void removeNinja() {
@@ -174,7 +175,7 @@ public class Square{
 		if(itemPresent != null)
 			display = itemPresent.getType();
 		else
-			display = "  ";
+			display = "   ";
 	}
 
 }
