@@ -320,7 +320,7 @@ public class GameEngine {
 		int value = 0;
 		if(player.getAmmo() == 0)
 			return "You are out of ammunition! Idiot!";
-		if(direction.equals("w") || direction.equals("d"))
+		if(direction.equals("s") || direction.equals("d"))
 			value = 1;
 		else
 			value = -1;
