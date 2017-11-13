@@ -114,6 +114,10 @@ public class Board {
 	public void setEmpty( int x, int y) {
 		room[x][y].setEmpty();
 	}
+	
+	public void removeNinja(int x, int y) {
+		room[x][y].removeNinja();
+	}
 
 
 }
