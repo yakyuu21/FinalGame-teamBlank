@@ -112,7 +112,7 @@ public class Board {
 	}
 	
 	public void setEmpty( int x, int y) {
-		room[x][y]=new Square();
+		room[x][y].setEmpty();
 	}
 
 
