@@ -316,10 +316,11 @@ public class GameEngine {
 		
 	}
 
-	/**public String shoot(String direction) {
+	public String shoot(String direction) {
 		int value = 0;
 		if(player.getAmmo() == 0)
-		if(direction.equals("w") || direction.equals("s"))
+			return "You are out of ammunition! Idiot!";
+		if(direction.equals("w") || direction.equals("d"))
 			value = 1;
 		else
 			value = -1;
@@ -327,22 +328,28 @@ public class GameEngine {
 		int y = player.getY();
 		switch(direction) {
 		case "w":
-		case "d":
-			for(int i = x + value; i > 0 && i < 9; i+=value) {
+		case "s":
+			for(int i = x + value; i >= 0 && i < 9; i+=value) {
 				if(board.at(i, y).getNinja()) {
-					killNinja(i, y);
-					//player.shoot();
+					board.killNinja(i, y);
+					player.fire();
 					return "You killed a Ninja!";
+				}
+				else if(board.at(i, y).getRoom()) {
+					break;
 				}
 			}
 			break;
 		case "a":
-		case "s":
-			for(int j = y + value; j > 0 && j < 9; j+=value) {
+		case "d":
+			for(int j = y + value; j >= 0 && j < 9; j+=value) {
 				if(board.at(x, j).getNinja()) {
-					killNinja(x, j);
-					//player.shoot();
+					board.killNinja(x, j);
+					player.fire();
 					return "You killed a Ninja!";
+				}
+				else if(board.at(x,j).getRoom()) {
+					break;
 				}
 			}
 			break;
@@ -351,16 +358,6 @@ public class GameEngine {
 		}
 		return "No Ninjas were killed!";
 	}
-
-
-	private void killNinja(int x, int y) {
-		for(int i = 0; i < ninjas.length; i++)
-		{
-			if(ninjas[i].getX() == x && ninjas[i].getY() == y)
-				ninjas[i].die();
-		}
-	}
-	 **/
 
 	/**public void ninjaMovement() {
 		int num = random.nextInt(4);
