@@ -104,13 +104,15 @@ public class UserInterface {
 			game.ninjaMovement();
 			
 			game.decInvincibility();
-				//check player lives
-				//if player still alive, check win condition (written already below)
-				if (game.checkPlayerIsBriefcase() == true)
-				{
-					System.out.println("YOU FOUND THE BRIEFCASE!");
-					gameStatus = status.WON;
-				}
+			if(game.playerAlive() == false) {
+				gameStatus = status.LOST;
+				System.out.println("YOU LOST THE GAME! LOSER!");
+			}
+			else if (game.checkPlayerIsBriefcase() == true)
+			{
+				System.out.println("YOU FOUND THE BRIEFCASE!");
+				gameStatus = status.WON;
+			}
 				
 		}
 	}
