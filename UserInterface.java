@@ -87,27 +87,21 @@ public class UserInterface {
 			while(!valid) {
 				System.out.print("Move(WASD) or shoot(F): ");
 				direction = scan.next().toLowerCase();
-				
-				if(direction.equals("f")) {
+				if(direction.equals("r"))
+					game.debugMode();
+				else if(direction.equals("f")) {
 					System.out.print("Choose direction to fire: ");
 					direction = scan.next();
 					System.out.print(game.shoot(direction));
 					valid = true;
 				}
 				else if(direction.equals("w")|| direction.equals("a") || direction.equals("s") || direction.equals("d")){
-					valid = game.move(direction);
-					
-					
+					valid = game.move(direction);	
 				}
 				else {
 					System.out.println("Invalid Input!");
 				}
-				
-				
-				if(game.checkSpy()) {
-					System.out.println("The Spy is dead!!!");
-					
-				}
+				//Ninja movement here
 				
 				displayBoard();
 				if (game.checkPlayerIsBriefcase() == true)
@@ -115,14 +109,6 @@ public class UserInterface {
 					System.out.println("YOU FOUND THE BRIEFCASE!");
 					gameStatus = status.WON;
 				}
-				else
-				{
-					gameStatus = status.CONTINUE;
-				}
-			
-				//int direction = random.nextInt(4);
-				//game.ninjaMovement();
-			//public void nijaMovement(){
 				
 			}
 		}
