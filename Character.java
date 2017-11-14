@@ -41,13 +41,6 @@ public class Character{
 		if(isInvincible > 0)
 			isInvincible--;
 	}
-	
-	public boolean checkGameOver() {
-		if(lives <= 0)
-			return false;
-		else 
-			return true;
-	}
 
 	public int getX() {
 		return locationX;
