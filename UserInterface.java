@@ -101,8 +101,9 @@ public class UserInterface {
 					System.out.println("Invalid Input!");
 				}
 			}
-				game.ninjaMovement();
-				//check player invincibility and decrement
+			game.ninjaMovement();
+			
+			game.decInvincibility();
 				//check player lives
 				//if player still alive, check win condition (written already below)
 				if (game.checkPlayerIsBriefcase() == true)
