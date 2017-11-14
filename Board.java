@@ -65,17 +65,32 @@ public class Board {
 	}
 	
 	
-	public void set(Character player, int x, int y) {	
+	public void set(Character player, int x, int y) {
+		if(room[x][y].getRadar())
+			applyRadar();
 		room[x][y].setCharacter(player, x, y);
 		player.setX(x);
 		player.setY(y);
 	}
+	private void applyRadar() {
+		for(int i = 0; i < horizontal; i++) {
+			for(int j = 0; j < vertical; j++) {
+				if(room[i][j].getNinja())
+					room[i][j].show();
+				else if(room[i][j].getItem())
+					room[i][j].show();
+				else if(room[i][j].getBrief())
+					room[i][j].show();
+			}
+		}
+		
+	}
+
 	public void move(int x, int y) {	
 		room[x][y].playerMoved(x, y);
 	}
 	
 	public void setNinja(Character ninjas, int x, int y) {
-		//room[x][y].setNinja(ninjas[]);
 		
 		for( int count = 0; count<=5; count++) {
 			room[x][y].setNinja(ninjas);

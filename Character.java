@@ -7,6 +7,7 @@ public class Character{
 	private boolean isNinja;
 	private int locationX, locationY;
 	private boolean isAlive;
+	private int isInvincible = 0;
 	
 	public Character(int x, int y) {
 		lives = 1;
@@ -75,5 +76,23 @@ public class Character{
 	
 	public void fire() {
 		bullet--;
+	}
+	public void getItem(Item item) {
+		boolean radar = false;
+		switch(item.getType()) {
+		case "R":
+			//this is taken care of by board class
+			break;
+		case "I":
+			isInvincible = 5; //this must be checked each time Player gets hit
+			break;
+		case "A":
+			if(bullet == 0)
+				bullet++;
+			break;
+			default:
+				System.out.print("Error-Player.getItem() switch");
+		}
+		
 	}
 }

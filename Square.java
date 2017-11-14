@@ -28,7 +28,7 @@ public class Square{
 		display = "   ";
 	}
 	public void setCharacter(Character charac, int x, int y) { //set character in location
-		if ((x == 1 ||
+		if ((x == 1 || 
 				x == 4 ||
 				x == 7)&&
 				(y == 1 ||
@@ -47,9 +47,12 @@ public class Square{
 			isPlayer = true;
 			display = " P ";
 			hide = false;
+			if(itemPresent != null) {
+				player.getItem(itemPresent);
+				itemPresent = null;
+			}
 		}
 	}
-
 
 	public void playerMoved(int x, int y) {
 		if ((x == 1 ||
@@ -130,6 +133,16 @@ public class Square{
 	public boolean getRoom() {
 		return isRoom;
 	}
+	public boolean getRadar() {
+		if(itemPresent != null) {
+			if(itemPresent.getType().equals("R"))
+				return true;
+			else
+				return false;
+		}
+		else
+			return false;
+	}
 
 
 	public Character getPlayerObj() {
@@ -176,6 +189,10 @@ public class Square{
 			display = itemPresent.getType();
 		else
 			display = "   ";
+	}
+	public void show() {
+		hide = false;
+		
 	}
 
 }

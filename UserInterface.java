@@ -71,7 +71,7 @@ public class UserInterface {
 			
 			if(game.look(direction) == 0)
 				System.out.println("Room Ahead!");
-			
+			 
 			else if(game.look(direction) == 2)
 				System.out.println("Ninja Ahead!");
 			
@@ -81,10 +81,9 @@ public class UserInterface {
 				System.out.println("Invalid !");
 			
 			boolean valid = false;
-			displayBoard();
-		
 
 			while(!valid) {
+				displayBoard();
 				System.out.print("Move(WASD) or shoot(F): ");
 				direction = scan.next().toLowerCase();
 				if(direction.equals("r"))
@@ -96,21 +95,22 @@ public class UserInterface {
 					valid = true;
 				}
 				else if(direction.equals("w")|| direction.equals("a") || direction.equals("s") || direction.equals("d")){
-					valid = game.move(direction);	
+					valid = game.move(direction);
 				}
 				else {
 					System.out.println("Invalid Input!");
 				}
+			}
 				//Ninja movement here
-				
-				displayBoard();
+				//check player invincibility and decrement
+				//check player lives
+				//if player still alive, check win condition (written already below)
 				if (game.checkPlayerIsBriefcase() == true)
 				{
 					System.out.println("YOU FOUND THE BRIEFCASE!");
 					gameStatus = status.WON;
 				}
 				
-			}
 		}
 	}
 	
