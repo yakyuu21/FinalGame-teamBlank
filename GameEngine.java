@@ -331,7 +331,7 @@ public class GameEngine {
 		case "s":
 			for(int i = x + value; i >= 0 && i < 9; i+=value) {
 				if(board.at(i, y).getNinja()) {
-					board.killNinja(i, y);
+					board.removeNinja(i, y);
 					player.fire();
 					return "You killed a Ninja!";
 				}
@@ -344,7 +344,7 @@ public class GameEngine {
 		case "d":
 			for(int j = y + value; j >= 0 && j < 9; j+=value) {
 				if(board.at(x, j).getNinja()) {
-					board.killNinja(x, j);
+					board.removeNinja(x, j);
 					player.fire();
 					return "You killed a Ninja!";
 				}
