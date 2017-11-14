@@ -37,6 +37,11 @@ public class Character{
 			isAlive = false;
 	}
 	
+	public void decInvincibility() {
+		if(isInvincible > 0)
+			isInvincible--;
+	}
+	
 	public boolean checkGameOver() {
 		if(lives <= 0)
 			return false;
