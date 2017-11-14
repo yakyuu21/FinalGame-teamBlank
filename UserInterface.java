@@ -101,7 +101,7 @@ public class UserInterface {
 					System.out.println("Invalid Input!");
 				}
 			}
-				//Ninja movement here
+				game.ninjaMovement();
 				//check player invincibility and decrement
 				//check player lives
 				//if player still alive, check win condition (written already below)

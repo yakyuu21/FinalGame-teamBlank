@@ -274,45 +274,6 @@ public class GameEngine {
 			return false;
 	}
 	
-	public boolean checkSpy(){
-		int x = player.getX();
-		int y = player.getY();
-		int a = 0;
-		int b = 0;
-		boolean value = false;
-		
-		for( int count = 0; count <= 5; count ++) {
-			a = ninjas[count].getX();
-			b= ninjas[count].getY();
-
-		
-			if( y == b) {
-				if(	 x+1 == a) {
-					board.setEmpty(x, y);
-					return (!value);
-				}
-				else if (x-1 == a ) {
-					board.setEmpty(x, y);
-					return (!value);
-				}
-			}
-		 
-			if ( x == a ) {
-				if( y + 1 == b) {
-					board.setEmpty(x, y);
-					return (!value);
-				}
-				else if (y - 1 == b) {
-					board.setEmpty(x, y);
-					return (!value);
-				}
-			}
-			
-		}
-		return value;
-		
-	}
-	
 	public void debugMode() {
 		board.debugMode();
 		
@@ -361,34 +322,143 @@ public class GameEngine {
 		return "No Ninjas were killed!";
 	}
 
-	/**public void ninjaMovement() {
-		int num = random.nextInt(4);
+	public boolean checkSpy(){
+		int x = player.getX();
+		int y = player.getY();
+		int a = 0;
+		int b = 0;
+		boolean value = false;
 		
+		for( int count = 0; count <= 5; count ++) {
+			a = ninjas[count].getX();
+			b= ninjas[count].getY();
+
 		
-		if( num == 0 ) { 
-			for(int i = 1; i <= 6; i++) {
-				int a= ninjas[i].getX();
-			
-				int b = (ninjas[i].getY()-1);
-			
-			board.setNinja( ninjas[i], a, b);
+			if( y == b) {
+				if(	 x+1 == a) {
+					player.decLives();
+					board.set(player,8, 0);
+					board.setEmpty(x, y);
+					return (!value);
+				}
+				else if (x-1 == a ) {
+					player.decLives();
+					board.set(player,8, 0);
+					board.setEmpty(x, y);
+					return (!value);
+				}
 			}
+		 
+			if ( x == a ) {
+				if( y + 1 == b) {
+					player.decLives();
+					board.set(player,8, 0);
+					board.setEmpty(x, y);
+					return (!value);
+				}
+				else if (y - 1 == b) {
+					player.decLives();
+					board.set(player,8, 0);
+					board.setEmpty(x, y);
+					return (!value);
+				}
+			}
+			
 		}
-		else if(num == 1) {
-		}
-		else if (num ==2 ) {
-		}
-		else if (num == 3) {
-		}
-		System.out.println("Ninjas got Number: " + num );
-	
-	
+		return value;
+		
 	}
-	**/
-
 	
+	public void ninjaMovement() {
+		
+		checkSpy();
+		for ( int i = 0; i <= 5; i++) { 
+			
+			int a = ninjas[i].getX();
+			int b = ninjas[i].getY();
+			
+			int direction;
+			
+			int x =0; 
+			int y = 0;
+			do {
+			direction = random.nextInt(4);
+			
+			switch(direction) {
+			
+			case 0:
+				x= a-1;
+				y= b;
+				break;
+			case 1:
+				x= a+1;
+				y = b;
+				break;
+			case 2:
+				x= a;
+				y = b-1;
+				break;
+			case 3:
+				x= a;
+				y = b+1;
+				break;
+			default:
+				System.out.println("Error");
+			
+			}
+			}
+			
+			while(( x < 0 || x > 8) || (y < 0 || y > 8)
+				|| board.at(x, y).getNinja()
+				|| board.at(x,y).getRoom());
+			
+			moveNinja(ninjas[i], direction , x, y);
+		
+		}
+	}
 	
-
+	public void moveNinja( Character ninjas, int direction, int x, int y) {
+	
+		switch(direction) {
+			
+			case 0:					
+				ninjas.setX(x);
+				ninjas.setY(y);
+				
+				board.removeNinja(x+1, y);
+				board.setNinja(ninjas,x,y);
+				break;
+				
+			case 1:	
+				ninjas.setX(x);
+				ninjas.setY(y);
+				
+				board.removeNinja(x-1, y);
+				board.setNinja(ninjas,x,y);
+				break;
+	
+			case 2:	
+				ninjas.setX(x);
+				ninjas.setY(y);
+			
+				board.removeNinja(x, y+1);
+				board.setNinja(ninjas,x,y);
+				break;
+					
+			case 3:	
+				ninjas.setX(x);
+				ninjas.setY(y);
+			
+				board.removeNinja(x, y-1);
+				board.setNinja(ninjas,x,y);
+			break;	
+	default:
+			System.out.println("DEFAULT");
+			break;
+			
+		}
+		
+	}
 
 }
 

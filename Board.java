@@ -91,11 +91,7 @@ public class Board {
 	}
 	
 	public void setNinja(Character ninjas, int x, int y) {
-		
-		for( int count = 0; count<=5; count++) {
 			room[x][y].setNinja(ninjas);
-			
-		}
 	}
 
 	public void set(Item radar, int x, int y) {
