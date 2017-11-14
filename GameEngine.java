@@ -459,6 +459,10 @@ public class GameEngine {
 		}
 		
 	}
+	
+	public void decInvincibility() {
+		player.decInvincibility();
+	}
 
 }
 
