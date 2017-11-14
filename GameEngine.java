@@ -126,6 +126,7 @@ public class GameEngine {
 				System.out.print("Error: GameEngine-look-switch");
 		}	
 		for(int i = 1; i < 3; i++) {
+			if(s[i] != null) {
 				if(s[i].getRoom()) {
 					clear = 0;
 					break;
@@ -140,6 +141,7 @@ public class GameEngine {
 					clear = 1;
 				}
 			}
+		}
 		return clear;
 	}
 
