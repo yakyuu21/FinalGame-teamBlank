@@ -29,8 +29,12 @@ public class Character{
 	}
 	
 	public void decLives() {
-		if(lives > 0)
+		if(isInvincible > 0)
+			return;
+		else if(lives > 0)
 			lives--;
+		if(lives == 0)
+			isAlive = false;
 	}
 	
 	public boolean checkGameOver() {
@@ -55,9 +59,6 @@ public class Character{
 
 	public void setBriefcase() {
 		briefcase = true;
-	}
-	public void setDead() {
-		isAlive = false;
 	}
 	public boolean getAlive() {
 		return isAlive;
