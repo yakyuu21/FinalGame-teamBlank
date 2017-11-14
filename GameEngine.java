@@ -463,7 +463,10 @@ public class GameEngine {
 	public void decInvincibility() {
 		player.decInvincibility();
 	}
-
+	
+	public boolean playerAlive() {
+		return player.getAlive();
+	}
 }
 
 
