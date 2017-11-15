@@ -13,7 +13,7 @@ public class Ninja extends Character{
 		isNinja = false;
 	}
 		
-	public boolean isAlive() {
+	public boolean getAlive() {
 		return isNinja;
 	}
 	

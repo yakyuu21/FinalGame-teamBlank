@@ -330,6 +330,8 @@ public class GameEngine {
 		boolean value = false;
 		
 		for( int count = 0; count <= 5; count ++) {
+			if(ninjas[count].getAlive() == false)
+				break;
 			a = ninjas[count].getX();
 			b= ninjas[count].getY();
 
@@ -373,7 +375,8 @@ public class GameEngine {
 		
 		checkSpy();
 		for ( int i = 0; i <= 5; i++) { 
-			
+			if(ninjas[i].getAlive() == false)
+				break;
 			int a = ninjas[i].getX();
 			int b = ninjas[i].getY();
 			

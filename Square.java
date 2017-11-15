@@ -185,6 +185,7 @@ public class Square{
 	
 	public void removeNinja() {
 		isNinja = false;
+		ninja.die();
 		if(itemPresent != null)
 			display = itemPresent.getType();
 		else

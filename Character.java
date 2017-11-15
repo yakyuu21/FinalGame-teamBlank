@@ -94,4 +94,7 @@ public class Character{
 		}
 		
 	}
+	public void die() {
+		isAlive = false;
+	}
 }
