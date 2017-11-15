@@ -101,6 +101,9 @@ public class UserInterface {
 					System.out.println("Invalid Input!");
 				}
 			}
+			if(game.checkSpy()) {
+				System.out.println("A Ninja Destroyed You!");
+			}
 			game.ninjaMovement();
 			
 			game.decInvincibility();
