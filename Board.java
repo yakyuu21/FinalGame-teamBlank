@@ -53,10 +53,7 @@ public class Board {
 	 */
 	public String displayBoard(int x, int y) {
 		if(debugMode) {
-			room[x][y].show();
-			String s =  room[x][y].display();
-			room[x][y].hide();
-			return s;
+			return room[x][y].getDisplay();
 		}
 		else
 			return room[x][y].display();
