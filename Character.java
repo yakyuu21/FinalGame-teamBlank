@@ -29,12 +29,17 @@ public class Character{
 	}
 	
 	public void decLives() {
-		if(isInvincible > 0)
-			return;
-		else if(lives > 0)
+		if(lives > 0)
 			lives--;
 		if(lives == 0)
 			isAlive = false;
+	}
+	
+	public boolean isInvincible() {
+		if(isInvincible > 0)
+			return true;
+		else
+			return false;
 	}
 	
 	public void decInvincibility() {
