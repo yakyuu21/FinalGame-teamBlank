@@ -89,9 +89,9 @@ public class GameEngine {
 		return board.displayBoard(x, y);
 	}
 
-	public int look(String direction) {
+	public boolean look(String direction) {
 		Square[] s = new Square[3];
-		int clear = 1;
+		boolean clear = true;
 		switch(direction.toLowerCase()) {
 			case "w":
 				for(int i = 1;i < 3; i++) {
@@ -128,16 +128,14 @@ public class GameEngine {
 		for(int i = 1; i < 3; i++) {
 			if(s[i] != null) {
 				if(s[i].getRoom()) {
-					clear = 0;
 					break;
 				}
 				else if(s[i].getNinja()) {
 					s[i].reveal();
-					clear = 2;
+					clear = false;
 				}
 				else {
 					s[i].reveal();
-					clear = 1;
 				}
 			}
 		}
