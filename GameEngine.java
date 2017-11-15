@@ -134,7 +134,6 @@ public class GameEngine {
 				else if(s[i].getNinja()) {
 					s[i].reveal();
 					clear = 2;
-					break;
 				}
 				else {
 					s[i].reveal();
