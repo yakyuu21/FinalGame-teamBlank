@@ -294,7 +294,7 @@ public class GameEngine {
 		case "s":
 			for(int i = x + value; i >= 0 && i < 9; i+=value) {
 				if(board.at(i, y).getNinja()) {
-					board.removeNinja(i, y);
+					board.at(i,y).killNinja();
 					player.fire();
 					return "You killed a Ninja!";
 				}
@@ -307,7 +307,7 @@ public class GameEngine {
 		case "d":
 			for(int j = y + value; j >= 0 && j < 9; j+=value) {
 				if(board.at(x, j).getNinja()) {
-					board.removeNinja(x, j);
+					board.at(x,j).killNinja();
 					player.fire();
 					return "You killed a Ninja!";
 				}
@@ -331,7 +331,7 @@ public class GameEngine {
 		
 		for( int count = 0; count <= 5; count ++) {
 			if(ninjas[count].getAlive() == false)
-				break;
+				continue;
 			a = ninjas[count].getX();
 			b= ninjas[count].getY();
 
@@ -376,13 +376,13 @@ public class GameEngine {
 		checkSpy();
 		for ( int i = 0; i <= 5; i++) { 
 			if(ninjas[i].getAlive() == false)
-				break;
+				continue;
 			int a = ninjas[i].getX();
 			int b = ninjas[i].getY();
 			
 			int direction;
 			
-			int x =0; 
+			int x = 0; 
 			int y = 0;
 			do {
 			direction = random.nextInt(4);

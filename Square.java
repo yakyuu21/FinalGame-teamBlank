@@ -73,6 +73,7 @@ public class Square{
 			player = null;
 			isPlayer = false;
 			hide = true;
+			isEmpty = true;
 			display = "   ";
 		}
 	}
@@ -89,6 +90,7 @@ public class Square{
 		isNinja = true;
 		hide = true;
 		display = " N ";
+		isEmpty = false;
 	}
 	public void setRoom() {
 		display = "[_]";
@@ -185,7 +187,6 @@ public class Square{
 	
 	public void removeNinja() {
 		isNinja = false;
-		ninja.die();
 		if(itemPresent != null)
 			display = itemPresent.getType();
 		else
@@ -194,6 +195,11 @@ public class Square{
 	public void show() {
 		hide = false;
 		
+	}
+	
+	public void killNinja() {
+		ninja.die();
+		removeNinja();
 	}
 
 }
