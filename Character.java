@@ -1,4 +1,4 @@
-package edu.cpp.cs.cs141.final_prog_assignment;
+package edu.cpp.cs.cs141.final_prog_assignment1;
 
 public class Character{
 	private int lives;
@@ -36,10 +36,13 @@ public class Character{
 	}
 	
 	public boolean isInvincible() {
-		if(isInvincible > 0)
-			return true;
-		else
+		if(isInvincible == 0)
 			return false;
+		else
+			return true;
+	}
+	public int getInvCount() {
+		return isInvincible;
 	}
 	
 	public void decInvincibility() {
@@ -52,6 +55,12 @@ public class Character{
 	}
 	public int getY() {
 		return locationY;
+	}
+	
+	
+	
+	public void setInvincible() {
+		isInvincible = 5;
 	}
 	public void setX(int x) {
 		locationX = x;
@@ -77,17 +86,24 @@ public class Character{
 	public int getAmmo() {
 		return bullet;
 	}
+	public void incAmmo() {
+		if(bullet == 0) //add ammo if no ammo left
+			bullet++;
+		//does nothign is already one ammo
+	}
 	
 	public void fire() {
 		bullet--;
 	}
+	
+	/*
 	public void getItem(Item item) {
 		switch(item.getType()) {
 		case "R":
 			//this is taken care of by board class
 			break;
 		case "I":
-			isInvincible = 5; //this must be checked each time Player gets hit
+			isInvincible = 5; //decremented by decInv every turn
 			break;
 		case "A":
 			if(bullet == 0)
@@ -98,6 +114,8 @@ public class Character{
 		}
 		
 	}
+	
+	*/
 	public void die() {
 		isAlive = false;
 	}

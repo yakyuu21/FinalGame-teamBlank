@@ -1,4 +1,4 @@
-package edu.cpp.cs.cs141.final_prog_assignment;
+package edu.cpp.cs.cs141.final_prog_assignment1;
 import java.util.Random;
 
 public class Board {
@@ -65,34 +65,35 @@ public class Board {
 	
 	
 	public void set(Character player, int x, int y) {
-		if(room[x][y].getRadar())
-			applyRadar();
+		//if(room[x][y].getRadar())
+		//	applyRadar();
 		room[x][y].setCharacter(player, x, y);
 		player.setX(x);
 		player.setY(y);
 	}
-	private void applyRadar() {
+	
+	/*
+	private void applyRadar() {//------------------`
 		for(int i = 0; i < horizontal; i++) {
-			for(int j = 0; j < vertical; j++) {
-				/*if(room[i][j].getNinja())
-					room[i][j].show();
+			for(int j = 0; j < vertical; j++) { //check every room and reveal the room with the briefcase
+			 	if(room[i][j].getNinja())
+					room[i][j].makeVisible();
 				else if(room[i][j].getItem())
-					room[i][j].show();
+					room[i][j].makeVisible();
 				else if(room[i][j].getBrief())
-					room[i][j].show();*/
-				if(room[i][j].getRoom() && room[i][j].getBrief())
-					room[i][j].setDisplay("[#]");
+					room[i][j].makeVisible();
 			}
 		}
 		
 	}
 
+	*/
 	public void move(int x, int y) {	
 		room[x][y].playerMoved(x, y);
 	}
 	
 	public void setNinja(Character ninjas, int x, int y) {
-			room[x][y].setNinja(ninjas);
+			room[x][y].setNinja(ninjas, x,y);
 	}
 
 	public void set(Item radar, int x, int y) {
@@ -103,8 +104,7 @@ public class Board {
 	 * used in GameEngine's checkPlayerIsBriefcase function
 	 * @return x-coordinate of briefcase
 	 */
-	public int getBriefcaseX()
-	{
+	public int getBriefcaseX(){
 		return briefcaseX;
 	}
 	
@@ -112,8 +112,7 @@ public class Board {
 	 * used in GameEngine's checkPlayerIsBriefcase function
 	 * @return y-coordinate of briefcase
 	 */
-	public int getBriefcaseY()
-	{
+	public int getBriefcaseY(){
 		return briefcaseY;
 	}
 	

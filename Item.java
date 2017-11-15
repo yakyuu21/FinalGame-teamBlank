@@ -1,7 +1,6 @@
-package edu.cpp.cs.cs141.final_prog_assignment;
+package edu.cpp.cs.cs141.final_prog_assignment1;
 
 public class Item{
-	
 	private String type;
 	
 	public Item(String s) {
@@ -18,7 +17,7 @@ public class Item{
 			return "A";
 			default:
 				return "Error - PowerUp.display - Switch";
-	}
+		}
 	}
 	
 	public String name() {

@@ -1,4 +1,4 @@
-package edu.cpp.cs.cs141.final_prog_assignment;
+package edu.cpp.cs.cs141.final_prog_assignment1;
 
 import java.util.Random;
 
@@ -13,6 +13,7 @@ public class GameEngine {
 	private Item invincible = null;
 	private Item ammo = null;
 
+
 	public void createBoard() {
 		player = new Character(false,0,8);
 		board = new Board();
@@ -26,25 +27,20 @@ public class GameEngine {
 		int count = 0;
 		
 		while( count <= 5 ) {
-		
-		do {
-			x = getRandom();
-			y = getRandom();
-		}
-		while  (x >= 5 && y <= 3);
+			do {
+				x = getRandom();
+				y = getRandom();
+			}while(x >= 5 && y <= 3);
 				
 		if(!board.at(x, y).getNinja() 
-					&& board.at(x, y).getEmpty() 
-					&& !board.at(x, y).getRoom()
-					&& !board.at(x, y).getItem()){ 
-				
-					ninjas[count] = new Ninja(x,y);
-					
+		&& board.at(x, y).getEmpty() 
+		&& !board.at(x, y).getRoom() 
+		&& !board.at(x, y).getItem()){ 
+					ninjas[count] = new Character(x,y);	
 					board.setNinja(ninjas[count],x,y);
 					
 					ninjas[count].setX(x);
 					ninjas[count].setY(y);
-				
 					count ++;
 			}
 		}
@@ -56,10 +52,11 @@ public class GameEngine {
 		radar = null;
 		invincible = null;
 		ammo = null;
-		while(radar == null) {
+		
+		while(radar == null) { //loop until one of each item is created
 			x = getRandom();
 			y = getRandom();
-			if(!board.at(x, y).getItem() && board.at(x, y).getEmpty() && !board.at(x, y).getRoom()) {
+			if(!board.at(x, y).getItem() && board.at(x, y).getEmpty() && !board.at(x, y).getRoom() && !board.at(x, y).getPlayer()) { //check if there is no item, not a room, and is empty
 				radar = new Item("radar");
 				board.set(radar, x, y);
 			}
@@ -67,7 +64,7 @@ public class GameEngine {
 		while(invincible == null) {
 			x = getRandom();
 			y = getRandom();
-			if(!board.at(x, y).getNinja() && board.at(x, y).getEmpty() && !board.at(x, y).getRoom()) {
+			if(!board.at(x, y).getNinja() && board.at(x, y).getEmpty() && !board.at(x, y).getRoom() && !board.at(x, y).getPlayer()) {//check if there is no item, not a room, and is empty
 				invincible = new Item("invincible");
 				board.set(invincible, x, y);
 			}
@@ -75,15 +72,17 @@ public class GameEngine {
 		while(ammo == null) {
 			x = getRandom();
 			y = getRandom();
-			if(!board.at(x, y).getNinja() && board.at(x, y).getEmpty() && !board.at(x, y).getRoom()) {
+			if(!board.at(x, y).getNinja() && board.at(x, y).getEmpty() && !board.at(x, y).getRoom() && !board.at(x, y).getPlayer()) {//check if there is no item, not a room, and is empty
 				ammo = new Item("ammo");
 				board.set(ammo, x, y);
 			}
 		}	
 	}
-	public int getRandom(){
+	
+	public int getRandom(){ //function for getting a random number 0-8
 		return random.nextInt(9);
 	}
+	
 	public String displayBoard(int x, int y){
 		return board.displayBoard(x, y);
 	}
@@ -147,55 +146,37 @@ public class GameEngine {
 		switch(direction){
 			case"w":
 				if((player.getX() == 0) ||
-				(player.getX() == 1+1 ||
-				player.getX() == 4+1 ||
-				player.getX() == 7+1) &&
-				(player.getY() == 1 ||
-				player.getY() == 4 ||
-				player.getY() == 7))
-				{
+				(player.getX() == 1+1 ||player.getX() == 4+1 ||player.getX() == 7+1) &&
+				(player.getY() == 1 ||	player.getY() == 4 ||player.getY() == 7)){
 					System.out.println("WALL!");
 					moved = false;
 
-				}
+				}/*
 				else if(board.at(player.getX()-1,  player.getY()).getNinja()) {
 					System.out.println("Ninja!");
 					moved = false;
-				}
-				else
-				{
-
+				}*/
+				else {
 					board.set(player, player.getX()-1, player.getY());
 					board.move(player.getX()+1, player.getY());
 					moved = true;
 				}
-
 				break;
 			case"a":
 				if((player.getY() == 0) ||
-						(player.getX() == 1 ||
-						player.getX() == 4 ||
-						player.getX() == 7) &&
-						(player.getY() == 1 ||
-						player.getY() == 4 ||
-						player.getY() == 7) ||
-						(player.getY() == 1+1 ||
-						player.getY() == 4+1 ||
-						player.getY() == 7+1) &&
-						(player.getX() == 1 ||
-						player.getX() == 4 ||
-						player.getX() == 7))
-				{
+				(player.getX() == 1 || player.getX() == 4 ||	player.getX() == 7) &&
+				(player.getY() == 1 || player.getY() == 4 ||	player.getY() == 7) || 
+				(player.getY() == 1+1 ||player.getY() == 4+1 || player.getY() == 7+1) &&
+				(player.getX() == 1 || player.getX() == 4 || player.getX() == 7)){
 					System.out.println("WALL!");
 					moved = false;
 
-				}
+				}/*
 				else if(board.at(player.getX(),  player.getY()-1).getNinja()) {
 					System.out.println("Ninja!");
 					moved = false;
-				}
-				else
-				{
+				}*/
+				else{
 					board.set(player, player.getX(), player.getY()-1);
 					board.move(player.getX(), player.getY()+1);
 					moved = true;
@@ -203,29 +184,18 @@ public class GameEngine {
 				break;
 			case"s":
 				if((player.getX() == 8) ||
-						(player.getX() == 1 ||
-						player.getX() == 4 ||
-						player.getX() == 7) &&
-						(player.getY() == 1 ||
-						player.getY() == 4 ||
-						player.getY() == 7) ||
-						(player.getX() == 1 ||
-						player.getX() == 4 ||
-						player.getX() == 7) &&
-						(player.getY() == 1 ||
-						player.getY() == 4 ||
-						player.getY() == 7))
-				{
+				(player.getX() == 1 ||player.getX() == 4 ||	player.getX() == 7) &&
+				(player.getY() == 1 ||player.getY() == 4 ||player.getY() == 7) ||
+				(player.getX() == 1 ||player.getX() == 4 ||player.getX() == 7) &&
+				(player.getY() == 1 ||player.getY() == 4 ||	player.getY() == 7)){
 					System.out.println("WALL!");
 					moved = false;
-
 				}
-				else if(board.at(player.getX()+1,  player.getY()).getNinja()) {
+				/*else if(board.at(player.getX()+1,  player.getY()).getNinja()) {
 					System.out.println("Ninja!");
 					moved = false;
-				}
-				else
-				{
+				}*/
+				else{
 					board.set(player, player.getX()+1, player.getY());
 					board.move(player.getX()-1, player.getY());
 					moved = true;
@@ -233,29 +203,19 @@ public class GameEngine {
 				break;
 			case"d":
 				if((player.getY() == 8) ||
-						(player.getX() == 1 ||
-						player.getX() == 4 ||
-						player.getX() == 7) &&
-						(player.getY() == 1 ||
-						player.getY() == 4 ||
-						player.getY() == 7) ||
-						(player.getY() == 1-1 ||
-						player.getY() == 4-1 ||
-						player.getY() == 7-1) &&
-						(player.getX() == 1 ||
-						player.getX() == 4 ||
-						player.getX() == 7))
-				{
+				(player.getX() == 1 || player.getX() == 4 || player.getX() == 7) &&
+				(player.getY() == 1 || player.getY() == 4 || player.getY() == 7) ||
+				(player.getY() == 1-1 || player.getY() == 4-1 || player.getY() == 7-1) &&
+				(player.getX() == 1 || player.getX() == 4 || player.getX() == 7)){
 					System.out.println("WALL!");
 					moved = false;
 
-				}
+				}/*
 				else if(board.at(player.getX(),  player.getY()+1).getNinja()) {
 					System.out.println("Ninja!");
 					moved = false;
-				}
-				else
-				{
+				}*/
+				else{
 					board.set(player, player.getX(), player.getY()+1);
 					board.move(player.getX(), player.getY()-1);
 					moved = true;
@@ -274,22 +234,20 @@ public class GameEngine {
 	 * checks if the player location is the same as the briefcase location
 	 * @return boolean is true if they're the same, false if they're not
 	 */
-	public boolean checkPlayerIsBriefcase()
-	{
+	public boolean checkPlayerIsBriefcase(){
 		if(player.getX() == board.getBriefcaseX() && player.getY() == board.getBriefcaseY())
-		{
 			return true;
-
-		}
 		else 
 			return false;
 	}
-	
+
 	public void debugMode() {
-		board.debugMode();
-		
+		board.debugMode();		
 	}
 
+	public int getAmmoCount() {
+		return player.getAmmo();
+	}
 	public String shoot(String direction) {
 		int value = 0;
 		if(player.getAmmo() == 0)
@@ -307,8 +265,7 @@ public class GameEngine {
 				if(board.at(i, y).getNinja()) {
 					board.at(i,y).killNinja();
 					player.fire();
-
-					return "You killed a Ninja!";
+					return "You killed a Ninja!\n";
 				}
 				else if(board.at(i, y).getRoom()) {
 					break;
@@ -321,8 +278,7 @@ public class GameEngine {
 				if(board.at(x, j).getNinja()) {
 					board.at(x,j).killNinja();
 					player.fire();
-
-					return "You killed a Ninja!";
+					return "You killed a Ninja! \n";
 				}
 				else if(board.at(x,j).getRoom()) {
 					break;
@@ -332,6 +288,7 @@ public class GameEngine {
 			default:
 				System.out.println("Error: GameEninge-shoot-switch");
 		}
+		player.fire();
 		return "No Ninjas were killed!";
 	}
 
@@ -343,143 +300,166 @@ public class GameEngine {
 		boolean value = false;
 		
 		for( int count = 0; count <= 5; count ++) {
-			if(ninjas[count].getAlive() == false)
+			if(ninjas[count].getAlive() == false) //if ninja is dead - check next ninja?
 				continue;
 			a = ninjas[count].getX();
 			b = ninjas[count].getY();
 
-		
-			if( y == b) {
-				if(	 x+1 == a) {
-					if(player.isInvincible() == false) {
-						player.decLives();
-						board.set(player,8, 0);
-						board.setEmpty(x, y);
-						return (!value);
+			if( y == b) { //if in same vertical line
+				if(x+1 == a) { //check for horizontal match in position
+					if(!player.isInvincible()) {
+						reset(x,y);
+						return !value;
 					}
 					else
-						return (!value);
+						return value;
 				}
-				else if (x-1 == a ) {
-					if(player.isInvincible() == false) {
-						player.decLives();
-						board.set(player,8, 0);
-						board.setEmpty(x, y);
-						return (!value);
+				else if (x-1 == a) {
+					if(!player.isInvincible()) {//if not invincible
+						reset(x,y);
+						return !value;
 					}
 					else
-						return (!value);
+						return value;
 				}
 			}
-		 
 			if ( x == a ) {
 				if( y + 1 == b) {
-					if(player.isInvincible() == false) {
-						player.decLives();
-						board.set(player,8, 0);
-						board.setEmpty(x, y);
-						return (!value);
+					if(!player.isInvincible()) {
+						reset(x,y);
+						return !value;
 					}
 					else
-						return (!value);
+						return value;
 				}
 				else if (y - 1 == b) {
-					if(player.isInvincible() == false) {
-						player.decLives();
-						board.set(player,8, 0);
-						board.setEmpty(x, y);
-						return (!value);
+					if(!player.isInvincible()) {
+						reset(x,y);
+						return !value;
 					}
 					else
-						return (!value);
+						return value;
 				}
+			}
+			if(x == a && y == b) {
+				if(!player.isInvincible()) {
+					reset(x,y);
+					return(!value);
+				}
+				else 
+					return value;
 			}
 			
 		}
 		return value;
-		
 	}
 	
+	public void reset(int x,int y) {
+		player.decLives();
+		board.set(player,8, 0);
+		board.setEmpty(x, y);
+	}
+	
+	
+	
 	public void ninjaMovement() {
-		
 		for ( int i = 0; i <= 5; i++) { 
 			if(ninjas[i].getAlive() == false)
 				continue;
+			
 			int a = ninjas[i].getX();
 			int b = ninjas[i].getY();
-			
 			int direction;
-			
 			int x = 0; 
 			int y = 0;
+			
 			do {
-			direction = random.nextInt(4);
+				direction = random.nextInt(4);
+				switch(direction) {
+				case 0:
+					x= a-1;
+					y= b;
+					break;
+				case 1:
+					x= a+1;
+					y = b;
+					break;
+				case 2:
+					x= a;
+					y = b-1;
+					break;
+				case 3:
+					x= a;
+					y = b+1;
+					break;
+				default:
+					System.out.println("Error");
+				
+				}
+			}while(( x < 0 || x > 8) || (y < 0 || y > 8)|| board.at(x, y).getNinja()|| board.at(x,y).getRoom()); //keep within boundary
 			
-			switch(direction) {
-			
-			case 0:
-				x= a-1;
-				y= b;
-				break;
-			case 1:
-				x= a+1;
-				y = b;
-				break;
-			case 2:
-				x= a;
-				y = b-1;
-				break;
-			case 3:
-				x= a;
-				y = b+1;
-				break;
-			default:
-				System.out.println("Error");
-			
+			boolean valid = false;
+			while(!valid) { //check so ninjas do not go into room
+				if(!board.at(x, y).getRoom()) {
+					moveNinja(ninjas[i],direction,x,y);
+					valid = true;
+				}
+				else
+					valid = false;
 			}
-			}
+			//moveNinja(ninjas[i], direction , x, y); ----if no need to check for ninja to go in room
 			
-			while(( x < 0 || x > 8) || (y < 0 || y > 8)
-				|| board.at(x, y).getNinja()
-				|| board.at(x,y).getRoom());
-			
-			moveNinja(ninjas[i], direction , x, y);
 		
+		
+			/*
+			 * for ( int i = 0; i <= 5; i++) { 
+			if(ninjas[i].getAlive() == false)
+				continue;
+			
+			int x = ninjas[i].getX();
+			int y = ninjas[i].getY();
+			int direction;
+			
+			do {
+				direction = random.nextInt(4);
+				switch(direction) {
+				case 0:
+					moveNinja(ninjas[i],direction,x-1,y);
+					break;
+				case 1:
+					moveNinja(ninjas[i],direction,x+1,y);
+					break;
+				case 2:
+					moveNinja(ninjas[i],direction,x,y-1);
+					break;
+				case 3:
+					moveNinja(ninjas[i],direction,x,y+1);
+					break;
+				default:
+					System.out.println("Error");
+				
+				}
+			}while(( x < 0 || x > 8) || (y < 0 || y > 8)|| board.at(x, y).get1`()|| board.at(x,y).getRoom());
+			
+			 */
 		}
 	}
 	
 	public void moveNinja( Character ninjas, int direction, int x, int y) {
-	
 		switch(direction) {
-			
 			case 0:					
-				ninjas.setX(x);
-				ninjas.setY(y);
-				
 				board.removeNinja(x+1, y);
 				board.setNinja(ninjas,x,y);
 				break;
-				
 			case 1:	
-				ninjas.setX(x);
-				ninjas.setY(y);
-				
 				board.removeNinja(x-1, y);
 				board.setNinja(ninjas,x,y);
 				break;
-	
 			case 2:	
-				ninjas.setX(x);
-				ninjas.setY(y);
-			
 				board.removeNinja(x, y+1);
 				board.setNinja(ninjas,x,y);
-				break;
-					
+				break;	
 			case 3:	
-				ninjas.setX(x);
-				ninjas.setY(y);
-			
 				board.removeNinja(x, y-1);
 				board.setNinja(ninjas,x,y);
 			break;	
@@ -494,10 +474,63 @@ public class GameEngine {
 	public void decInvincibility() {
 		player.decInvincibility();
 	}
+	public int invCount() {
+		return player.getInvCount();
+	}
 	
 	public boolean playerAlive() {
 		return player.getAlive();
 	}
+	//////////////////////
+	
+	public boolean checkItem() {
+		int x = player.getX();
+		int y = player.getY();
+		if(board.at(x, y).getItem()) 
+			return true;
+		return false;
+	}
+	public int applyItem() {
+		int x = player.getX();
+		int y = player.getY();
+		String type = board.at(x, y).getItemtype();
+		
+		switch(type) {
+			case "radar" : //radar
+				applyRadar();
+				board.at(x, y).setItemnull();
+				return 1;
+			case "invincible": //invincible
+				applyInvincible();
+				board.at(x, y).setItemnull();
+				return 2;
+			case "ammo"://ammo
+				applyAmmo();
+				board.at(x, y).setItemnull();
+				return 3;
+			default:
+				return 0;
+		}
+	}
+	
+	public void applyInvincible() {
+		player.setInvincible();
+	}
+	public void applyAmmo() {
+		player.incAmmo();
+	}
+	
+	
+	public void applyRadar() {
+		for(int i = 0; i < 9; i++) {
+			for(int j = 0; j < 9; j++) { //check every room and reveal the room with the briefcase
+				if(board.at(i,j).getBrief())
+					board.at(i,j).revealBrief();
+			}
+		}
+	}
+	
+	
 }
 
 

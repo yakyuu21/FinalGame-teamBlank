@@ -1,7 +1,6 @@
-package edu.cpp.cs.cs141.final_prog_assignment;
+package edu.cpp.cs.cs141.final_prog_assignment1;
 
 public class Square{
-
 	private boolean isNinja;
 	private boolean isPlayer;
 	private boolean isRoom;
@@ -16,6 +15,7 @@ public class Square{
 	private Item itemPresent;
 
 	private String display;
+	private String displayHidden = " * ";
 
 	public Square() { //default constructor
 		isEmpty = true;
@@ -28,48 +28,44 @@ public class Square{
 		display = "   ";
 	}
 	public void setCharacter(Character charac, int x, int y) { //set character in location
-		if ((x == 1 || 
-				x == 4 ||
-				x == 7)&&
-				(y == 1 ||
-				y == 4 ||
-				y == 7))
-		{
+		if ((x == 1 || x == 4 || x == 7)&&
+		(y == 1 || y == 4 || y == 7)){ //when inside room
 			player = null;
 			isPlayer = false;
 			hide = false;
 			isRoom = true;
 			display = "[P]";
 		}
-		else
-		{
+		else{ //when not inside room
 			player = charac;
 			isPlayer = true;
 			display = " P ";
 			hide = false;
+			/*
 			if(itemPresent != null) {
 				player.getItem(itemPresent);
 				itemPresent = null;
 			}
+			
+			*/
 		}
 	}
+	public void setItemnull() {
+		if(itemPresent!=null) 
+			itemPresent = null;
+		isItem = false;
+	}
 
-	public void playerMoved(int x, int y) {
-		if ((x == 1 ||
-				x == 4 ||
-				x == 7)&&
-				(y == 1 ||
-				y == 4 ||
-				y == 7))
-		{
-			player = null;
-			isPlayer = false;
-			hide = false;
-			isRoom = true;
-			display = "[_]";
+	public void playerMoved(int x, int y) { //when player moves inside a room
+		if ((x == 1 || x == 4 || x == 7)&&
+			(y == 1 || y == 4 ||y == 7)){
+				player = null;
+				isPlayer = false;
+				hide = false;
+				isRoom = true;
+				display = "[_]";
 		}
-		else
-		{
+		else{
 			player = null;
 			isPlayer = false;
 			hide = true;
@@ -85,12 +81,17 @@ public class Square{
 		display = " " + itemPresent.getType() + " ";
 		isItem = true;
 	}
-	public void setNinja(Character charac) {
+	public void setNinja(Character charac,int x, int y) {
 		ninja = charac;
 		isNinja = true;
 		hide = true;
-		display = " N ";
+		if(isPlayer) 
+			display = " P ";
+		else
+			display = " N "; 
 		isEmpty = false;
+		ninja.setX(x);
+		ninja.setY(y);		
 	}
 	public void setRoom() {
 		display = "[_]";
@@ -98,16 +99,17 @@ public class Square{
 		isRoom = true;
 		isBrief = false;
 	}
+	public void toggleHide() {
+		hide = !hide;
+	}
 	public void briefExist(boolean isDebugOn) {
-		if (isDebugOn == false)
-		{
+		if (!isDebugOn) {//if debug mode is not on
 			display = "[_]";
 			hide = false;
 			isRoom = true;
 			isBrief = true;
 		}
-		else 
-		{
+		else { //if debug mode is on
 			display = "[#]";
 			hide = true;
 			isRoom = true;
@@ -118,46 +120,36 @@ public class Square{
 
 
 	public boolean getNinja() {
-		if(isNinja) //ninja exists
-			return true; 
-		else
-			return false;
+		return isNinja;
+			}
+	public boolean getPlayer() {
+		return isPlayer;
 	}
 	public boolean getItem() {
-		if(isItem)
-			return true;
-		else
-			return false;
+		return isItem;
 	}
+	
 	public boolean getEmpty() {
 		return isEmpty;
 	}
 	public boolean getRoom() {
 		return isRoom;
 	}
-	public boolean getRadar() {
-		if(itemPresent != null) {
-			if(itemPresent.getType().equals("R"))
-				return true;
-			else
-				return false;
-		}
-		else
-			return false;
+
+	public String getItemtype() {
+		return itemPresent.name();
 	}
-
-
 	public Character getPlayerObj() {
 		return player;
 	}
 	public Character getNinjaObj() {
 		return ninja;
 	}
-
-
 	public boolean getBrief() {
 		return isBrief;
 	}
+	
+	
 
 	public String display() {
 		if(!hide) //if something visible
@@ -167,9 +159,12 @@ public class Square{
 			return display;
 		}
 		else 
-			return " * ";
+			return displayHidden;
 	}
 
+	public void revealBrief() {
+		display = "[#]";
+	}
 	public void reveal() {
 		reveal = !reveal;
 	}
@@ -189,14 +184,16 @@ public class Square{
 		isNinja = false;
 		if(itemPresent != null)
 			display = itemPresent.getType();
+		else if(isPlayer){
+			display = " P ";
+		}
 		else {
 			display = "   ";
 			isEmpty = true;
 		}
 	}
-	public void show() {
-		hide = false;
-		
+	public void makeVisible() {
+		hide = false; 
 	}
 	
 	public void killNinja() {
@@ -205,10 +202,6 @@ public class Square{
 	}
 	public String getDisplay() {
 		return display;
-	}
-	
-	public void setDisplay(String display) {
-		this.display = display;
 	}
 	
 }
