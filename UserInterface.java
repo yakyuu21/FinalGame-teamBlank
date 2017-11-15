@@ -69,16 +69,11 @@ public class UserInterface {
 			
 			direction = look();
 			
-			if(game.look(direction) == 0)
-				System.out.println("Room Ahead!");
-			 
-			else if(game.look(direction) == 2)
-				System.out.println("Ninja Ahead!");
-			
-			else if(game.look(direction) == 1)
+			if(game.look(direction))
 				System.out.println("All Clear!");
+			 
 			else
-				System.out.println("Invalid !");
+				System.out.println("Ninja Ahead!");
 			
 			boolean valid = false;
 
