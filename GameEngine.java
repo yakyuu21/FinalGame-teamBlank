@@ -373,7 +373,6 @@ public class GameEngine {
 	
 	public void ninjaMovement() {
 		
-		checkSpy();
 		for ( int i = 0; i <= 5; i++) { 
 			if(ninjas[i].getAlive() == false)
 				continue;
