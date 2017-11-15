@@ -53,7 +53,7 @@ public class Board {
 	 */
 	public String displayBoard(int x, int y) {
 		if(debugMode) {
-			room[x][y].reveal();
+			room[x][y].show();
 			return room[x][y].display();
 		}
 		else
