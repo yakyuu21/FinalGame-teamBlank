@@ -207,4 +207,8 @@ public class Square{
 		return display;
 	}
 	
+	public void setDisplay(String display) {
+		this.display = display;
+	}
+	
 }

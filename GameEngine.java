@@ -13,7 +13,6 @@ public class GameEngine {
 	private Item invincible = null;
 	private Item ammo = null;
 
-
 	public void createBoard() {
 		player = new Character(false,0,8);
 		board = new Board();
@@ -308,6 +307,7 @@ public class GameEngine {
 				if(board.at(i, y).getNinja()) {
 					board.at(i,y).killNinja();
 					player.fire();
+
 					return "You killed a Ninja!";
 				}
 				else if(board.at(i, y).getRoom()) {
@@ -321,6 +321,7 @@ public class GameEngine {
 				if(board.at(x, j).getNinja()) {
 					board.at(x,j).killNinja();
 					player.fire();
+
 					return "You killed a Ninja!";
 				}
 				else if(board.at(x,j).getRoom()) {

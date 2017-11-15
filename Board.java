@@ -74,12 +74,14 @@ public class Board {
 	private void applyRadar() {
 		for(int i = 0; i < horizontal; i++) {
 			for(int j = 0; j < vertical; j++) {
-				if(room[i][j].getNinja())
+				/*if(room[i][j].getNinja())
 					room[i][j].show();
 				else if(room[i][j].getItem())
 					room[i][j].show();
 				else if(room[i][j].getBrief())
-					room[i][j].show();
+					room[i][j].show();*/
+				if(room[i][j].getRoom() && room[i][j].getBrief())
+					room[i][j].setDisplay("[#]");
 			}
 		}
 		
