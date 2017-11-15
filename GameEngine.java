@@ -142,7 +142,7 @@ public class GameEngine {
 		return clear;
 	}
 
-	public boolean move(String direction) {
+		public boolean move(String direction) {
 		boolean moved = false;
 
 		switch(direction){
@@ -159,7 +159,10 @@ public class GameEngine {
 					moved = false;
 
 				}
-
+				else if(board.at(player.getX()-1,  player.getY()).getNinja()) {
+					System.out.println("Ninja!");
+					moved = false;
+				}
 				else
 				{
 
@@ -188,6 +191,10 @@ public class GameEngine {
 					moved = false;
 
 				}
+				else if(board.at(player.getX(),  player.getY()-1).getNinja()) {
+					System.out.println("Ninja!");
+					moved = false;
+				}
 				else
 				{
 					board.set(player, player.getX(), player.getY()-1);
@@ -214,6 +221,10 @@ public class GameEngine {
 					moved = false;
 
 				}
+				else if(board.at(player.getX()+1,  player.getY()).getNinja()) {
+					System.out.println("Ninja!");
+					moved = false;
+				}
 				else
 				{
 					board.set(player, player.getX()+1, player.getY());
@@ -239,6 +250,10 @@ public class GameEngine {
 					System.out.println("WALL!");
 					moved = false;
 
+				}
+				else if(board.at(player.getX(),  player.getY()+1).getNinja()) {
+					System.out.println("Ninja!");
+					moved = false;
 				}
 				else
 				{
