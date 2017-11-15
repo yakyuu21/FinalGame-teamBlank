@@ -201,5 +201,9 @@ public class Square{
 		ninja.die();
 		removeNinja();
 	}
+	
+	public String getDisplay() {
+		return display;
+	}
 
 }
