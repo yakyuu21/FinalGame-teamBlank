@@ -189,8 +189,10 @@ public class Square{
 		isNinja = false;
 		if(itemPresent != null)
 			display = itemPresent.getType();
-		else
+		else {
 			display = "   ";
+			isEmpty = true;
+		}
 	}
 	public void show() {
 		hide = false;
@@ -201,9 +203,8 @@ public class Square{
 		ninja.die();
 		removeNinja();
 	}
-	
 	public String getDisplay() {
 		return display;
 	}
-
+	
 }

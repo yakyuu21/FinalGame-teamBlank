@@ -82,7 +82,6 @@ public class Character{
 		bullet--;
 	}
 	public void getItem(Item item) {
-		boolean radar = false;
 		switch(item.getType()) {
 		case "R":
 			//this is taken care of by board class

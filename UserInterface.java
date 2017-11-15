@@ -97,7 +97,7 @@ public class UserInterface {
 				}
 			}
 			if(game.checkSpy()) {
-				System.out.println("A Ninja Destroyed You!");
+				System.out.println("A Ninja destroyed you!");
 			}
 			game.ninjaMovement();
 			

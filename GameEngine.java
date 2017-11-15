@@ -142,7 +142,7 @@ public class GameEngine {
 		return clear;
 	}
 
-		public boolean move(String direction) {
+	public boolean move(String direction) {
 		boolean moved = false;
 
 		switch(direction){
@@ -345,36 +345,52 @@ public class GameEngine {
 			if(ninjas[count].getAlive() == false)
 				continue;
 			a = ninjas[count].getX();
-			b= ninjas[count].getY();
+			b = ninjas[count].getY();
 
 		
 			if( y == b) {
 				if(	 x+1 == a) {
-					player.decLives();
-					board.set(player,8, 0);
-					board.setEmpty(x, y);
-					return (!value);
+					if(player.isInvincible() == false) {
+						player.decLives();
+						board.set(player,8, 0);
+						board.setEmpty(x, y);
+						return (!value);
+					}
+					else
+						return (!value);
 				}
 				else if (x-1 == a ) {
-					player.decLives();
-					board.set(player,8, 0);
-					board.setEmpty(x, y);
-					return (!value);
+					if(player.isInvincible() == false) {
+						player.decLives();
+						board.set(player,8, 0);
+						board.setEmpty(x, y);
+						return (!value);
+					}
+					else
+						return (!value);
 				}
 			}
 		 
 			if ( x == a ) {
 				if( y + 1 == b) {
-					player.decLives();
-					board.set(player,8, 0);
-					board.setEmpty(x, y);
-					return (!value);
+					if(player.isInvincible() == false) {
+						player.decLives();
+						board.set(player,8, 0);
+						board.setEmpty(x, y);
+						return (!value);
+					}
+					else
+						return (!value);
 				}
 				else if (y - 1 == b) {
-					player.decLives();
-					board.set(player,8, 0);
-					board.setEmpty(x, y);
-					return (!value);
+					if(player.isInvincible() == false) {
+						player.decLives();
+						board.set(player,8, 0);
+						board.setEmpty(x, y);
+						return (!value);
+					}
+					else
+						return (!value);
 				}
 			}
 			
