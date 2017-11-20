@@ -1,6 +1,7 @@
 package edu.cpp.cs.cs141.final_prog_assignment1;
+import java.io.Serializable;
 
-public class Character{
+public class Character implements Serializable{
 	private int lives;
 	private int bullet;
 	private boolean briefcase;

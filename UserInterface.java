@@ -42,6 +42,9 @@ public class UserInterface {
 					 * 
 					 * loadGame() - retrieve board from saved data 
 					 */
+					loadGame();
+					playGame();
+					
 					break;
 				case "4":
 					System.out.println("you chose 4\n" + "Game will close.\n" + "GOODBYE" ); ///closes/exits game
@@ -57,6 +60,8 @@ public class UserInterface {
 	/**
 	 * Creates board
 	 */
+	
+	
 	public void startGame() {
 		game.createBoard();
 		playGame();
@@ -149,6 +154,8 @@ public class UserInterface {
 				game.debugMode();
 			if(direction.equals("w")||direction.equals("a")||direction.equals("s")||direction.equals("d"))
 				valid = true;
+			if(direction.equals("1"))
+				saveGame();
 		}
 		return direction;
 	}
@@ -189,6 +196,21 @@ public class UserInterface {
 				+ "GOOD LUCK\n");
 	}
 	
+	public void saveGame() {
+		String userInput;
+		System.out.println("Name a save file:");
+		userInput = scan.next();
+		scan.nextLine();
+		game.save(userInput);
+	}
+	
+	public void loadGame() {
+		String userInput;
+		System.out.println("Load: enter file name");
+		userInput = scan.next();
+		scan.nextLine();
+		game.load(userInput);
+	}
 	
 
 	

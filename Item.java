@@ -1,6 +1,6 @@
 package edu.cpp.cs.cs141.final_prog_assignment1;
-
-public class Item{
+import java.io.Serializable;
+public class Item implements Serializable{
 	private String type;
 	
 	public Item(String s) {

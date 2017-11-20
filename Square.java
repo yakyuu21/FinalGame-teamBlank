@@ -1,6 +1,6 @@
 package edu.cpp.cs.cs141.final_prog_assignment1;
-
-public class Square{
+import java.io.Serializable;
+public class Square implements Serializable{
 	private boolean isNinja;
 	private boolean isPlayer;
 	private boolean isRoom;

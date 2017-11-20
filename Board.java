@@ -1,7 +1,8 @@
 package edu.cpp.cs.cs141.final_prog_assignment1;
 import java.util.Random;
+import java.io.Serializable;
 
-public class Board {
+public class Board implements Serializable{
 	private final int horizontal = 9;
 	private final int vertical = 9;
 	private Square[][] room = new Square[vertical][horizontal];

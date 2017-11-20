@@ -2,7 +2,17 @@ package edu.cpp.cs.cs141.final_prog_assignment1;
 
 import java.util.Random;
 
-public class GameEngine {
+
+import java.util.Random;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+
+public class GameEngine implements Serializable{
 
 	private Random random = new Random();
 
@@ -21,7 +31,8 @@ public class GameEngine {
 		createPowerUp();	
 		createNinjas();
 	}
-					
+			
+
 	public void createNinjas() {
 		int x,y;
 		int count = 0;
@@ -530,6 +541,47 @@ public class GameEngine {
 		}
 	}
 	
+	public void save(String filename) {
+		try {
+			FileOutputStream ofstream = new FileOutputStream(filename + ".dat") ;
+			ObjectOutputStream outfile = new ObjectOutputStream(ofstream);
+			
+			outfile.writeObject(board);
+			outfile.writeObject(ninjas);
+			outfile.writeObject(player);
+
+			outfile.writeObject(radar);
+			outfile.writeObject(invincible);
+			outfile.writeObject(ammo);
+			outfile.close();
+			System.out.println("Save Successful");
+					
+		}
+		catch(IOException e) {
+			System.out.println("Unable to Save");
+		}
+	}
+	
+	public void load(String filename) {
+		try {
+			FileInputStream ifstream = new FileInputStream(filename + ".dat");
+			ObjectInputStream infile = new ObjectInputStream(ifstream);
+			 
+			board = (Board) infile.readObject();
+			ninjas = (Character[]) infile.readObject();
+			player = (Character) infile.readObject();
+			radar = (Item) infile.readObject();
+			invincible = (Item) infile.readObject();
+			ammo = (Item) infile.readObject();
+
+			infile.close();
+			System.out.println("Load Successful");
+		}
+		
+		catch(IOException | ClassNotFoundException e) {
+			System.out.println("Unable to load");
+		}
+	}
 	
 }
 
