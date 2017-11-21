@@ -1,7 +1,6 @@
 package edu.cpp.cs.cs141.final_prog_assignment;
-import java.io.Serializable;
 
-public class Character implements Serializable{
+public class Character{
 	private int lives;
 	private int bullet;
 	private boolean briefcase;
@@ -37,13 +36,10 @@ public class Character implements Serializable{
 	}
 	
 	public boolean isInvincible() {
-		if(isInvincible == 0)
-			return false;
-		else
+		if(isInvincible > 0)
 			return true;
-	}
-	public int getInvCount() {
-		return isInvincible;
+		else
+			return false;
 	}
 	
 	public void decInvincibility() {
@@ -56,15 +52,6 @@ public class Character implements Serializable{
 	}
 	public int getY() {
 		return locationY;
-	}
-	public int getLives() {
-		return lives;
-	}
-	
-	
-	
-	public void setInvincible() {
-		isInvincible = 5;
 	}
 	public void setX(int x) {
 		locationX = x;
@@ -90,14 +77,26 @@ public class Character implements Serializable{
 	public int getAmmo() {
 		return bullet;
 	}
-	public void incAmmo() {
-		if(bullet == 0) //add ammo if no ammo left
-			bullet++;
-		//does nothing is already one ammo
-	}
 	
 	public void fire() {
 		bullet--;
+	}
+	public void getItem(Item item) {
+		switch(item.getType()) {
+		case "R":
+			//this is taken care of by board class
+			break;
+		case "I":
+			isInvincible = 5; //this must be checked each time Player gets hit
+			break;
+		case "A":
+			if(bullet == 0)
+				bullet++;
+			break;
+			default:
+				System.out.print("Error-Player.getItem() switch");
+		}
+		
 	}
 	public void die() {
 		isAlive = false;

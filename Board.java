@@ -1,8 +1,7 @@
 package edu.cpp.cs.cs141.final_prog_assignment;
 import java.util.Random;
-import java.io.Serializable;
 
-public class Board implements Serializable{
+public class Board {
 	private final int horizontal = 9;
 	private final int vertical = 9;
 	private Square[][] room = new Square[vertical][horizontal];
@@ -61,28 +60,37 @@ public class Board implements Serializable{
 	}	
 
 	public Square at(int x, int y) {
-		try
-		{
-			return room[x][y];
-		}
-		catch (ArrayIndexOutOfBoundsException e)
-		{
-			return room[briefcaseX][briefcaseY]; // look at the briefcase room (used in senseSpy() in GameEngine)
-		}
+		return room[x][y];
 	}
 	
 	
 	public void set(Character player, int x, int y) {
+		if(room[x][y].getRadar())
+			applyRadar();
 		room[x][y].setCharacter(player, x, y);
 		player.setX(x);
 		player.setY(y);
 	}
+	private void applyRadar() {
+		for(int i = 0; i < horizontal; i++) {
+			for(int j = 0; j < vertical; j++) {
+				if(room[i][j].getNinja())
+					room[i][j].show();
+				else if(room[i][j].getItem())
+					room[i][j].show();
+				else if(room[i][j].getBrief())
+					room[i][j].show();
+			}
+		}
+		
+	}
+
 	public void move(int x, int y) {	
 		room[x][y].playerMoved(x, y);
 	}
 	
 	public void setNinja(Character ninjas, int x, int y) {
-			room[x][y].setNinja(ninjas, x,y);
+			room[x][y].setNinja(ninjas);
 	}
 
 	public void set(Item radar, int x, int y) {
@@ -93,7 +101,8 @@ public class Board implements Serializable{
 	 * used in GameEngine's checkPlayerIsBriefcase function
 	 * @return x-coordinate of briefcase
 	 */
-	public int getBriefcaseX(){
+	public int getBriefcaseX()
+	{
 		return briefcaseX;
 	}
 	
@@ -101,7 +110,8 @@ public class Board implements Serializable{
 	 * used in GameEngine's checkPlayerIsBriefcase function
 	 * @return y-coordinate of briefcase
 	 */
-	public int getBriefcaseY(){
+	public int getBriefcaseY()
+	{
 		return briefcaseY;
 	}
 	
