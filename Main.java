@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.cpp.cs.cs141.final_prog_assignment1;
+package edu.cpp.cs.cs141.final_prog_assignment;
 
 
 public class Main {

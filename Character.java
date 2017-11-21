@@ -1,4 +1,4 @@
-package edu.cpp.cs.cs141.final_prog_assignment1;
+package edu.cpp.cs.cs141.final_prog_assignment;
 import java.io.Serializable;
 
 public class Character implements Serializable{
