@@ -112,12 +112,12 @@ public class UserInterface {
 				showLine();
 				displayBoard();
 				printStatus();
-				System.out.print("Move(WASD) or shoot(F) or Debug(r): \n");
+				System.out.print("\tMake a wise choice: \nMove: \n\t  W(UP)\n A(LEFT)  S(DOWN)  D(RIGHT) \nShoot: F \nDebug: R \n");
 				direction = scan.next().toLowerCase();
 				if(direction.equals("r"))
 					game.debugMode();
 				else if(direction.equals("f")) {
-					System.out.print("Choose direction to fire: \n");
+					System.out.print("Choose direction to fire: W(UP)/ A(LEFT)/ S(DOWN)/ D(RIGHT) \n");
 					direction = scan.next();
 					System.out.print(game.shoot(direction));
 					valid = true;
@@ -183,7 +183,7 @@ public class UserInterface {
 			showLine();
 			displayBoard();
 			printStatus();
-			System.out.print("\nChoose direction to look(WASD): \nType \"save\" to save, \"quit\" to exit game.\n");
+			System.out.print("\nChoose direction to look:　\n\t  W(UP)\n A(LEFT)  S(DOWN)  D(RIGHT) \nType \"save\" to save, \"quit\" to exit game.\n");
 			direction = scan.next().toLowerCase();
 			if(direction.equals("r"))
 				game.debugMode();
