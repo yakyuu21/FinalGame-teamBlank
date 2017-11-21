@@ -1,7 +1,6 @@
 package edu.cpp.cs.cs141.final_prog_assignment;
-
-public class Item{
-	
+import java.io.Serializable;
+public class Item implements Serializable{
 	private String type;
 	
 	public Item(String s) {
@@ -11,14 +10,14 @@ public class Item{
 	public String getType() {
 		switch(type) {
 		case "radar":
-			return "R";
+			return " R ";
 		case "invincible":
-			return "I";
+			return " I ";
 		case "ammo":
-			return "A";
+			return " A ";
 			default:
 				return "Error - PowerUp.display - Switch";
-	}
+		}
 	}
 	
 	public String name() {
