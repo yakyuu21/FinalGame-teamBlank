@@ -68,12 +68,21 @@ public class Square implements Serializable{
 				display = "[_]";
 		}
 		else{
-			player = null;
-			isPlayer = false;
-			hide = true;
-			isEmpty = true;
-			display = "   ";
-		}
+			if(isItem) {
+				player = null;
+				isPlayer = false;
+				hide = true;
+				isEmpty = false;
+				display = itemPresent.getType();
+			}
+			else { 
+				player = null;
+				isPlayer = false;
+				hide = true;
+				isEmpty = true;
+				display = "   ";
+			}	
+		}	
 	}
 
 
