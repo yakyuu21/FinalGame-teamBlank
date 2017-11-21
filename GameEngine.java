@@ -411,7 +411,7 @@ public class GameEngine implements Serializable{
 						y = b+1;
 						break;
 					default:
-						System.out.println("Error");
+						System.out.println("Error @ ninjamovement default case");
 
 				}
 			}while(( x < 0 || x > 8) || (y < 0 || y > 8)|| board.at(x, y).getNinja()|| board.at(x,y).getRoom()); //keep within boundary
@@ -478,7 +478,7 @@ public class GameEngine implements Serializable{
 							isLoop = false;
 							break;
 						default:
-							System.out.println("Error!");
+							System.out.println("Error @ uselineofsightmovement default case");
 					}
 
 					// if ninja can't move there...
@@ -528,7 +528,7 @@ public class GameEngine implements Serializable{
 							x = a;
 							y = b;
 						default:
-							System.out.println("Error");
+							System.out.println("Error @ uselineofsightmovement else - default case");
 
 					}
 					loopCount--;
@@ -599,7 +599,7 @@ public class GameEngine implements Serializable{
 							y = b;
 							break;
 						default:
-							System.out.println("Error!");
+							System.out.println("Error @ useradialmovement default case");
 							break;
 					}
 
@@ -651,7 +651,7 @@ public class GameEngine implements Serializable{
 							x = a;
 							y = b;
 						default:
-							System.out.println("Error");
+							System.out.println("Error @ useradialmovement default case");
 
 					}
 					loopCount--;
@@ -738,7 +738,7 @@ public class GameEngine implements Serializable{
 			ninjaDirection = 1;
 		else if (row > i && column == j)
 			ninjaDirection = 0;
-		else System.out.println("Error");
+		else System.out.println("Error @ getninjadirection");
 		return ninjaDirection;
 	}
 
