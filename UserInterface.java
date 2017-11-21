@@ -156,8 +156,7 @@ public class UserInterface {
 	}
 
 
-		
-	
+
 
 	private String look() {
 		boolean valid = false;
@@ -165,9 +164,7 @@ public class UserInterface {
 		while(!valid) {
 			showLine();
 			displayBoard();
-			System.out.println("Invincibility: "+ game.invCount());
-			System.out.println("Ammo: "+ game.getAmmoCount());
-			
+			printStatus();
 			System.out.print("\nChoose direction to look(WASD): \nType \"save\" to save, \"quit\" to exit game.");
 			direction = scan.next().toLowerCase();
 			if(direction.equals("r"))
@@ -181,7 +178,14 @@ public class UserInterface {
 		}
 		return direction;
 	}
-	
+
+	public void printStatus() {
+		System.out.println("Invincibility: "+ game.invCount());
+		System.out.println("Ammo: "+ game.getAmmoCount());
+		System.out.println("Lives: " + game.getPlayer().getLives());
+		System.out.println("Ninjas Left: " + game.getNumNinja());
+	}
+
 
 	private void displayBoard() {
 		int length = 9;
@@ -286,7 +290,7 @@ public class UserInterface {
 	}
 
 	public void showLine() {
-		System.out.println("----------------------------------");
+		System.out.println("\n\n\n----------------------------------\n\n\n");
 	}
 	
 	

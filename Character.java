@@ -57,6 +57,9 @@ public class Character implements Serializable{
 	public int getY() {
 		return locationY;
 	}
+	public int getLives() {
+		return lives;
+	}
 	
 	
 	
