@@ -694,7 +694,6 @@ public class GameEngine implements Serializable{
 				board.setNinja(ninjas,x,y);
 				break;	
 			default:
-				System.out.println("DEFAULT");
 				break;
 
 		}
