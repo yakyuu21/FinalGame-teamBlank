@@ -14,12 +14,18 @@ public class UserInterface {
 		scan = new Scanner(System.in);	
 	}
 
-	
+	public void printTitle() {
+		System.out.println("\tGet the Cheese\n"
+						+ "===============================");
+	}
 	public void mainMenu() {
-		System.out.println(	"1) How to Play\n" + 
-							"2) Start New Game\n" + 
-							"3) Load Game\n" + 
-							"4) Exit Game\n");
+		printTitle();
+		System.out.println(	"Main Menu: \n"+
+				"------------------\n"
+				+ "\t1) How to Play\n" + 
+							"\t2) Start New Game\n" + 
+							"\t3) Load Game\n" + 
+							"\t4) Exit Game\n");
 		String input = scan.next();
 		switch(input) {
 			case "1":
