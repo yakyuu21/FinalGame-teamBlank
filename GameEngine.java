@@ -23,6 +23,7 @@ public class GameEngine implements Serializable{
 	private Item invincible = null;
 	private Item ammo = null;
 	private int numNinja;
+	private String difficulty;
 	
 
 
@@ -378,7 +379,7 @@ public class GameEngine implements Serializable{
 	}
 
 
-
+//---------------------------------------------
 	public void ninjaMovement() {
 		for ( int i = 0; i <= 5; i++) { 
 			if(ninjas[i].getAlive() == false)
@@ -441,8 +442,6 @@ public class GameEngine implements Serializable{
 			int x = 0; 
 			int y = 0;
 			boolean isLoop = false;
-
-
 			if (senseSpyInLineOfSight(a,b) == true)
 			{
 				isLoop = true;
@@ -768,6 +767,8 @@ public class GameEngine implements Serializable{
 			}
 		return isSpyNearby;
 	}
+	
+	///////---------------------------------------
 
 	public void decInvincibility() {
 		player.decInvincibility();
@@ -779,7 +780,7 @@ public class GameEngine implements Serializable{
 	public boolean playerAlive() {
 		return player.getAlive();
 	}
-	//////////////////////
+	//////////////////////----------------------------------------
 
 	public boolean checkItem() {
 		int x = player.getX();
@@ -827,7 +828,7 @@ public class GameEngine implements Serializable{
 			}
 		}
 	}
-	
+	/////--------------------------------------------------------------
 	public boolean save(String filename) {
 			try {
 				FileOutputStream ofstream = new FileOutputStream(filename + ".dat") ;
@@ -840,6 +841,7 @@ public class GameEngine implements Serializable{
 				outfile.writeObject(radar);
 				outfile.writeObject(invincible);
 				outfile.writeObject(ammo);
+				outfile.writeObject(difficulty);
 				outfile.close();
 				return true;
 						
@@ -860,6 +862,7 @@ public class GameEngine implements Serializable{
 				radar = (Item) infile.readObject();
 				invincible = (Item) infile.readObject();
 				ammo = (Item) infile.readObject();
+				difficulty = (String) infile.readObject();
 				infile.close();
 				return true;
 			}catch(IOException | ClassNotFoundException e) {
@@ -884,6 +887,26 @@ public class GameEngine implements Serializable{
 		
 		public Character getPlayer() {
 			return player;
+		}
+		
+		public void setDifficulty(String level) {
+			difficulty = level;
+		}
+		
+		public void ninjaDecision(){
+			switch(difficulty) {
+			case"1":
+				ninjaMovement();
+				break;
+			case"2":
+				useLineOfSightMovement();
+				break;
+			case"3":
+				useRadialMovement();
+				break;
+			default:
+				break;
+			}
 		}
 
 }

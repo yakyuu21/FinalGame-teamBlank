@@ -13,12 +13,7 @@ public class UserInterface {
 		this.game = game;
 		scan = new Scanner(System.in);	
 	}
-	
-	public void openMenu() {
-		boolean redo = true;
-		while(redo) 
-			mainMenu();
-	}
+
 	
 	public void mainMenu() {
 		System.out.println(	"1) How to Play\n" + 
@@ -47,6 +42,7 @@ public class UserInterface {
 				break;
 			default: //when anything besides 1,2,3,4 is pressed in menu
 				System.out.println("Invalid Input");
+				mainMenu();
 				break;
 		}
 				
@@ -62,8 +58,22 @@ public class UserInterface {
 		do{ 
 			Scanner input = new Scanner(System.in);
 			level = input.next();
-			if (level.equals("1") || level.equals("2") || level.equals("3"))
-			 isCorrectInput = true;
+			if (level.equals("1") || level.equals("2") || level.equals("3")) {
+				switch(level){
+					case"1":
+						game.setDifficulty("1");
+						isCorrectInput = true;
+						break;
+					case"2":
+						game.setDifficulty("2");
+						isCorrectInput = true;
+						break;
+					case"3":
+						game.setDifficulty("3");
+						 isCorrectInput = true;
+						 break;
+				}
+			}
 			else
 				System.out.println("Nah.  Enter 1, 2, or 3.");
 		} while(isCorrectInput == false);
@@ -134,21 +144,14 @@ public class UserInterface {
 				System.out.println("A Ninja destroyed you!");
 
 			//***********************************************
-			if (lvl.equals("1"))
-				game.ninjaMovement();
-			else if (lvl.equals("2"))
-				game.useLineOfSightMovement();
-			else
-				game.useRadialMovement();
-			//game.ninjaMovement();
-
-			//game.ninjaMovementRAD();
+			game.ninjaDecision();
 			//***********************************************
 			game.decInvincibility();
 
 			if(game.playerAlive() == false) {
 				gameStatus = status.LOST;
 				System.out.println("YOU LOST THE GAME! LOSER!");
+				mainMenu();
 			}
 			else if (game.checkPlayerIsBriefcase() == true){
 				System.out.println("YOU FOUND THE BRIEFCASE!");
@@ -249,11 +252,12 @@ public class UserInterface {
 			if(userInput.toLowerCase().equals("y")) {
 				saveGame();
 				valid = true;
+				mainMenu();
 			}
 			else if(userInput.toLowerCase().equals("n")) {
 				System.out.println("The game will now return to main menu.\n");
-				mainMenu();
 				valid = true;
+				mainMenu();
 			}
 			else {
 				System.out.println("Invalid Input!");
