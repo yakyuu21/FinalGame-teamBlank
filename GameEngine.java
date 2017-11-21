@@ -484,15 +484,13 @@ public class GameEngine implements Serializable{
 				int count2 = 0;
 				int count3 = 0;
 				direction = getNinjaDirection(a, b, player.getX(), player.getY());
-				while (isLoop == true)
-				{
+				while (isLoop == true){
 					switch(direction) {
 						case 0: // up
 							x= a-1;
 							y= b;
 							count0++;
 							isLoop = false;
-
 							break;
 						case 1: // down
 
@@ -500,26 +498,18 @@ public class GameEngine implements Serializable{
 							y = b;
 							count1++;
 							isLoop = false;
-
-
-
 							break;
 						case 2: // left
-
 							x= a;
 							y = b-1;
 							count2++;
 							isLoop = false;
-
 							break;
 						case 3: // right
-
 							x= a;
 							y = b+1;
 							count3++;
 							isLoop = false;
-
-
 							break;
 						default:
 							System.out.println("Error!");
@@ -532,8 +522,7 @@ public class GameEngine implements Serializable{
 					{
 						isLoop = true; // ...the do loop activates...
 						direction = random.nextInt(4); //...and a random direction is assigned.
-						if (count0 >= 1 && count1 >= 1 && count2 >= 1 && count3 >= 1) // if ninja can't move at all, case 4 is activated.
-						{
+						if (count0 >= 1 && count1 >= 1 && count2 >= 1 && count3 >= 1) { // if ninja can't move at all, case 4 is activated.{
 							isLoop = false;
 							direction = 4;
 							x = a;
@@ -543,20 +532,8 @@ public class GameEngine implements Serializable{
 
 					// if ninja tried to move into a player's space, case 4 is activated.
 					else if (board.at(x,y).getPlayer() == true)
-					{
 						isLoop = true;
-						/*
-						isLoop = false;
-						direction = 4;
-						x = a;
-						y = b;
-						 */
-
-					}
-					else
-					{
-						//else isLoop = false; // if for some other reason a ninja can't move, the ninja will keep the same position
-
+					else{//else isLoop = false; // if for some other reason a ninja can't move, the ninja will keep the same position
 						moveNinja(ninjas[i],direction,x,y);
 					}
 				}
@@ -595,14 +572,11 @@ public class GameEngine implements Serializable{
 						|| board.at(x, y).getNinja() == true
 						|| board.at(x,y).getRoom() == true 
 						|| loopCount == 0); //keep within boundary
-
-
-				if (loopCount == 0)
-				{
-					direction = 4;
-					x = a;
-					y = b;
-				}
+					if (loopCount == 0){
+						direction = 4;
+						x = a;
+						y = b;
+					}
 
 				moveNinja(ninjas[i],direction,x,y);
 
@@ -625,14 +599,11 @@ public class GameEngine implements Serializable{
 			int y = 0;
 			boolean isLoop = false;
 
-
-			if (senseSpyInRad(a,b) == true) // senseSpy() checks if spy is within a 3 unit radius of a ninja; return true if spy is nearby, false if not
-			{
+			if (senseSpyInRad(a,b) == true) { // senseSpy() checks if spy is within a 3 unit radius of a ninja; return true if spy is nearby, false if not
 				direction = getNinjaDirection(a, b, player.getX(), player.getY()); // specifies a direction for a ninja
 
 				//loop that takes in the specified direction; if the ninja can't move to that location, direction is random
-				do
-				{
+				do{
 					int count0 = 0;
 					int count1 = 0;
 					int count2 = 0;
@@ -644,63 +615,56 @@ public class GameEngine implements Serializable{
 							count0++;
 							break;
 						case 1: // down
-
 							x= a+1;
 							y = b;
 							count1++;
-
-
 							break;
 						case 2: // left
-
 							x= a;
 							y = b-1;
 							count2++;
 							break;
 						case 3: // right
-
 							x= a;
 							y = b+1;
 							count3++;
 							break;
 						case 4: // stay (used only if a ninja can't move)
-
 							x = a;
 							y = b;
+							break;
 						default:
 							System.out.println("Error!");
+							break;
 					}
 
 					// if ninja can't move somewhere...
 					if (( x < 0 || x > 8) 
 							|| (y < 0 || y > 8)
 							|| board.at(x, y).getNinja()==true
-							|| board.at(x, y).getRoom() == true)
-					{
+							|| board.at(x, y).getRoom() == true){
 						isLoop = true; // ...the do loop activates...
 						direction = random.nextInt(4); //...and a random direction is assigned.
-						if (count0 >= 1 && count1 >= 1 && count2 >= 1 && count3 >= 1) // if ninja can't move, case 4 is activated.
-						{
+						if (count0 >= 1 && count1 >= 1 && count2 >= 1 && count3 >= 1) { // if ninja can't move, case 4 is activated.
 							isLoop = false;
 							direction = 4;
 						}
 					}
 
 					// if ninja tried to move into a player's space, case 4 is activated.
-					else if (board.at(x,y).getPlayer())
-					{
+					else if (board.at(x,y).getPlayer()){
 						isLoop = false;
 						direction = 4;
 					}
-					else isLoop = false; // if for some other reason a ninja can't move, the ninja will keep the same position
+					else 
+						isLoop = false; // if for some other reason a ninja can't move, the ninja will keep the same position
 				}while (isLoop == true);
 
 				moveNinja(ninjas[i],direction,x,y);
 			}
 
 			// if the ninja is not within 3 units radius of spy, then direction of ninja movement is random.
-			else
-			{
+			else{
 				int loopCount = 10; // will try to choose a position 10 times
 				do {
 					direction = random.nextInt(4);
@@ -733,10 +697,7 @@ public class GameEngine implements Serializable{
 						|| board.at(x, y).getNinja() == true
 						|| board.at(x,y).getRoom() == true 
 						|| loopCount == 0); //keep within boundary
-
-
-				if (loopCount == 0)
-				{
+				if (loopCount == 0){
 					direction = 4;
 					x = a;
 					y = b;
@@ -782,30 +743,26 @@ public class GameEngine implements Serializable{
 		int ninjaDirection = 0;
 		int s;
 
-		if (row < i && column < j) // ninja in quadrant 3: spy = origin
-		{
+		if (row < i && column < j) { // ninja in quadrant 3: spy = origin
 			s = random.nextInt(2);
 			if (s == 0)
 				ninjaDirection =  1;
 			else ninjaDirection = 3;
 		}
 
-		else if (row < i && column > j)
-		{
+		else if (row < i && column > j){
 			s = random.nextInt(2);
 			if (s == 0)
 				ninjaDirection =  1;
 			else ninjaDirection = 2;
 		}
-		else if (row > i && column < j)
-		{
+		else if (row > i && column < j){
 			s = random.nextInt(2);
 			if (s == 0)
 				ninjaDirection =  0;
 			else ninjaDirection = 3;
 		}
-		else if (row > i && column > j)
-		{
+		else if (row > i && column > j){
 			s = random.nextInt(2);
 			if (s == 0)
 				ninjaDirection =  0;
@@ -827,8 +784,7 @@ public class GameEngine implements Serializable{
 	public boolean senseSpyInLineOfSight(int xNinja, int yNinja)
 	{
 		boolean isSpyInSight = false;
-		if (xNinja == player.getX() || yNinja == player.getY())
-		{
+		if (xNinja == player.getX() || yNinja == player.getY()){
 			isSpyInSight = true;
 		}
 		return isSpyInSight;
@@ -839,11 +795,8 @@ public class GameEngine implements Serializable{
 	{
 		boolean isSpyNearby = false;
 		for(int i = row - 3; i <= row + 3; i++)
-
-			for(int j = column - 3; j <= column + 3; j++)
-			{
-				if (board.at(i, j).getPlayer() == true)
-				{
+			for(int j = column - 3; j <= column + 3; j++){
+				if (board.at(i, j).getPlayer() == true){
 					isSpyNearby = true;
 				}
 			}

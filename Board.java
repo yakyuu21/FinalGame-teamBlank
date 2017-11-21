@@ -73,29 +73,10 @@ public class Board implements Serializable{
 	
 	
 	public void set(Character player, int x, int y) {
-		//if(room[x][y].getRadar())
-		//	applyRadar();
 		room[x][y].setCharacter(player, x, y);
 		player.setX(x);
 		player.setY(y);
 	}
-	
-	/*
-	private void applyRadar() {//------------------`
-		for(int i = 0; i < horizontal; i++) {
-			for(int j = 0; j < vertical; j++) { //check every room and reveal the room with the briefcase
-			 	if(room[i][j].getNinja())
-					room[i][j].makeVisible();
-				else if(room[i][j].getItem())
-					room[i][j].makeVisible();
-				else if(room[i][j].getBrief())
-					room[i][j].makeVisible();
-			}
-		}
-		
-	}
-
-	*/
 	public void move(int x, int y) {	
 		room[x][y].playerMoved(x, y);
 	}

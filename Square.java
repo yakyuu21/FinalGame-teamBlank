@@ -183,7 +183,7 @@ public class Square implements Serializable{
 	public void removeNinja() {
 		isNinja = false;
 		if(itemPresent != null)
-			display = itemPresent.getType();
+			display = " " + itemPresent.getType() + " ";
 		else if(isPlayer){
 			display = " P ";
 		}

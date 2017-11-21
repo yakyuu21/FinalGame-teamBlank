@@ -90,33 +90,12 @@ public class Character implements Serializable{
 	public void incAmmo() {
 		if(bullet == 0) //add ammo if no ammo left
 			bullet++;
-		//does nothign is already one ammo
+		//does nothing is already one ammo
 	}
 	
 	public void fire() {
 		bullet--;
 	}
-	
-	/*
-	public void getItem(Item item) {
-		switch(item.getType()) {
-		case "R":
-			//this is taken care of by board class
-			break;
-		case "I":
-			isInvincible = 5; //decremented by decInv every turn
-			break;
-		case "A":
-			if(bullet == 0)
-				bullet++;
-			break;
-			default:
-				System.out.print("Error-Player.getItem() switch");
-		}
-		
-	}
-	
-	*/
 	public void die() {
 		isAlive = false;
 	}
