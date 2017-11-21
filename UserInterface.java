@@ -16,31 +16,41 @@ public class UserInterface {
 	
 	public void openMenu() {
 		boolean redo = true;
-		while(redo) {
+		while(redo) 
 			mainMenu();
-			String input = scan.next();
-			switch(input) {
-				case "1":
-					howToPlay();
-					break;
-				case "2":
-					System.out.println("you chose 2");
-					startGame(chooseDifficulty());
-					break;
-				case "3":
-					System.out.println("you chose 3");
-					break;
-				case "4":
-					System.out.println("you chose 4\n" + "Game will close.\n" + "GOODBYE" ); ///closes/exits game
-					System.exit(0);
-					break;
-				default: //when anything besides 1,2,3,4 is pressed in menu
-					System.out.println("Invalid Input");
-					break;
-			}
-		}
 	}
 	
+	public void mainMenu() {
+		System.out.println(	"1) How to Play\n" + 
+							"2) Start New Game\n" + 
+							"3) Load Game\n" + 
+							"4) Exit Game\n");
+		String input = scan.next();
+		switch(input) {
+			case "1":
+				howToPlay();
+				break;
+			case "2":
+				System.out.println("you chose 2");
+				startGame(chooseDifficulty());
+				break;
+			case "3":
+				System.out.println("you chose 3");
+				if(loadGame())
+					playGame(getLevel());
+				else 
+					mainMenu();
+				break;
+			case "4":
+				System.out.println("you chose 4\n" + "Game will close.\n" + "GOODBYE" ); ///closes/exits game
+				System.exit(0);
+				break;
+			default: //when anything besides 1,2,3,4 is pressed in menu
+				System.out.println("Invalid Input");
+				break;
+		}
+				
+	}
 	public String chooseDifficulty()
 	{
 		System.out.println("Select Difficulty. \n"
@@ -85,15 +95,13 @@ public class UserInterface {
 			while(!valid) { //repeat until user input a valid key -- take action(move or shoot)
 				showLine();
 				displayBoard();
-				System.out.println("Invincibility: "+ game.invCount());
-				System.out.println("Ammo: "+ game.getAmmoCount());
-
-				System.out.print("Move(WASD) or shoot(F): ");
+				printStatus();
+				System.out.print("Move(WASD) or shoot(F): \n");
 				direction = scan.next().toLowerCase();
 				if(direction.equals("r"))
 					game.debugMode();
 				else if(direction.equals("f")) {
-					System.out.print("Choose direction to fire: ");
+					System.out.print("Choose direction to fire: \n");
 					direction = scan.next();
 					System.out.print(game.shoot(direction));
 					valid = true;
@@ -107,7 +115,6 @@ public class UserInterface {
 			}
 			if(game.checkItem()) {
 				int itemPickUp = game.applyItem();
-
 				switch(itemPickUp) {
 					case 1:
 						System.out.println("You have picked up a Radar!");
@@ -137,10 +144,6 @@ public class UserInterface {
 
 			//game.ninjaMovementRAD();
 			//***********************************************
-
-			if(game.checkSpy())  //ninja check method
-				System.out.println("A Ninja destroyed you!");
-
 			game.decInvincibility();
 
 			if(game.playerAlive() == false) {
@@ -165,7 +168,7 @@ public class UserInterface {
 			showLine();
 			displayBoard();
 			printStatus();
-			System.out.print("\nChoose direction to look(WASD): \nType \"save\" to save, \"quit\" to exit game.");
+			System.out.print("\nChoose direction to look(WASD): \nType \"save\" to save, \"quit\" to exit game.\n");
 			direction = scan.next().toLowerCase();
 			if(direction.equals("r"))
 				game.debugMode();
@@ -183,7 +186,7 @@ public class UserInterface {
 		System.out.println("Invincibility: "+ game.invCount());
 		System.out.println("Ammo: "+ game.getAmmoCount());
 		System.out.println("Lives: " + game.getPlayer().getLives());
-		System.out.println("Ninjas Left: " + game.getNumNinja());
+		System.out.println("Ninjas Left: " + game.getNumNinja() + "\n");
 	}
 
 
@@ -198,37 +201,6 @@ public class UserInterface {
 		System.out.println("\n");
 	}
 
-	public void mainMenu() {
-		System.out.println(	"1) How to Play\n" + 
-							"2) Start New Game\n" + 
-							"3) Load Game\n" + 
-							"4) Exit Game\n");
-		String input = scan.next();
-		switch(input) {
-			case "1":
-				howToPlay();
-				break;
-			case "2":
-				System.out.println("you chose 2");
-				startGame(chooseDifficulty());
-				break;
-			case "3":
-				System.out.println("you chose 3");
-				loadGame();
-				playGame(getLevel());
-				
-				break;
-			case "4":
-				System.out.println("you chose 4\n" + "Game will close.\n" + "GOODBYE" ); ///closes/exits game
-				System.exit(0);
-				break;
-			default: //when anything besides 1,2,3,4 is pressed in menu
-				System.out.println("Invalid Input");
-				break;
-		}
-				
-	}
-	
 	public void howToPlay() {
 		System.out.println(	"1) HOW TO PLAY:\n" + "You are a SPY that is tasked with retrieving a "
 				+ "briefcase containing classified enemy documents \nlocated in one of the NINE rooms."
@@ -255,12 +227,17 @@ public class UserInterface {
 		game.save(userInput);
 	}
 	
-	public void loadGame() {
+	public boolean loadGame() {
 		String userInput;
 		System.out.println("Load: enter file name");
 		userInput = scan.next();
 		scan.nextLine();
-		game.load(userInput);
+		if(game.load(userInput))
+			return true;
+		else {
+			System.out.println("Unable to Load\n");
+			return false;
+		}
 	}
 	
 	public void quitGame() {

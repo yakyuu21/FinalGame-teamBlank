@@ -860,12 +860,9 @@ public class GameEngine implements Serializable{
 				radar = (Item) infile.readObject();
 				invincible = (Item) infile.readObject();
 				ammo = (Item) infile.readObject();
-
 				infile.close();
 				return true;
-			}
-			
-			catch(IOException | ClassNotFoundException e) {
+			}catch(IOException | ClassNotFoundException e) {
 				return false;
 			}
 		}
