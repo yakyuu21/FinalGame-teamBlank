@@ -10,11 +10,11 @@ public class Item implements Serializable{
 	public String getType() {
 		switch(type) {
 		case "radar":
-			return "R";
+			return " R ";
 		case "invincible":
-			return "I";
+			return " I ";
 		case "ammo":
-			return "A";
+			return " A ";
 			default:
 				return "Error - PowerUp.display - Switch";
 		}

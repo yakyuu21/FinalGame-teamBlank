@@ -80,7 +80,7 @@ public class Square implements Serializable{
 	public void setItem(Item item) {
 		itemPresent = item;
 		hide = true;
-		display = " " + itemPresent.getType() + " ";
+		display = itemPresent.getType();
 		isItem = true;
 	}
 	public void setNinja(Character charac,int x, int y) {
@@ -174,7 +174,7 @@ public class Square implements Serializable{
 	public void removeNinja() {
 		isNinja = false;
 		if(itemPresent != null)
-			display = " " + itemPresent.getType() + " ";
+			display = itemPresent.getType();
 		else if(isPlayer){
 			display = " P ";
 		}
