@@ -1,4 +1,4 @@
-package edu.cpp.cs.cs141.final_prog_assignment;
+package edu.cpp.cs.cs141.final_prog_assignment1;
 
 import java.util.Scanner;
 
@@ -7,7 +7,6 @@ public class UserInterface {
 	private GameEngine game;
 	private Scanner scan = null;
 	private status gameStatus = status.CONTINUE;
-	int level;
 	
 	public UserInterface(GameEngine game) {
 		this.game = game;
@@ -18,93 +17,31 @@ public class UserInterface {
 		boolean redo = true;
 		while(redo) {
 			mainMenu();
-			String input = scan.next();
-			switch(input) {
-				case "1":
-					howToPlay();
-					break;
-				case "2":
-					System.out.println("you chose 2");
-
-					startGame(chooseDifficulty());
-					/* playGame(); --implement gameplay in gameEngine 
-					 * 			to avoid going back to main menu after display game board
-					 * 
-					 */
-
-					break;
-				case "3":
-					System.out.println("you chose 3");
-					/* - need to implement: saveGame();
-					 * 			-- saves current board situation and make available for next use.
-					 * 			--(maybe create an outstream function that creates a file with certain name with board situation.)
-					 * 
-					 * loadGame() - retrieve board from saved data 
-					 */
-					break;
-				case "4":
-					System.out.println("you chose 4\n" + "Game will close.\n" + "GOODBYE" ); ///closes/exits game
-					System.exit(0);
-					break;
-				default: //when anything besides 1,2,3,4 is pressed in menu
-					System.out.println("Invalid Input");
-					break;
-			}
 		}
 	}
 	
-	public int chooseDifficulty()
-	{
-		System.out.println("Select Difficulty. \n"
-				+ "(1) lol\n"
-				+ "(2) Yo. Dis hard. \n"
-				+ "(3) DAFUQ?!");
-		boolean isCorrectInput = false;
-		
-
-		do
-		{ 
-			Scanner input = new Scanner(System.in);
-			level = input.nextInt();
-			if (level == 1 || level == 2 || level == 3)
-			{
-			 isCorrectInput = true;
-			}
-			else
-			{
-				System.out.println("Nah.  Enter 1, 2, or 3.");
-			}
-		} while(isCorrectInput == false);
-		return level;
-	}
-	// Will probably need to catch exception when a String is entered
-
-	
-	/**
-	 * Creates board
-	 */
-	public void startGame(int level) {
+	public void startGame() {
 		game.createBoard();
-		playGame(level);
+		playGame();
 	}
 	
-	public void playGame(int level){
+	public void playGame(){
 		String direction;
 		gameStatus = status.CONTINUE;
-
+		
 		while(gameStatus == status.CONTINUE) {
-			direction = look();
-			if(game.look(direction))
+			direction = look(); //calls look function and assign output to ?direction?
+			if(game.look(direction)) //uses variable output "direction"  o display text
 				System.out.println("All Clear!");
 			else
 				System.out.println("Ninja Ahead!");
-
+			
 			boolean valid = false;
 			while(!valid) { //repeat until user input a valid key -- take action(move or shoot)
 				displayBoard();
 				System.out.println("Invincibility: "+ game.invCount());
 				System.out.println("Ammo: "+ game.getAmmoCount());
-
+				
 				System.out.print("Move(WASD) or shoot(F): ");
 				direction = scan.next().toLowerCase();
 				if(direction.equals("r"))
@@ -124,49 +61,28 @@ public class UserInterface {
 			}
 			if(game.checkItem()) {
 				int itemPickUp = game.applyItem();
-
+				
 				switch(itemPickUp) {
-					case 1:
-						System.out.println("You have picked up a Radar!");
-						break;
-					case 2:
-						System.out.println("You have picked up an Invincibility!");
-						break;
-					case 3:
-						System.out.println("You have picked up an Ammo!");
-						break;
-					default:
-						break;
+				case 1:
+					System.out.println("You have picked up a Radar!");
+					break;
+				case 2:
+					System.out.println("You have picked up an Invincibility!");
+					break;
+				case 3:
+					System.out.println("You have picked up an Ammo!");
+					break;
+				default:
+					break;
 				}
 			}
 			//add check item method here
 			if(game.checkSpy())  //ninja check method
 				System.out.println("A Ninja destroyed you!");
-
-			//***********************************************
-			if (level == 1)
-			{
-				game.ninjaMovement();
-
-			}
-			else if (level == 2)
-			{
-				game.useLineOfSightMovement();
-			}
-			else
-			{
-				game.useRadialMovement();
-			}
-			//game.ninjaMovement();
-
-			//game.ninjaMovementRAD();
-			//***********************************************
-
-			if(game.checkSpy())  //ninja check method
-				System.out.println("A Ninja destroyed you!");
-
+			
+			game.ninjaMovement();
 			game.decInvincibility();
-
+			
 			if(game.playerAlive() == false) {
 				gameStatus = status.LOST;
 				System.out.println("YOU LOST THE GAME! LOSER!");
@@ -175,10 +91,9 @@ public class UserInterface {
 				System.out.println("YOU FOUND THE BRIEFCASE!");
 				gameStatus = status.WON;
 			}
-
+				
 		}
 	}
-
 
 		
 	
@@ -229,12 +144,12 @@ public class UserInterface {
 				break;
 			case "2":
 				System.out.println("you chose 2");
-				startGame(chooseDifficulty());
+				startGame();
 				break;
 			case "3":
 				System.out.println("you chose 3");
 				loadGame();
-				playGame(getLevel());
+				playGame();
 				
 				break;
 			case "4":
@@ -307,10 +222,7 @@ public class UserInterface {
 		}while(!valid);
 	}
 
-	public int getLevel()
-	{
-		return level;
-	}
+	
 
 	
 	

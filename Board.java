@@ -1,4 +1,4 @@
-package edu.cpp.cs.cs141.final_prog_assignment;
+package edu.cpp.cs.cs141.final_prog_assignment1;
 import java.util.Random;
 import java.io.Serializable;
 
@@ -61,14 +61,7 @@ public class Board implements Serializable{
 	}	
 
 	public Square at(int x, int y) {
-		try
-		{
-			return room[x][y];
-		}
-		catch (ArrayIndexOutOfBoundsException e)
-		{
-			return room[briefcaseX][briefcaseY]; // look at the briefcase room (used in senseSpy() in GameEngine)
-		}
+		return room[x][y];
 	}
 	
 	
