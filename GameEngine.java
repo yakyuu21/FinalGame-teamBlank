@@ -422,41 +422,6 @@ public class GameEngine implements Serializable{
 				else
 					valid = false;
 			}
-			//moveNinja(ninjas[i], direction , x, y); ----if no need to check for ninja to go in room
-
-
-
-			/*
-			 * for ( int i = 0; i <= 5; i++) { 
-			if(ninjas[i].getAlive() == false)
-				continue;
-
-			int x = ninjas[i].getX();
-			int y = ninjas[i].getY();
-			int direction;
-
-			do {
-				direction = random.nextInt(4);
-				switch(direction) {
-				case 0:
-					moveNinja(ninjas[i],direction,x-1,y);
-					break;
-				case 1:
-					moveNinja(ninjas[i],direction,x+1,y);
-					break;
-				case 2:
-					moveNinja(ninjas[i],direction,x,y-1);
-					break;
-				case 3:
-					moveNinja(ninjas[i],direction,x,y+1);
-					break;
-				default:
-					System.out.println("Error");
-
-				}
-			}while(( x < 0 || x > 8) || (y < 0 || y > 8)|| board.at(x, y).get1`()|| board.at(x,y).getRoom());
-
-			 */
 		}
 	}
 

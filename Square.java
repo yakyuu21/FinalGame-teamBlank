@@ -27,6 +27,16 @@ public class Square implements Serializable{
 		hide = true;
 		display = "   ";
 	}
+	
+	public void setEmpty(){
+		isEmpty = true;
+		isPlayer = false;
+		isRoom = false;
+		isItem = false;
+		player = null;
+		hide = true;
+		display = "   ";
+	}
 	public void setCharacter(Character charac, int x, int y) { //set character in location
 		if ((x == 1 || x == 4 || x == 7)&&
 		(y == 1 || y == 4 || y == 7)){ //when inside room
@@ -41,13 +51,6 @@ public class Square implements Serializable{
 			isPlayer = true;
 			display = " P ";
 			hide = false;
-			/*
-			if(itemPresent != null) {
-				player.getItem(itemPresent);
-				itemPresent = null;
-			}
-			
-			*/
 		}
 	}
 	public void setItemnull() {
@@ -56,9 +59,8 @@ public class Square implements Serializable{
 		isItem = false;
 	}
 
-	public void playerMoved(int x, int y) { //when player moves inside a room
-		if ((x == 1 || x == 4 || x == 7)&&
-			(y == 1 || y == 4 ||y == 7)){
+	public void playerMoved(int x, int y) { //when player moves out of room
+		if ((x == 1 || x == 4 || x == 7)&&(y == 1 || y == 4 ||y == 7)){
 				player = null;
 				isPlayer = false;
 				hide = false;
@@ -167,17 +169,6 @@ public class Square implements Serializable{
 	}
 	public void reveal() {
 		reveal = !reveal;
-	}
-	
-	public void setEmpty(){
-		isEmpty = true;
-		isPlayer = false;
-		isNinja = false;
-		isRoom = false;
-		isItem = false;
-		player = null;
-		ninja = null;
-		display = "   ";
 	}
 	
 	public void removeNinja() {
