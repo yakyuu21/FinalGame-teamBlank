@@ -318,8 +318,8 @@ public class GameEngine implements Serializable{
 
 			if (board.at(x, y).getRoom())// if ninja goes into a room
 				return value;
-			
-			
+
+
 			if( y == b) { //if in same vertical line
 				if(x+1 == a) { //check for horizontal match in position
 					if(!player.isInvincible()) {
@@ -463,7 +463,7 @@ public class GameEngine implements Serializable{
 	public void useLineOfSightMovement() //change values in ninjaMovement or useNinjaAI, checkSpy, creatNinja to TEST
 	{
 		for ( int i = 0; i <=5; i++) 
-		{ 
+		{
 
 			if(ninjas[i].getAlive() == false)
 				continue;
@@ -544,10 +544,13 @@ public class GameEngine implements Serializable{
 					// if ninja tried to move into a player's space, case 4 is activated.
 					else if (board.at(x,y).getPlayer() == true)
 					{
+						isLoop = true;
+						/*
 						isLoop = false;
 						direction = 4;
 						x = a;
 						y = b;
+						 */
 
 					}
 					else
@@ -557,6 +560,52 @@ public class GameEngine implements Serializable{
 						moveNinja(ninjas[i],direction,x,y);
 					}
 				}
+			}
+			else 
+			{
+				int loopCount = 10; // will try to choose a position 10 times
+				do {
+					direction = random.nextInt(4);
+					switch(direction) {
+						case 0:
+							x= a-1;
+							y= b;
+							break;
+						case 1:
+							x= a+1;
+							y = b;
+							break;
+						case 2:
+							x= a;
+							y = b-1;
+							break;
+						case 3:
+							x= a;
+							y = b+1;
+							break;
+						case 4:
+							x = a;
+							y = b;
+						default:
+							System.out.println("Error");
+
+					}
+					loopCount--;
+				} while(( x < 0 || x > 8) || (y < 0 || y > 8)
+						|| board.at(x, y).getNinja() == true
+						|| board.at(x,y).getRoom() == true 
+						|| loopCount == 0); //keep within boundary
+
+
+				if (loopCount == 0)
+				{
+					direction = 4;
+					x = a;
+					y = b;
+				}
+
+				moveNinja(ninjas[i],direction,x,y);
+
 			}
 		}
 	}
@@ -774,7 +823,7 @@ public class GameEngine implements Serializable{
 		return ninjaDirection;
 	}
 
-	
+
 	public boolean senseSpyInLineOfSight(int xNinja, int yNinja)
 	{
 		boolean isSpyInSight = false;
@@ -784,8 +833,8 @@ public class GameEngine implements Serializable{
 		}
 		return isSpyInSight;
 	}
-	
-	
+
+
 	public boolean senseSpyInRad(int row, int column) // row = x coordinate for ninja, column = y coordinate for ninja
 	{
 		boolean isSpyNearby = false;
