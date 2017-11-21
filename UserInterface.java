@@ -7,7 +7,7 @@ public class UserInterface {
 	private GameEngine game;
 	private Scanner scan = null;
 	private status gameStatus = status.CONTINUE;
-	int level;
+	String level;
 	
 	public UserInterface(GameEngine game) {
 		this.game = game;
@@ -25,22 +25,10 @@ public class UserInterface {
 					break;
 				case "2":
 					System.out.println("you chose 2");
-
 					startGame(chooseDifficulty());
-					/* playGame(); --implement gameplay in gameEngine 
-					 * 			to avoid going back to main menu after display game board
-					 * 
-					 */
-
 					break;
 				case "3":
 					System.out.println("you chose 3");
-					/* - need to implement: saveGame();
-					 * 			-- saves current board situation and make available for next use.
-					 * 			--(maybe create an outstream function that creates a file with certain name with board situation.)
-					 * 
-					 * loadGame() - retrieve board from saved data 
-					 */
 					break;
 				case "4":
 					System.out.println("you chose 4\n" + "Game will close.\n" + "GOODBYE" ); ///closes/exits game
@@ -53,27 +41,21 @@ public class UserInterface {
 		}
 	}
 	
-	public int chooseDifficulty()
+	public String chooseDifficulty()
 	{
 		System.out.println("Select Difficulty. \n"
 				+ "(1) lol\n"
 				+ "(2) Yo. Dis hard. \n"
 				+ "(3) DAFUQ?!");
 		boolean isCorrectInput = false;
-		
 
-		do
-		{ 
+		do{ 
 			Scanner input = new Scanner(System.in);
-			level = input.nextInt();
-			if (level == 1 || level == 2 || level == 3)
-			{
+			level = input.next();
+			if (level.equals("1") || level.equals("2") || level.equals("3"))
 			 isCorrectInput = true;
-			}
 			else
-			{
 				System.out.println("Nah.  Enter 1, 2, or 3.");
-			}
 		} while(isCorrectInput == false);
 		return level;
 	}
@@ -83,12 +65,12 @@ public class UserInterface {
 	/**
 	 * Creates board
 	 */
-	public void startGame(int level) {
+	public void startGame(String level) {
 		game.createBoard();
 		playGame(level);
 	}
 	
-	public void playGame(int level){
+	public void playGame(String lvl){
 		String direction;
 		gameStatus = status.CONTINUE;
 
@@ -101,6 +83,7 @@ public class UserInterface {
 
 			boolean valid = false;
 			while(!valid) { //repeat until user input a valid key -- take action(move or shoot)
+				showLine();
 				displayBoard();
 				System.out.println("Invincibility: "+ game.invCount());
 				System.out.println("Ammo: "+ game.getAmmoCount());
@@ -144,19 +127,12 @@ public class UserInterface {
 				System.out.println("A Ninja destroyed you!");
 
 			//***********************************************
-			if (level == 1)
-			{
+			if (lvl.equals("1"))
 				game.ninjaMovement();
-
-			}
-			else if (level == 2)
-			{
+			else if (lvl.equals("2"))
 				game.useLineOfSightMovement();
-			}
 			else
-			{
 				game.useRadialMovement();
-			}
 			//game.ninjaMovement();
 
 			//game.ninjaMovementRAD();
@@ -187,6 +163,7 @@ public class UserInterface {
 		boolean valid = false;
 		String direction = "";
 		while(!valid) {
+			showLine();
 			displayBoard();
 			System.out.println("Invincibility: "+ game.invCount());
 			System.out.println("Ammo: "+ game.getAmmoCount());
@@ -284,34 +261,34 @@ public class UserInterface {
 	}
 	
 	public void quitGame() {
-		System.out.println("Would you like to save? [Y]es / [N]o");
 		String userInput;
-		userInput = scan.next();
 		boolean valid = false;
-		do {
+		do {		
+			System.out.println("Would you like to save? [Y]es / [N]o");
+			userInput = scan.next();
 			if(userInput.toLowerCase().equals("y")) {
 				saveGame();
 				valid = true;
 			}
 			else if(userInput.toLowerCase().equals("n")) {
-				System.out.println("The game will not return to main menu.");
+				System.out.println("The game will now return to main menu.\n");
 				mainMenu();
 				valid = true;
 			}
 			else {
 				System.out.println("Invalid Input!");
-				System.out.println("Would you like to save? [Y]es / [N]o");
-
 				valid = false;
 			}
 		}while(!valid);
 	}
 
-	public int getLevel()
-	{
+	public String getLevel(){
 		return level;
 	}
 
+	public void showLine() {
+		System.out.println("----------------------------------");
+	}
 	
 	
 }
