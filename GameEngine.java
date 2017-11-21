@@ -22,6 +22,8 @@ public class GameEngine implements Serializable{
 	private Item radar = null;
 	private Item invincible = null;
 	private Item ammo = null;
+	private int numNinja;
+	
 
 
 	public void createBoard() {
@@ -825,48 +827,67 @@ public class GameEngine implements Serializable{
 			}
 		}
 	}
+	
+	public boolean save(String filename) {
+			try {
+				FileOutputStream ofstream = new FileOutputStream(filename + ".dat") ;
+				ObjectOutputStream outfile = new ObjectOutputStream(ofstream);
+				
+				outfile.writeObject(board);
+				outfile.writeObject(ninjas);
+				outfile.writeObject(player);
 
-	public void save(String filename) {
-		try {
-			FileOutputStream ofstream = new FileOutputStream(filename + ".dat") ;
-			ObjectOutputStream outfile = new ObjectOutputStream(ofstream);
-
-			outfile.writeObject(board);
-			outfile.writeObject(ninjas);
-			outfile.writeObject(player);
-
-			outfile.writeObject(radar);
-			outfile.writeObject(invincible);
-			outfile.writeObject(ammo);
-			outfile.close();
-			System.out.println("Save Successful");
-
+				outfile.writeObject(radar);
+				outfile.writeObject(invincible);
+				outfile.writeObject(ammo);
+				outfile.close();
+				return true;
+						
+			}
+			catch(IOException e) {
+				return false;
+			}
 		}
-		catch(IOException e) {
-			System.out.println("Unable to Save");
+		
+		public boolean load(String filename) {
+			try {
+				FileInputStream ifstream = new FileInputStream(filename + ".dat");
+				ObjectInputStream infile = new ObjectInputStream(ifstream);
+				 
+				board = (Board) infile.readObject();
+				ninjas = (Character[]) infile.readObject();
+				player = (Character) infile.readObject();
+				radar = (Item) infile.readObject();
+				invincible = (Item) infile.readObject();
+				ammo = (Item) infile.readObject();
+
+				infile.close();
+				return true;
+			}
+			
+			catch(IOException | ClassNotFoundException e) {
+				return false;
+			}
 		}
-	}
-
-	public void load(String filename) {
-		try {
-			FileInputStream ifstream = new FileInputStream(filename + ".dat");
-			ObjectInputStream infile = new ObjectInputStream(ifstream);
-
-			board = (Board) infile.readObject();
-			ninjas = (Character[]) infile.readObject();
-			player = (Character) infile.readObject();
-			radar = (Item) infile.readObject();
-			invincible = (Item) infile.readObject();
-			ammo = (Item) infile.readObject();
-
-			infile.close();
-			System.out.println("Load Successful");
+		
+		public void setNumNinja() {
+			int counter = 0;
+			for(int i = 0; i < 6; i++) {
+				if(ninjas[i].getAlive())
+					counter++;
+			}
+			
+			numNinja = counter;
 		}
-
-		catch(IOException | ClassNotFoundException e) {
-			System.out.println("Unable to load");
+		
+		public int getNumNinja() {
+			setNumNinja();
+			return numNinja;
 		}
-	}
+		
+		public Character getPlayer() {
+			return player;
+		}
 
 }
 

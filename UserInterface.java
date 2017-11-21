@@ -249,7 +249,6 @@ public class UserInterface {
 		userInput = scan.next();
 		scan.nextLine();
 		game.save(userInput);
-		System.out.println("Save Complete!");
 	}
 	
 	public void loadGame() {
