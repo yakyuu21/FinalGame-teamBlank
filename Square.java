@@ -1,6 +1,7 @@
 package edu.cpp.cs.cs141.final_prog_assignment;
-import java.io.Serializable;
-public class Square implements Serializable{
+
+public class Square{
+
 	private boolean isNinja;
 	private boolean isPlayer;
 	private boolean isRoom;
@@ -15,7 +16,6 @@ public class Square implements Serializable{
 	private Item itemPresent;
 
 	private String display;
-	private String displayHidden = " * ";
 
 	public Square() { //default constructor
 		isEmpty = true;
@@ -27,82 +27,70 @@ public class Square implements Serializable{
 		hide = true;
 		display = "   ";
 	}
-	
-	public void setEmpty(){
-		isEmpty = true;
-		isPlayer = false;
-		isRoom = false;
-		isItem = false;
-		player = null;
-		hide = true;
-		display = "   ";
-	}
 	public void setCharacter(Character charac, int x, int y) { //set character in location
-		if ((x == 1 || x == 4 || x == 7)&&
-		(y == 1 || y == 4 || y == 7)){ //when inside room
+		if ((x == 1 || 
+				x == 4 ||
+				x == 7)&&
+				(y == 1 ||
+				y == 4 ||
+				y == 7))
+		{
 			player = null;
 			isPlayer = false;
 			hide = false;
 			isRoom = true;
 			display = "[P]";
 		}
-		else{ //when not inside room
+		else
+		{
 			player = charac;
 			isPlayer = true;
 			display = " P ";
 			hide = false;
+			if(itemPresent != null) {
+				player.getItem(itemPresent);
+				itemPresent = null;
+			}
 		}
-	}
-	public void setItemnull() {
-		if(itemPresent!=null) 
-			itemPresent = null;
-		isItem = false;
 	}
 
-	public void playerMoved(int x, int y) { //when player moves out of room
-		if ((x == 1 || x == 4 || x == 7)&&(y == 1 || y == 4 ||y == 7)){
-				player = null;
-				isPlayer = false;
-				hide = false;
-				isRoom = true;
-				display = "[_]";
+	public void playerMoved(int x, int y) {
+		if ((x == 1 ||
+				x == 4 ||
+				x == 7)&&
+				(y == 1 ||
+				y == 4 ||
+				y == 7))
+		{
+			player = null;
+			isPlayer = false;
+			hide = false;
+			isRoom = true;
+			display = "[_]";
 		}
-		else{
-			if(isItem) {
-				player = null;
-				isPlayer = false;
-				hide = true;
-				isEmpty = false;
-				display = itemPresent.getType();
-			}
-			else { 
-				player = null;
-				isPlayer = false;
-				hide = true;
-				isEmpty = true;
-				display = "   ";
-			}	
-		}	
+		else
+		{
+			player = null;
+			isPlayer = false;
+			hide = true;
+			isEmpty = true;
+			display = "   ";
+		}
 	}
 
 
 	public void setItem(Item item) {
 		itemPresent = item;
 		hide = true;
-		display = itemPresent.getType();
+		display = " " + itemPresent.getType() + " ";
 		isItem = true;
 	}
-	public void setNinja(Character charac,int x, int y) {
+	public void setNinja(Character charac) {
 		ninja = charac;
 		isNinja = true;
 		hide = true;
-		if(isPlayer) 
-			display = " P ";
-		else
-			display = " N "; 
+		display = " N ";
 		isEmpty = false;
-		ninja.setX(x);
-		ninja.setY(y);		
 	}
 	public void setRoom() {
 		display = "[_]";
@@ -110,17 +98,16 @@ public class Square implements Serializable{
 		isRoom = true;
 		isBrief = false;
 	}
-	public void toggleHide() {
-		hide = !hide;
-	}
 	public void briefExist(boolean isDebugOn) {
-		if (!isDebugOn) {//if debug mode is not on
+		if (isDebugOn == false)
+		{
 			display = "[_]";
 			hide = false;
 			isRoom = true;
 			isBrief = true;
 		}
-		else { //if debug mode is on
+		else 
+		{
 			display = "[#]";
 			hide = true;
 			isRoom = true;
@@ -131,36 +118,46 @@ public class Square implements Serializable{
 
 
 	public boolean getNinja() {
-		return isNinja;
-			}
-	public boolean getPlayer() {
-		return isPlayer;
+		if(isNinja) //ninja exists
+			return true; 
+		else
+			return false;
 	}
 	public boolean getItem() {
-		return isItem;
+		if(isItem)
+			return true;
+		else
+			return false;
 	}
-	
 	public boolean getEmpty() {
 		return isEmpty;
 	}
 	public boolean getRoom() {
 		return isRoom;
 	}
-
-	public String getItemtype() {
-		return itemPresent.name();
+	public boolean getRadar() {
+		if(itemPresent != null) {
+			if(itemPresent.getType().equals("R"))
+				return true;
+			else
+				return false;
+		}
+		else
+			return false;
 	}
+
+
 	public Character getPlayerObj() {
 		return player;
 	}
 	public Character getNinjaObj() {
 		return ninja;
 	}
+
+
 	public boolean getBrief() {
 		return isBrief;
 	}
-	
-	
 
 	public String display() {
 		if(!hide) //if something visible
@@ -170,30 +167,36 @@ public class Square implements Serializable{
 			return display;
 		}
 		else 
-			return displayHidden;
+			return " * ";
 	}
 
-	public void revealBrief() {
-		display = "[#]";
-	}
 	public void reveal() {
 		reveal = !reveal;
+	}
+	
+	public void setEmpty(){
+		isEmpty = true;
+		isPlayer = false;
+		isNinja = false;
+		isRoom = false;
+		isItem = false;
+		player = null;
+		ninja = null;
+		display = "   ";
 	}
 	
 	public void removeNinja() {
 		isNinja = false;
 		if(itemPresent != null)
 			display = itemPresent.getType();
-		else if(isPlayer){
-			display = " P ";
-		}
 		else {
 			display = "   ";
 			isEmpty = true;
 		}
 	}
-	public void makeVisible() {
-		hide = false; 
+	public void show() {
+		hide = false;
+		
 	}
 	
 	public void killNinja() {
