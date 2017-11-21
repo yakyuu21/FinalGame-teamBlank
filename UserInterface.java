@@ -7,111 +7,84 @@ public class UserInterface {
 	private GameEngine game;
 	private Scanner scan = null;
 	private status gameStatus = status.CONTINUE;
-	String level;
 	
 	public UserInterface(GameEngine game) {
 		this.game = game;
 		scan = new Scanner(System.in);	
 	}
-
 	
-	public void mainMenu() {
-		System.out.println(	"1) How to Play\n" + 
-							"2) Start New Game\n" + 
-							"3) Load Game\n" + 
-							"4) Exit Game\n");
-		String input = scan.next();
-		switch(input) {
-			case "1":
-				howToPlay();
-				break;
-			case "2":
-				System.out.println("you chose 2");
-				startGame(chooseDifficulty());
-				break;
-			case "3":
-				System.out.println("you chose 3");
-				if(loadGame())
-					playGame(getLevel());
-				else 
-					mainMenu();
-				break;
-			case "4":
-				System.out.println("you chose 4\n" + "Game will close.\n" + "GOODBYE" ); ///closes/exits game
-				System.exit(0);
-				break;
-			default: //when anything besides 1,2,3,4 is pressed in menu
-				System.out.println("Invalid Input");
-				mainMenu();
-				break;
-		}
-				
-	}
-	public String chooseDifficulty()
-	{
-		System.out.println("Select Difficulty. \n"
-				+ "(1) lol\n"
-				+ "(2) Yo. Dis hard. \n"
-				+ "(3) DAFUQ?!");
-		boolean isCorrectInput = false;
-
-		do{ 
-			Scanner input = new Scanner(System.in);
-			level = input.next();
-			if (level.equals("1") || level.equals("2") || level.equals("3")) {
-				switch(level){
-					case"1":
-						game.setDifficulty("1");
-						isCorrectInput = true;
-						break;
-					case"2":
-						game.setDifficulty("2");
-						isCorrectInput = true;
-						break;
-					case"3":
-						game.setDifficulty("3");
-						 isCorrectInput = true;
-						 break;
-				}
+	/**
+	 * Displays menu options.  Player provides input.  If player selects (2), then startGame() executes.
+	 */
+	public void openMenu() {
+		boolean redo = true;
+		while(redo) {
+			mainMenu();
+			String input = scan.next();
+			switch(input) {
+				case "1":
+					howToPlay();
+					break;
+				case "2":
+					System.out.println("you chose 2");
+					startGame();
+					/* playGame(); --implement gameplay in gameEngine 
+					 * 			to avoid going back to main menu after display game board
+					 * 
+					 */
+					
+					break;
+				case "3":
+					System.out.println("you chose 3");
+					/* - need to implement: saveGame();
+					 * 			-- saves current board situation and make available for next use.
+					 * 			--(maybe create an outstream function that creates a file with certain name with board situation.)
+					 * 
+					 * loadGame() - retrieve board from saved data 
+					 */
+					break;
+				case "4":
+					System.out.println("you chose 4\n" + "Game will close.\n" + "GOODBYE" ); ///closes/exits game
+					System.exit(0);
+					break;
+				default: //when anything besides 1,2,3,4 is pressed in menu
+					System.out.println("Invalid Input");
+					break;
 			}
-			else
-				System.out.println("Nah.  Enter 1, 2, or 3.");
-		} while(isCorrectInput == false);
-		return level;
+		}
 	}
-	// Will probably need to catch exception when a String is entered
 
-	
 	/**
 	 * Creates board
 	 */
-	public void startGame(String level) {
+	public void startGame() {
 		game.createBoard();
-		playGame(level);
+		playGame();
 	}
 	
-	public void playGame(String lvl){
+	public void playGame(){
 		String direction;
 		gameStatus = status.CONTINUE;
-
 		while(gameStatus == status.CONTINUE) {
+			
 			direction = look();
+			
 			if(game.look(direction))
 				System.out.println("All Clear!");
+			 
 			else
 				System.out.println("Ninja Ahead!");
-
+			
 			boolean valid = false;
-			while(!valid) { //repeat until user input a valid key -- take action(move or shoot)
-				showLine();
+
+			while(!valid) {
 				displayBoard();
-				printStatus();
-				System.out.print("Move(WASD) or shoot(F): \n");
+				System.out.print("Move(WASD) or shoot(F): ");
 				direction = scan.next().toLowerCase();
 				if(direction.equals("r"))
 					game.debugMode();
 				else if(direction.equals("f")) {
-					System.out.print("Choose direction to fire: \n");
+					System.out.print("Choose direction to fire: ");
 					direction = scan.next();
 					System.out.print(game.shoot(direction));
 					valid = true;
@@ -123,75 +96,52 @@ public class UserInterface {
 					System.out.println("Invalid Input!");
 				}
 			}
-			if(game.checkItem()) {
-				int itemPickUp = game.applyItem();
-				switch(itemPickUp) {
-					case 1:
-						System.out.println("You have picked up a Radar!");
-						break;
-					case 2:
-						System.out.println("You have picked up an Invincibility!");
-						break;
-					case 3:
-						System.out.println("You have picked up an Ammo!");
-						break;
-					default:
-						break;
-				}
-			}
-			//add check item method here
-			if(game.checkSpy())  //ninja check method
+			if(game.checkSpy()) {
 				System.out.println("A Ninja destroyed you!");
-
-			//***********************************************
-			game.ninjaDecision();
-			//***********************************************
+			}
+			game.ninjaMovement();
+			
 			game.decInvincibility();
-
 			if(game.playerAlive() == false) {
 				gameStatus = status.LOST;
 				System.out.println("YOU LOST THE GAME! LOSER!");
-				mainMenu();
 			}
-			else if (game.checkPlayerIsBriefcase() == true){
+			else if (game.checkPlayerIsBriefcase() == true)
+			{
 				System.out.println("YOU FOUND THE BRIEFCASE!");
 				gameStatus = status.WON;
 			}
-
+				
 		}
 	}
-
-
-
+	
+				
+			
+			  /**if(player.getAlive()){
+			  		decLives();
+			  }
+			  if(player.checkGameOver(){
+			  		startGame();
+			  }
+			  **/
+		
+		
+	
 
 	private String look() {
 		boolean valid = false;
 		String direction = "";
 		while(!valid) {
-			showLine();
 			displayBoard();
-			printStatus();
-			System.out.print("\nChoose direction to look(WASD): \nType \"save\" to save, \"quit\" to exit game.\n");
+			System.out.print("Choose direction to look(WASD): ");
 			direction = scan.next().toLowerCase();
 			if(direction.equals("r"))
 				game.debugMode();
-			if(direction.toLowerCase().equals("w")||direction.toLowerCase().equals("a")||direction.toLowerCase().equals("s")||direction.toLowerCase().equals("d"))
+			if(direction.equals("w")||direction.equals("a")||direction.equals("s")||direction.equals("d"))
 				valid = true;
-			else if(direction.toLowerCase().equals("save"))
-				saveGame();
-			else if(direction.toLowerCase().equals("quit"))
-				quitGame();
 		}
 		return direction;
 	}
-
-	public void printStatus() {
-		System.out.println("Invincibility: "+ game.invCount());
-		System.out.println("Ammo: "+ game.getAmmoCount());
-		System.out.println("Lives: " + game.getPlayer().getLives());
-		System.out.println("Ninjas Left: " + game.getNumNinja() + "\n");
-	}
-
 
 	private void displayBoard() {
 		int length = 9;
@@ -204,6 +154,13 @@ public class UserInterface {
 		System.out.println("\n");
 	}
 
+	public void mainMenu() {
+		System.out.println(	"1) How to Play\n" + 
+							"2) Start New Game\n" + 
+							"3) Load Game\n" + 
+							"4) Exit Game\n");
+	}
+	
 	public void howToPlay() {
 		System.out.println(	"1) HOW TO PLAY:\n" + "You are a SPY that is tasked with retrieving a "
 				+ "briefcase containing classified enemy documents \nlocated in one of the NINE rooms."
@@ -222,57 +179,8 @@ public class UserInterface {
 				+ "GOOD LUCK\n");
 	}
 	
-	public void saveGame() {
-		String userInput;
-		System.out.println("Name a save file:");
-		userInput = scan.next();
-		scan.nextLine();
-		game.save(userInput);
-	}
 	
-	public boolean loadGame() {
-		String userInput;
-		System.out.println("Load: enter file name");
-		userInput = scan.next();
-		scan.nextLine();
-		if(game.load(userInput))
-			return true;
-		else {
-			System.out.println("Unable to Load\n");
-			return false;
-		}
-	}
-	
-	public void quitGame() {
-		String userInput;
-		boolean valid = false;
-		do {		
-			System.out.println("Would you like to save? [Y]es / [N]o");
-			userInput = scan.next();
-			if(userInput.toLowerCase().equals("y")) {
-				saveGame();
-				valid = true;
-				mainMenu();
-			}
-			else if(userInput.toLowerCase().equals("n")) {
-				System.out.println("The game will now return to main menu.\n");
-				valid = true;
-				mainMenu();
-			}
-			else {
-				System.out.println("Invalid Input!");
-				valid = false;
-			}
-		}while(!valid);
-	}
 
-	public String getLevel(){
-		return level;
-	}
-
-	public void showLine() {
-		System.out.println("\n\n\n----------------------------------\n\n\n");
-	}
 	
 	
 }
