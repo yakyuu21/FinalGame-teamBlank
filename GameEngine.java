@@ -24,7 +24,7 @@ public class GameEngine implements Serializable{
 	private Item ammo = null;
 	private int numNinja;
 	private String difficulty;
-	
+
 
 
 	public void createBoard() {
@@ -379,7 +379,7 @@ public class GameEngine implements Serializable{
 	}
 
 
-//---------------------------------------------
+	//---------------------------------------------
 	public void ninjaMovement() {
 		for ( int i = 0; i <= 5; i++) { 
 			if(ninjas[i].getAlive() == false)
@@ -452,37 +452,33 @@ public class GameEngine implements Serializable{
 				int count4 = 0; //added
 				direction = getNinjaDirection(a, b, player.getX(), player.getY());
 				while (isLoop == true){
+					System.out.println("loop3");
 					switch(direction) {
 						case 0: // up
 							x= a-1;
 							y= b;
 							count0++;
-							isLoop = false;
 							break;
 						case 1: // down
 
 							x= a+1;
 							y = b;
 							count1++;
-							isLoop = false;
 							break;
 						case 2: // left
 							x= a;
 							y = b-1;
 							count2++;
-							isLoop = false;
 							break;
 						case 3: // right
 							x= a;
 							y = b+1;
 							count3++;
-							isLoop = false;
 							break;
 						case 4: // added
 							x = a;
 							y = b;
 							count4++;
-							isLoop = false;
 						default:
 							System.out.println("Error @ uselineofsightmovement default case");
 					}
@@ -504,52 +500,70 @@ public class GameEngine implements Serializable{
 					}
 
 					else{
+						isLoop = false;
 						moveNinja(ninjas[i],direction,x,y);
 					}
 				}
 			}
-			else 
-			{
-				int loopCount = 10; // will try to choose a position 10 times
+
+			else{
+				isLoop = false;
+				int count0 = 0;
+				int count1 = 0;
+				int count2 = 0;
+				int count3 = 0;
+
+
 				do {
+					System.out.println("loop5");
 					direction = random.nextInt(4);
 					switch(direction) {
 						case 0:
 							x= a-1;
 							y= b;
+							count0++;
 							break;
 						case 1:
 							x= a+1;
 							y = b;
+							count1++;
+
 							break;
 						case 2:
 							x= a;
 							y = b-1;
+							count2++;
+
 							break;
 						case 3:
 							x= a;
 							y = b+1;
+							count3++;
+
 							break;
 						case 4:
 							x = a;
 							y = b;
 						default:
-							System.out.println("Error @ uselineofsightmovement else - default case");
+							System.out.println("Error @ useradialmovement else - default case");
+							break;
 
 					}
-					loopCount--;
-				} while(( x < 0 || x > 8) || (y < 0 || y > 8)
-						|| board.at(x, y).getNinja() == true
-						|| board.at(x,y).getRoom() == true 
-						|| loopCount == 0
-						|| board.at(x, y).getPlayer() == true); //keep within boundary; added
-					if (loopCount == 0){
+					if (count0 >= 1 && count1 >= 1 && count2 >= 1 && count3 >= 1) { // if ninja can't move, case 4 is activated.
+						isLoop = false;
 						direction = 4;
 						x = a;
 						y = b;
-					}
+					}					
+				} while(( x < 0 || x > 8) || (y < 0 || y > 8)
+						|| board.at(x, y).getNinja() == true
+						|| board.at(x,y).getRoom() == true 
+						|| board.at(x, y).getPlayer() == true); //keep within boundary; added
+
+
 
 				moveNinja(ninjas[i],direction,x,y);
+
 
 			}
 		}
@@ -572,13 +586,14 @@ public class GameEngine implements Serializable{
 
 			if (senseSpyInRad(a,b) == true) { // senseSpy() checks if spy is within a 3 unit radius of a ninja; return true if spy is nearby, false if not
 				direction = getNinjaDirection(a, b, player.getX(), player.getY()); // specifies a direction for a ninja
-
+				int count0 = 0;
+				int count1 = 0;
+				int count2 = 0;
+				int count3 = 0;
 				//loop that takes in the specified direction; if the ninja can't move to that location, direction is random
 				do{
-					int count0 = 0;
-					int count1 = 0;
-					int count2 = 0;
-					int count3 = 0;
+					System.out.println("loop4 "+direction);
+
 					switch(direction) {
 						case 0: // up
 							x= a-1;
@@ -612,7 +627,7 @@ public class GameEngine implements Serializable{
 					// if ninja can't move somewhere...
 					if (( x < 0 || x > 8) 
 							|| (y < 0 || y > 8)
-							|| board.at(x, y).getNinja()==true
+							|| (board.at(x, y).getNinja()==true && direction != 4)
 							|| board.at(x, y).getRoom() == true
 							|| board.at(x, y).getPlayer() == true){ //added
 						isLoop = true; // ...the do loop activates...
@@ -620,56 +635,77 @@ public class GameEngine implements Serializable{
 						if (count0 >= 1 && count1 >= 1 && count2 >= 1 && count3 >= 1) { // if ninja can't move, case 4 is activated.
 							isLoop = false;
 							direction = 4;
+							x = a;
+							y = b;
 						}
 					}
 
 					else 
-						isLoop = false; // if for some other reason a ninja can't move, the ninja will keep the same position
+					{
+						isLoop = false;
+						moveNinja(ninjas[i],direction,x,y);
+
+					}// if for some other reason a ninja can't move, the ninja will keep the same position
 				}while (isLoop == true);
 
-				moveNinja(ninjas[i],direction,x,y);
 			}
 
 			// if the ninja is not within 3 units radius of spy, then direction of ninja movement is random.
 			else{
-				int loopCount = 10; // will try to choose a position 10 times
+				isLoop = false;
+				int count0 = 0;
+				int count1 = 0;
+				int count2 = 0;
+				int count3 = 0;
+
+
 				do {
+					System.out.println("loop5");
 					direction = random.nextInt(4);
 					switch(direction) {
 						case 0:
 							x= a-1;
 							y= b;
+							count0++;
 							break;
 						case 1:
 							x= a+1;
 							y = b;
+							count1++;
+
 							break;
 						case 2:
 							x= a;
 							y = b-1;
+							count2++;
+
 							break;
 						case 3:
 							x= a;
 							y = b+1;
+							count3++;
+
 							break;
 						case 4:
 							x = a;
 							y = b;
 						default:
 							System.out.println("Error @ useradialmovement else - default case");
+							break;
 
 					}
-					loopCount--;
+					if (count0 >= 1 && count1 >= 1 && count2 >= 1 && count3 >= 1) { // if ninja can't move, case 4 is activated.
+						isLoop = false;
+						direction = 4;
+						x = a;
+						y = b;
+					}					
 				} while(( x < 0 || x > 8) || (y < 0 || y > 8)
 						|| board.at(x, y).getNinja() == true
 						|| board.at(x,y).getRoom() == true 
-						|| loopCount == 0
 						|| board.at(x, y).getPlayer() == true); //keep within boundary; added
-				if (loopCount == 0){
-					direction = 4;
-					x = a;
-					y = b;
-				}
+
+
 
 				moveNinja(ninjas[i],direction,x,y);
 
@@ -746,6 +782,10 @@ public class GameEngine implements Serializable{
 			ninjaDirection = 1;
 		else if (row > i && column == j)
 			ninjaDirection = 0;
+		else if (row == i && column == j)
+		{
+			ninjaDirection = 4;
+		}
 		else System.out.println("Error @ getninjadirection");
 		return ninjaDirection;
 	}
@@ -764,15 +804,15 @@ public class GameEngine implements Serializable{
 	public boolean senseSpyInRad(int row, int column) // row = x coordinate for ninja, column = y coordinate for ninja
 	{
 		boolean isSpyNearby = false;
-		for(int i = row - 3; i <= row + 3; i++)
-			for(int j = column - 3; j <= column + 3; j++){
+		for(int i = row - 3; i <= row + 3; i++) // changed
+			for(int j = column - 8; j <= column + 8; j++){ // changed
 				if (board.at(i, j).getPlayer() == true){
 					isSpyNearby = true;
 				}
 			}
 		return isSpyNearby;
 	}
-	
+
 	///////---------------------------------------
 
 	public void decInvincibility() {
@@ -838,71 +878,71 @@ public class GameEngine implements Serializable{
 	}
 	/////--------------------------------------------------------------
 	public boolean save(String filename) {
-			try {
-				FileOutputStream ofstream = new FileOutputStream(filename + ".dat") ;
-				ObjectOutputStream outfile = new ObjectOutputStream(ofstream);
-				
-				outfile.writeObject(board);
-				outfile.writeObject(ninjas);
-				outfile.writeObject(player);
+		try {
+			FileOutputStream ofstream = new FileOutputStream(filename + ".dat") ;
+			ObjectOutputStream outfile = new ObjectOutputStream(ofstream);
 
-				outfile.writeObject(radar);
-				outfile.writeObject(invincible);
-				outfile.writeObject(ammo);
-				outfile.writeObject(difficulty);
-				outfile.close();
-				return true;
-						
-			}
-			catch(IOException e) {
-				return false;
-			}
+			outfile.writeObject(board);
+			outfile.writeObject(ninjas);
+			outfile.writeObject(player);
+
+			outfile.writeObject(radar);
+			outfile.writeObject(invincible);
+			outfile.writeObject(ammo);
+			outfile.writeObject(difficulty);
+			outfile.close();
+			return true;
+
 		}
-		
-		public boolean load(String filename) {
-			try {
-				FileInputStream ifstream = new FileInputStream(filename + ".dat");
-				ObjectInputStream infile = new ObjectInputStream(ifstream);
-				 
-				board = (Board) infile.readObject();
-				ninjas = (Character[]) infile.readObject();
-				player = (Character) infile.readObject();
-				radar = (Item) infile.readObject();
-				invincible = (Item) infile.readObject();
-				ammo = (Item) infile.readObject();
-				difficulty = (String) infile.readObject();
-				infile.close();
-				return true;
-			}catch(IOException | ClassNotFoundException e) {
-				return false;
-			}
+		catch(IOException e) {
+			return false;
 		}
-		
-		public void setNumNinja() {
-			int counter = 0;
-			for(int i = 0; i < 6; i++) {
-				if(ninjas[i].getAlive())
-					counter++;
-			}
-			
-			numNinja = counter;
+	}
+
+	public boolean load(String filename) {
+		try {
+			FileInputStream ifstream = new FileInputStream(filename + ".dat");
+			ObjectInputStream infile = new ObjectInputStream(ifstream);
+
+			board = (Board) infile.readObject();
+			ninjas = (Character[]) infile.readObject();
+			player = (Character) infile.readObject();
+			radar = (Item) infile.readObject();
+			invincible = (Item) infile.readObject();
+			ammo = (Item) infile.readObject();
+			difficulty = (String) infile.readObject();
+			infile.close();
+			return true;
+		}catch(IOException | ClassNotFoundException e) {
+			return false;
 		}
-		
-		public int getNumNinja() {
-			setNumNinja();
-			return numNinja;
+	}
+
+	public void setNumNinja() {
+		int counter = 0;
+		for(int i = 0; i < 6; i++) {
+			if(ninjas[i].getAlive())
+				counter++;
 		}
-		
-		public Character getPlayer() {
-			return player;
-		}
-		
-		public void setDifficulty(String level) {
-			difficulty = level;
-		}
-		
-		public void ninjaDecision(){
-			switch(difficulty) {
+
+		numNinja = counter;
+	}
+
+	public int getNumNinja() {
+		setNumNinja();
+		return numNinja;
+	}
+
+	public Character getPlayer() {
+		return player;
+	}
+
+	public void setDifficulty(String level) {
+		difficulty = level;
+	}
+
+	public void ninjaDecision(){
+		switch(difficulty) {
 			case"1":
 				ninjaMovement();
 				break;
@@ -914,8 +954,8 @@ public class GameEngine implements Serializable{
 				break;
 			default:
 				break;
-			}
 		}
+	}
 
 }
 
