@@ -217,26 +217,39 @@ public class UserInterface {
 	}
 
 	public void howToPlay() {
-		System.out.println(	"1) HOW TO PLAY:\n" + "You are a SPY that is tasked with retrieving a "
-				+ "briefcase containing classified enemy documents \nlocated in one of the NINE rooms."
-				+ "These rooms can only be opened from the NORTH side."
-				+ "\nHowever, there are SIX ninjas patrolling the building.\n"
-				+ "You have a choice of taking an action of: \n"
-				+ "- Look ahead(once per turn): \n\tPress L to look TWO squares ahead\n"
-				+ "- Move one square: \n\tPress W,A,S,D to face, then move up,left,down,right respectively\n"
-				+ ""
-				+ ""
-				//add stuff about items
-				+ ""
-				+ ""
-				+ "- Shoot in one direction(You only get one ammo at start):\n\tPress SPACE to shoot\n"
-				+ "Bring back the briefcase ALIVE!\n"
-				+ "GOOD LUCK\n");
+		System.out.println("Background:\n"
+				+ "--------------\n"
+				+ "You are a SPY that infiltrated the enemy's base of operation in order to steal a briefcase\n"
+				+ "containing classified information.  The building you have infiltrated has a 9x9 layout, and\n"
+				+ "is pitch black.  Luckily, you brought along your nightvision goggle that allows your to see\n"
+				+ "two spaces ahead of you.  The briefcase is hidden in one of nine rooms, and for added security\n"
+				+ "there are six ninjas patrolling the building.  Your objective is to safely navigate the building\n"
+				+ "while doing your best to avoid the ninjas.  If the ninjas is next to you, the ninja will stab you\n"
+				+ "sending you back to the beginning of the game.  When a ninja kills you three times you have failed\n"
+				+ "your objective.  You do have a gun with a single bullet, so use it with caution.  While navigating\n"
+				+ "the building, you may find items laying on the floor: radar, invincible potion, or one more ammo.\n"
+				+ "The items will grant you a power up that will help you on your quest to steal the briefcase.\n"
+				+ "GOOD LUCK!\n");
+				
+		System.out.println("Items:\n"
+				+ "(R) - RADAR - When picked up it will show your which room contains the briefcase\n"
+				+ "(A) - AMMO - An additional bullet, can only be picked up if you have no ammo\n"
+				+ "(I) - INVINCIBILITY - For 5 turns you are impervious to death\n");
+		
+		System.out.println("Controls: \n"
+				+ "w - move up\t s - move down\t d - move right\t a - move left\n"
+				+ "- You can only move one space per turn.  If you run into a wall or room, your turn does not expire\n"
+				+ "- Rooms can only be accessed from the NORTH\n"
+				+ "- Look ahead(once per turn) 2 spaces in the direction of your choice\n"
+				+ "r - debug mode\n"
+				+ "f - shoot, use wasd for which direction.  The bullet will travel in a straight trajectory until\n"
+				+ "\tit hits a Ninja, Wall, or a Room\n"
+				+ "-At any time type [save] to save your progress or type [quit] to return to the main menu\n");
 	}
 	
 	public void saveGame() {
 		String userInput;
-		System.out.println("Name a save file:");
+		System.out.println("Save: Name your save file:");
 		userInput = scan.next();
 		scan.nextLine();
 		game.save(userInput);
@@ -244,7 +257,7 @@ public class UserInterface {
 	
 	public boolean loadGame() {
 		String userInput;
-		System.out.println("Load: enter file name");
+		System.out.println("Load: Enter file name");
 		userInput = scan.next();
 		scan.nextLine();
 		if(game.load(userInput))
