@@ -452,6 +452,7 @@ public class GameEngine implements Serializable{
 				int count4 = 0; //added
 				direction = getNinjaDirection(a, b, player.getX(), player.getY());
 				while (isLoop == true){
+
 					switch(direction) {
 						case 0: // up
 							x= a-1;
@@ -478,6 +479,7 @@ public class GameEngine implements Serializable{
 							x = a;
 							y = b;
 							count4++;
+							break;
 						default:
 							System.out.println("Error @ uselineofsightmovement default case");
 					}
@@ -490,7 +492,7 @@ public class GameEngine implements Serializable{
 					{
 						isLoop = true; // ...the do loop activates...
 						direction = random.nextInt(4); //...and a random direction is assigned.
-						if (count0 >= 1 && count1 >= 1 && count2 >= 1 && count3 >= 1 && count4 >=1) { // if ninja can't move at all, case 4 is activated; added count4
+						if (count0 >= 1 && count1 >= 1 && count2 >= 1 && count3 >= 1) { // if ninja can't move at all, case 4 is activated; added count4
 							isLoop = false;
 							direction = 4;
 							x = a;
@@ -506,15 +508,17 @@ public class GameEngine implements Serializable{
 			}
 
 			else{
-				isLoop = false;
+				isLoop = true;
 				int count0 = 0;
 				int count1 = 0;
 				int count2 = 0;
 				int count3 = 0;
 
 
-				do {
+				do
+				{
 					direction = random.nextInt(4);
+
 					switch(direction) {
 						case 0:
 							x= a-1;
@@ -542,6 +546,7 @@ public class GameEngine implements Serializable{
 						case 4:
 							x = a;
 							y = b;
+							break;
 						default:
 							System.out.println("Error @ useradialmovement else - default case");
 							break;
@@ -552,11 +557,16 @@ public class GameEngine implements Serializable{
 						direction = 4;
 						x = a;
 						y = b;
-					}					
+					}				
+					else
+					{
+						isLoop = false;
+					}
 				} while(( x < 0 || x > 8) || (y < 0 || y > 8)
-						|| board.at(x, y).getNinja() == true
+						|| (board.at(x, y).getNinja() == true && direction != 4)
 						|| board.at(x,y).getRoom() == true 
-						|| board.at(x, y).getPlayer() == true); //keep within boundary; added
+						|| board.at(x, y).getPlayer() == true
+						|| isLoop == true); //keep within boundary; added
 
 
 
