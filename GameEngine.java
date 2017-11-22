@@ -452,7 +452,6 @@ public class GameEngine implements Serializable{
 				int count4 = 0; //added
 				direction = getNinjaDirection(a, b, player.getX(), player.getY());
 				while (isLoop == true){
-					System.out.println("loop3");
 					switch(direction) {
 						case 0: // up
 							x= a-1;
@@ -515,7 +514,6 @@ public class GameEngine implements Serializable{
 
 
 				do {
-					System.out.println("loop5");
 					direction = random.nextInt(4);
 					switch(direction) {
 						case 0:
@@ -592,7 +590,6 @@ public class GameEngine implements Serializable{
 				int count3 = 0;
 				//loop that takes in the specified direction; if the ninja can't move to that location, direction is random
 				do{
-					System.out.println("loop4 "+direction);
 
 					switch(direction) {
 						case 0: // up
@@ -660,7 +657,6 @@ public class GameEngine implements Serializable{
 
 
 				do {
-					System.out.println("loop5");
 					direction = random.nextInt(4);
 					switch(direction) {
 						case 0:
