@@ -129,6 +129,13 @@ public class UserInterface {
 					System.out.println("Invalid Input!");
 				}
 			}
+			
+			if (game.checkPlayerIsBriefcase() == true){
+				displayBoard();
+				System.out.println("YOU FOUND THE BRIEFCASE!");
+				gameStatus = status.WON;
+			}
+			
 			if(game.checkItem()) {
 				int itemPickUp = game.applyItem();
 				displayBoard();
@@ -165,11 +172,6 @@ public class UserInterface {
 				System.out.println("YOU LOST THE GAME! LOSER!");
 				mainMenu();
 			}
-			else if (game.checkPlayerIsBriefcase() == true){
-				System.out.println("YOU FOUND THE BRIEFCASE!");
-				gameStatus = status.WON;
-			}
-
 		}
 	}
 
