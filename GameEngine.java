@@ -428,7 +428,7 @@ public class GameEngine implements Serializable{
 		}
 	}
 
-	public void useLineOfSightMovement() //change values in ninjaMovement or useNinjaAI, checkSpy, creatNinja to TEST
+	public void useLineOfSightMovement()
 	{
 		for ( int i = 0; i <=5; i++) 
 		{
@@ -707,7 +707,7 @@ public class GameEngine implements Serializable{
 						y = b;
 					}					
 				} while(( x < 0 || x > 8) || (y < 0 || y > 8)
-						|| board.at(x, y).getNinja() == true
+						|| (board.at(x, y).getNinja() == true && direction != 4)
 						|| board.at(x,y).getRoom() == true 
 						|| board.at(x, y).getPlayer() == true); //keep within boundary; added
 
