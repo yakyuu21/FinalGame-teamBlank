@@ -809,7 +809,7 @@ public class GameEngine implements Serializable{
 	{
 		boolean isSpyNearby = false;
 		for(int i = row - 3; i <= row + 3; i++) // changed
-			for(int j = column - 8; j <= column + 8; j++){ // changed
+			for(int j = column - 3; j <= column + 3; j++){ // changed
 				if (board.at(i, j).getPlayer() == true){
 					isSpyNearby = true;
 				}
