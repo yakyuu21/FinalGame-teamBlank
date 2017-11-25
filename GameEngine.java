@@ -449,7 +449,6 @@ public class GameEngine implements Serializable{
 				int count1 = 0;
 				int count2 = 0;
 				int count3 = 0;
-				int count4 = 0; //added
 				direction = getNinjaDirection(a, b, player.getX(), player.getY());
 				while (isLoop == true){
 
@@ -478,7 +477,6 @@ public class GameEngine implements Serializable{
 						case 4: // added
 							x = a;
 							y = b;
-							count4++;
 							break;
 						default:
 							System.out.println("Error @ uselineofsightmovement default case");
