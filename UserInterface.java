@@ -299,6 +299,7 @@ public class UserInterface {
 		String userInput;
 		boolean valid = false;
 		do {		
+			showLine();
 			System.out.println("Would you like to save? [Y]es / [N]o");
 			userInput = scan.next();
 			if(userInput.toLowerCase().equals("y")) {
@@ -307,6 +308,7 @@ public class UserInterface {
 				mainMenu();
 			}
 			else if(userInput.toLowerCase().equals("n")) {
+				showLine();
 				System.out.println("The game will now return to main menu.\n");
 				valid = true;
 				mainMenu();
