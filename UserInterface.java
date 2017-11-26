@@ -110,8 +110,8 @@ public class UserInterface {
 			boolean valid = false;
 			while(!valid) { //repeat until user input a valid key -- take action(move or shoot)
 				showLine();
-				displayBoard();
 				printStatus();
+				displayBoard();
 				System.out.print("\tMake a wise choice: \nMove: \n\t  W(UP)\n A(LEFT)  S(DOWN)  D(RIGHT) \nShoot: F \nDebug: R \n");
 				direction = scan.next().toLowerCase();
 				if(direction.equals("r"))
