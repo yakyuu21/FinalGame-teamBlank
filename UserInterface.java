@@ -284,7 +284,6 @@ public class UserInterface {
 
 	public boolean loadGame() {
 		String userInput;
-		showLine();
 		System.out.println("Load: Enter file name");
 		userInput = scan.next();
 		scan.nextLine();
