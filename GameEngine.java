@@ -798,11 +798,66 @@ public class GameEngine implements Serializable{
 	public boolean senseSpyInLineOfSight(int xNinja, int yNinja)
 	{
 		boolean isSpyInSight = false;
-		if (xNinja == player.getX() || yNinja == player.getY()){
-			isSpyInSight = true;
+		if (xNinja == player.getX() || yNinja == player.getY()){ // if ninja and spy are in same row or column
+			if (xNinja < player.getX()) // same column and ninja above spy
+			{
+				for ( int i = xNinja + 1; i < player.getX(); i++) 
+				{
+					if (board.at(i, player.getY()).getNinja() || board.at(i, player.getY()).getRoom())
+					{
+						isSpyInSight = false;
+						break;
+					}
+					else isSpyInSight = true;
+				}
+			}
+			else if (xNinja > player.getX()) // same column and ninja below spy
+			{
+				for ( int i = xNinja - 1; i > player.getX(); i--)
+				{
+					if (board.at(i, player.getY()).getNinja() || board.at(i, player.getY()).getRoom())
+					{
+						isSpyInSight = false;
+						break;
+					}
+					else isSpyInSight = true;
+
+				}
+			}
+			else if (yNinja > player.getY()) // same row and ninja to the right of spy
+			{
+				for ( int i = yNinja -1 ; i > player.getY(); i--)
+				{
+					if (board.at(player.getX(), i).getNinja() || board.at(player.getX(), i).getRoom())
+					{
+						isSpyInSight = false;
+						break;
+					}
+					else isSpyInSight = true;
+
+				}
+			}
+			else if (yNinja < player.getY()) // same row and ninja to the left of spy
+			{
+				for ( int i = yNinja + 1; i < player.getY(); i++)
+				{
+					if (board.at(player.getX(), i).getNinja() || board.at(player.getX(), i).getRoom())
+					{
+						isSpyInSight = false;
+						break;
+					}
+					else isSpyInSight = true;
+				}
+			}
+			else
+				isSpyInSight = false;
 		}
+		else 				
+			isSpyInSight = false;
+
 		return isSpyInSight;
 	}
+
 
 
 	public boolean senseSpyInRad(int row, int column) // row = x coordinate for ninja, column = y coordinate for ninja
