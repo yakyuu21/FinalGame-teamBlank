@@ -241,12 +241,12 @@ public class UserInterface {
 				+ "(I) - INVINCIBILITY - For 5 turns you are impervious to death\n");
 		
 		System.out.println("Controls: \n"
-				+ "w - move up\t s - move down\t d - move right\t a - move left\n"
+				+ "\t  W(UP)\n A(LEFT)  S(DOWN)  D(RIGHT) \n"
 				+ "- You can only move one space per turn.  If you run into a wall or room, your turn does not expire\n"
 				+ "- Rooms can only be accessed from the NORTH\n"
 				+ "- Look ahead(once per turn) 2 spaces in the direction of your choice\n"
-				+ "r - debug mode\n"
-				+ "f - shoot, use wasd for which direction.  The bullet will travel in a straight trajectory until\n"
+				+ "[r] - debug mode\n"
+				+ "[f] - shoot, use wasd for which direction.  The bullet will travel in a straight trajectory until\n"
 				+ "\tit hits a Ninja, Wall, or a Room\n"
 				+ "-At any time type [save] to save your progress or type [quit] to return to the main menu\n");
 	}
