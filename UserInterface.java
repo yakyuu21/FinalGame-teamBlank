@@ -149,7 +149,9 @@ public class UserInterface {
 			if (game.checkPlayerIsBriefcase() == true){
 				displayBoard();
 				showLine();
-				System.out.println("YOU FOUND THE BRIEFCASE! \n\n\n\n\n\n\n\n\n\n");
+				System.out.println("YOU FOUND THE BRIEFCASE!");
+				showLine();
+				System.out.println("\n\n\n\n");
 				gameStatus = status.WON;
 				mainMenu(); //added
 
