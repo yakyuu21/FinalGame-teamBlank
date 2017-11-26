@@ -15,6 +15,7 @@ public class Board implements Serializable{
 	private int briefcaseY;
 	
 	private boolean debugMode = false;
+	private boolean hasRadar;
 	
 	/**
 	 * Creates board with room and briefcase.
@@ -36,7 +37,7 @@ public class Board implements Serializable{
 					if(x == briefcaseX && y == briefcaseY) {
 						room[x][y] = new Square(); //with briefcase
 						
-						room[x][y].briefExist(debugMode);
+						room[x][y].briefExist(debugMode, hasRadar);
 					}
 					else {
 						room[x][y] = new Square();//without briefcase
@@ -105,9 +106,9 @@ public class Board implements Serializable{
 		return briefcaseY;
 	}
 	
-	public void debugMode() {
+	public void debugMode(boolean hasRadar) {
 		debugMode = !debugMode;
-		room[briefcaseX][briefcaseY].briefExist(debugMode);
+		room[briefcaseX][briefcaseY].briefExist(debugMode, hasRadar);
 		
 	}
 	

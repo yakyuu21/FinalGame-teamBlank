@@ -113,16 +113,16 @@ public class Square implements Serializable{
 	public void toggleHide() {
 		hide = !hide;
 	}
-	public void briefExist(boolean isDebugOn) {
-		if (!isDebugOn) {//if debug mode is not on
+	public void briefExist(boolean isDebugOn, boolean hasRadar) {
+		if (!isDebugOn && !hasRadar) {//if debug mode is not on and spy does not have radar
 			display = "[_]";
 			hide = false;
 			isRoom = true;
 			isBrief = true;
 		}
-		else { //if debug mode is on
+		else { //if debug mode is on or if spy has radar
 			display = "[#]";
-			hide = true;
+			hide = false;
 			isRoom = true;
 			isBrief = true;
 		}

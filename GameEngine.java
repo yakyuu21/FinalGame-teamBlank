@@ -24,15 +24,20 @@ public class GameEngine implements Serializable{
 	private Item ammo = null;
 	private int numNinja;
 	private String difficulty;
+	private boolean hasRadar;
 
-
-
+	public boolean getHasRadar()
+	{
+		return hasRadar;
+	}
+	
 	public void createBoard() {
 		player = new Character(false,0,8);
 		board = new Board();
 		board.set(player, 8, 0);
 		createPowerUp();	
 		createNinjas();
+		hasRadar = false;
 	}
 
 
@@ -256,8 +261,9 @@ public class GameEngine implements Serializable{
 	}
 
 	public void debugMode() {
-		board.debugMode();		
+		board.debugMode(getHasRadar());		
 	}
+	
 
 	public int getAmmoCount() {
 		return player.getAmmo();
@@ -928,6 +934,7 @@ public class GameEngine implements Serializable{
 
 
 	public void applyRadar() {
+		hasRadar = true; // added: to be used in debug, briefcase will remain visible when switching debugmode on and off 
 		for(int i = 0; i < 9; i++) {
 			for(int j = 0; j < 9; j++) { //check every room and reveal the room with the briefcase
 				if(board.at(i,j).getBrief())
