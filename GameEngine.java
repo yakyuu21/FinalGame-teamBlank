@@ -271,7 +271,7 @@ public class GameEngine implements Serializable{
 	public String shoot(String direction) {
 		int value = 0;
 		if(player.getAmmo() == 0)
-			return "You are out of ammunition! Idiot!";
+			return "You are out of ammunition! Idiot! \n";
 		if(direction.equals("s") || direction.equals("d"))
 			value = 1;
 		else
@@ -309,7 +309,7 @@ public class GameEngine implements Serializable{
 				System.out.println("Error: GameEninge-shoot-switch");
 		}
 		player.fire();
-		return "No Ninjas were killed!";
+		return "No Ninjas were killed!\n";
 	}
 
 	public boolean checkSpy(){

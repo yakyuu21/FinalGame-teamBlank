@@ -8,7 +8,7 @@ public class UserInterface {
 	private Scanner scan = null;
 	private status gameStatus = status.CONTINUE;
 	String level;
-	
+
 	public UserInterface(GameEngine game) {
 		this.game = game;
 		scan = new Scanner(System.in);	
@@ -16,49 +16,56 @@ public class UserInterface {
 
 	public void printTitle() {
 		System.out.println("\tGet the Cheese\n"
-						+ "===============================");
+				+ "===============================");
 	}
 	public void mainMenu() {
 		printTitle();
 		System.out.println(	"Main Menu: \n"+
 				"------------------\n"
 				+ "\t1) How to Play\n" + 
-							"\t2) Start New Game\n" + 
-							"\t3) Load Game\n" + 
-							"\t4) Exit Game\n");
+				"\t2) Start New Game\n" + 
+				"\t3) Load Game\n" + 
+				"\t4) Exit Game\n");
 		String input = scan.next();
 		switch(input) {
 			case "1":
 				howToPlay();
 				break;
 			case "2":
-				System.out.println("you chose 2");
+				showLine();
+				System.out.println("You chose 2.");
+				showLine();
 				startGame(chooseDifficulty());
 				break;
 			case "3":
-				System.out.println("you chose 3");
+				showLine();
+				System.out.println("You chose 3.");
+				showLine();
 				if(loadGame())
 					playGame(getLevel());
 				else 
 					mainMenu();
 				break;
 			case "4":
-				System.out.println("you chose 4\n" + "Game will close.\n" + "GOODBYE" ); ///closes/exits game
+				showLine();
+				System.out.println("You chose 4.\n" + "Game will close.\n" + "GOODBYE" ); ///closes/exits game
+				showLine();
 				System.exit(0);
 				break;
 			default: //when anything besides 1,2,3,4 is pressed in menu
+				showLine();
 				System.out.println("Invalid Input");
 				mainMenu();
 				break;
 		}
-				
+
 	}
 	public String chooseDifficulty()
 	{
 		System.out.println("Select Difficulty. \n"
-				+ "(1) lol\n"
-				+ "(2) Yo. Dis hard. \n"
-				+ "(3) DAFUQ?!");
+				+ "\t(1) lol\n"
+				+ "\t(2) Yo. Dis hard. \n"
+				+ "\t(3) DAFUQ?!\n");
 		boolean isCorrectInput = false;
 
 		do{ 
@@ -76,8 +83,8 @@ public class UserInterface {
 						break;
 					case"3":
 						game.setDifficulty("3");
-						 isCorrectInput = true;
-						 break;
+						isCorrectInput = true;
+						break;
 				}
 			}
 			else
@@ -87,7 +94,7 @@ public class UserInterface {
 	}
 	// Will probably need to catch exception when a String is entered
 
-	
+
 	/**
 	 * Creates board
 	 */
@@ -95,17 +102,23 @@ public class UserInterface {
 		game.createBoard();
 		playGame(level);
 	}
-	
+
 	public void playGame(String lvl){
 		String direction;
 		gameStatus = status.CONTINUE;
 
 		while(gameStatus == status.CONTINUE) {
+
 			direction = look();
 			if(game.look(direction))
+			{
+				showLine();
 				System.out.println("All Clear!");
-			else
+			}
+			else {
+				showLine();
 				System.out.println("Ninja Ahead!");
+			}
 
 			boolean valid = false;
 			while(!valid) { //repeat until user input a valid key -- take action(move or shoot)
@@ -117,8 +130,10 @@ public class UserInterface {
 				if(direction.equals("r"))
 					game.debugMode();
 				else if(direction.equals("f")) {
-					System.out.print("Choose direction to fire: W(UP)/ A(LEFT)/ S(DOWN)/ D(RIGHT) \n");
+					showLine();
+					System.out.print("Choose direction to fire: \n\t  W(UP)\n A(LEFT)  S(DOWN)  D(RIGHT) \n");
 					direction = scan.next();
+					showLine();
 					System.out.print(game.shoot(direction));
 					valid = true;
 				}
@@ -126,18 +141,20 @@ public class UserInterface {
 					valid = game.move(direction);
 				}
 				else {
+					showLine();
 					System.out.println("Invalid Input!");
 				}
 			}
-			
+
 			if (game.checkPlayerIsBriefcase() == true){
 				displayBoard();
+				showLine();
 				System.out.println("YOU FOUND THE BRIEFCASE! \n\n\n\n\n\n\n\n\n\n");
 				gameStatus = status.WON;
 				mainMenu(); //added
 
 			}
-			
+
 			if(game.checkItem()) {
 				int itemPickUp = game.applyItem();
 				printStatus();
@@ -161,8 +178,10 @@ public class UserInterface {
 				}
 			}
 			//add check item method here
-			if(game.checkSpy())  //ninja check method
+			if(game.checkSpy()) {  //ninja check method
+				showLine();
 				System.out.println("A Ninja destroyed you!");
+			}
 
 			//***********************************************
 			game.ninjaDecision();
@@ -171,7 +190,8 @@ public class UserInterface {
 
 			if(game.playerAlive() == false) {
 				gameStatus = status.LOST;
-				System.out.println("YOU LOST THE GAME! LOSER!");
+				showLine();
+				System.out.println("YOU LOST THE GAME! LOSER!\n");
 				mainMenu();
 			}
 		}
@@ -187,7 +207,7 @@ public class UserInterface {
 			showLine();
 			printStatus();
 			displayBoard();
-			System.out.print("\nChoose direction to look:　\n\t  W(UP)\n A(LEFT)  S(DOWN)  D(RIGHT) \nType \"save\" to save, \"quit\" to exit game.\n");
+			System.out.print("\nChoose direction to look:　\n\t  W(UP)\n A(LEFT)  S(DOWN)  D(RIGHT) \nDebug: R \nType \"save\" to save, \"quit\" to exit game.\n");
 			direction = scan.next().toLowerCase();
 			if(direction.equals("r"))
 				game.debugMode();
@@ -234,12 +254,12 @@ public class UserInterface {
 				+ "the building, you may find items laying on the floor: radar, invincible potion, or one more ammo.\n"
 				+ "The items will grant you a power up that will help you on your quest to steal the briefcase.\n"
 				+ "GOOD LUCK!\n");
-				
+
 		System.out.println("Items:\n"
 				+ "(R) - RADAR - When picked up it will show your which room contains the briefcase\n"
 				+ "(A) - AMMO - An additional bullet, can only be picked up if you have no ammo\n"
 				+ "(I) - INVINCIBILITY - For 5 turns you are impervious to death\n");
-		
+
 		System.out.println("Controls: \n"
 				+ "\t  W(UP)\n A(LEFT)  S(DOWN)  D(RIGHT) \n"
 				+ "- You can only move one space per turn.  If you run into a wall or room, your turn does not expire\n"
@@ -250,17 +270,19 @@ public class UserInterface {
 				+ "\tit hits a Ninja, Wall, or a Room\n"
 				+ "-At any time type [save] to save your progress or type [quit] to return to the main menu\n");
 	}
-	
+
 	public void saveGame() {
 		String userInput;
+		showLine();
 		System.out.println("Save: Name your save file:");
 		userInput = scan.next();
 		scan.nextLine();
 		game.save(userInput);
 	}
-	
+
 	public boolean loadGame() {
 		String userInput;
+		showLine();
 		System.out.println("Load: Enter file name");
 		userInput = scan.next();
 		scan.nextLine();
@@ -271,7 +293,7 @@ public class UserInterface {
 			return false;
 		}
 	}
-	
+
 	public void quitGame() {
 		String userInput;
 		boolean valid = false;
@@ -289,6 +311,7 @@ public class UserInterface {
 				mainMenu();
 			}
 			else {
+				showLine();
 				System.out.println("Invalid Input!");
 				valid = false;
 			}
@@ -300,9 +323,9 @@ public class UserInterface {
 	}
 
 	public void showLine() {
-		System.out.println("\n\n\n----------------------------------\n\n\n");
+		System.out.println("\n----------------------------------\n");
 	}
-	
-	
+
+
 }
 
