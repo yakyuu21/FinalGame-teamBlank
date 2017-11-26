@@ -140,8 +140,8 @@ public class UserInterface {
 			
 			if(game.checkItem()) {
 				int itemPickUp = game.applyItem();
-				displayBoard();
 				printStatus();
+				displayBoard();
 				showLine();
 				switch(itemPickUp) {
 					case 1:
@@ -185,8 +185,8 @@ public class UserInterface {
 		String direction = "";
 		while(!valid) {
 			showLine();
-			displayBoard();
 			printStatus();
+			displayBoard();
 			System.out.print("\nChoose direction to look:　\n\t  W(UP)\n A(LEFT)  S(DOWN)  D(RIGHT) \nType \"save\" to save, \"quit\" to exit game.\n");
 			direction = scan.next().toLowerCase();
 			if(direction.equals("r"))
