@@ -30,6 +30,7 @@ public class UserInterface {
 		switch(input) {
 			case "1":
 				howToPlay();
+				mainMenu();
 				break;
 			case "2":
 				showLine();
