@@ -1,14 +1,51 @@
+/**
+ * CS 141: Intro to Programming and Problem Solving
+ * Professor: Edwin Rodr&iacute;guez
+ *
+ * Programming Assignment #N
+ *
+ * <description-of-assignment>
+ * This is a team project in which we implement a 2D game containing
+ * various objects: rooms, power ups, player, and ninjas.
+ * The goal of this game is to have the user interact with different 
+ * entities in the program and to complete the objective of finding
+ * the briefcase.
+ * 
+ * Team Blank
+ * 	
+ * Justen Minamitani
+ * Saroj Poudel
+ * Steve Marrero
+ * Aaron Lim
+ * Koshi Huynh
+ * Jon Camarillo
+ */
 package edu.cpp.cs.cs141.final_prog_assignment;
 
 import java.util.Scanner;
 
+/**
+ * This class handles all the interactions between the game and the user.
+ */
 public class UserInterface {
+
 	private enum status{WON, LOST, CONTINUE};
 	private GameEngine game;
 	private Scanner scan = null;
+	/**
+	 * The game status is set as CONTINUE until player wins or loses.
+	 */
 	private status gameStatus = status.CONTINUE;
+	
+	/**
+	 * This field represents difficulty of the game
+	 */
 	String level;
 
+	/**
+	 * Default contructor that sets the game in motion.
+	 * @param game GameEngine object
+	 */
 	public UserInterface(GameEngine game) {
 		this.game = game;
 		scan = new Scanner(System.in);	
@@ -18,6 +55,12 @@ public class UserInterface {
 		System.out.println("\tGet the Cheese\n"
 				+ "===============================");
 	}
+
+	/**
+	 * This method will display the main menu at the start of the game or when
+	 * the player quits the game.  Game will end when the player exits from
+	 * this menu.
+	 */
 	public void mainMenu() {
 		printTitle();
 		System.out.println(	"Main Menu: \n"+
@@ -61,6 +104,11 @@ public class UserInterface {
 		}
 
 	}
+	
+	/**
+	 * This method will create the current difficulty of the game.
+	 * @return difficulty level
+	 */
 	public String chooseDifficulty()
 	{
 		System.out.println("Select Difficulty. \n"
@@ -97,13 +145,19 @@ public class UserInterface {
 
 
 	/**
-	 * Creates board
+	 * This method will create the board at the start of a new game.
 	 */
 	public void startGame(String level) {
 		game.createBoard();
 		playGame(level);
 	}
 
+	/**
+	 * This method will allow player to play the game on the desired difficulty. It will 
+	 * get its action from {@link GameEngine} and display messages with each command.
+	 * This method will control the flow of the game.
+	 * @param lvl String input from user that indicates the difficulty of the game.
+	 */
 	public void playGame(String lvl){
 		String direction;
 		gameStatus = status.CONTINUE;
@@ -186,9 +240,8 @@ public class UserInterface {
 				System.out.println("A Ninja destroyed you!");
 			}
 
-			//***********************************************
 			game.ninjaDecision();
-			//***********************************************
+
 			game.decInvincibility();
 
 			if(game.playerAlive() == false) {
@@ -199,8 +252,6 @@ public class UserInterface {
 			}
 		}
 	}
-
-
 
 
 	private String look() {
@@ -224,6 +275,9 @@ public class UserInterface {
 		return direction;
 	}
 
+	/**
+	 * This method displays the current status of the player and the number of ninjas left
+	 */
 	public void printStatus() {
 		System.out.println("Invincibility: "+ game.invCount());
 		System.out.println("Ammo: "+ game.getAmmoCount());
@@ -232,6 +286,9 @@ public class UserInterface {
 	}
 
 
+	/**
+	 * This method will display the board onto the screen
+	 */
 	private void displayBoard() {
 		int length = 9;
 		for(int x = 0;x < length; x++) {
@@ -243,6 +300,10 @@ public class UserInterface {
 		System.out.println("\n");
 	}
 
+	/**
+	 * This method displays the background information of the game, and instructions on how to play.
+	 * It will describe the controls, and what each item does.
+	 */
 	public void howToPlay() {
 		System.out.println("Background:\n"
 				+ "--------------\n"
@@ -274,6 +335,10 @@ public class UserInterface {
 				+ "-At any time type [save] to save your progress or type [quit] to return to the main menu\n");
 	}
 
+	/**
+	 * This method will ask the user to create a new save file or to overwrite an
+	 * existing one.
+	 */
 	public void saveGame() {
 		String userInput;
 		showLine();
@@ -283,6 +348,11 @@ public class UserInterface {
 		game.save(userInput);
 	}
 
+	/**
+	 * This method will ask the user to load an existing file that they have
+	 * previously created
+	 * @return true if the file exist, false if it doesn't
+	 */
 	public boolean loadGame() {
 		String userInput;
 		System.out.println("Load: Enter file name");
@@ -296,6 +366,11 @@ public class UserInterface {
 		}
 	}
 
+	/**
+	 * This method will be called when the player quits the game. It will check
+	 * to see if the player wanted to save their progress before quitting and
+	 * send them back to the main menu.
+	 */
 	public void quitGame() {
 		String userInput;
 		boolean valid = false;
@@ -322,6 +397,10 @@ public class UserInterface {
 		}while(!valid);
 	}
 
+	/**
+	 * This method will return the current difficulty of the game
+	 * @return String value of the level difficulty.
+	 */
 	public String getLevel(){
 		return level;
 	}

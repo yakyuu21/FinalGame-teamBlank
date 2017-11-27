@@ -1,26 +1,82 @@
+/**
+ * CS 141: Intro to Programming and Problem Solving
+ * Professor: Edwin Rodr&iacute;guez
+ *
+ * Programming Assignment #N
+ *
+ * <description-of-assignment>
+ * This is a team project in which we implement a 2D game containing
+ * various objects: rooms, power ups, player, and ninjas.
+ * The goal of this game is to have the user interact with different 
+ * entities in the program and to complete the objective of finding
+ * the briefcase.
+ * 
+ * Team Blank
+ * 	
+ * Justen Minamitani
+ * Saroj Poudel
+ * Steve Marrero
+ * Aaron Lim
+ * Koshi Huynh
+ * Jon Camarillo
+ */
+
+
 package edu.cpp.cs.cs141.final_prog_assignment;
 import java.util.Random;
 import java.io.Serializable;
 
+
+/**
+ * This class represents the board that contains {@link Square} 
+ */
 public class Board implements Serializable{
 	private final int horizontal = 9;
 	private final int vertical = 9;
+	
+	/**
+	 * This field represents the board and the coordinates of the different
+	 * type of {@link Square}
+	 */
 	private Square[][] room = new Square[vertical][horizontal];
+	
 	private Random random = new Random();
 
+	/**
+	 * this field represents the possible "x" coordinate of the briefcase
+	 */
 	private int[] briefcaseArrayX = {1,4,7};
+	
+	/**
+	 * This field represents the possible "y" coordinates of the briefcase
+	 */
 	private int[] briefcaseArrayY = {1,4,7};
 	
+	/**
+	 * This field represents the "x" coordinates of the briefcase.
+	 */
 	private int briefcaseX;
+	
+	/**
+	 * This field represents the "y" coordinates of the briefcase.
+	 */
 	private int briefcaseY;
 	
+	/**
+	 * This field represents the state of the board visibility
+	 */
+	
 	private boolean debugMode = false;
+	
+	/**
+	 * This field represents if the room has the radar
+	 */
 	private boolean hasRadar;
 	
 	/**
-	 * Creates board with room and briefcase.
+	 * This is the default constructor, when called it will create the board
 	 */
-	Board() {
+	public Board() {
 		createBoard();
 	}
 
@@ -28,6 +84,7 @@ public class Board implements Serializable{
 	 * Creates board with room and briefcase.
 	 */
 	public void createBoard() {
+		
 		briefcaseX = briefcaseArrayX[random.nextInt(3)];
 		briefcaseY = briefcaseArrayY[random.nextInt(3)];
 
@@ -51,7 +108,10 @@ public class Board implements Serializable{
 	}
 
 	/**
-	 * 
+	 * This method returns the {@link Square} string at location x and y
+	 * @param x the x component of the {@link Square}
+	 * @param y the y component of the {@link Square}
+	 * @return the String display of the Square @ location
 	 */
 	public String displayBoard(int x, int y) {
 		if(debugMode) {
@@ -61,6 +121,12 @@ public class Board implements Serializable{
 			return room[x][y].display();
 	}	
 
+	/**
+	 * This method returns the {@link Square} object at location x and y of {@link #room}
+	 * @param x an integer that represents the the row
+	 * @param y an integer that represents the column
+	 * @return Square at the coordinates
+	 */
 	public Square at(int x, int y) {
 		try
 		{
@@ -72,7 +138,12 @@ public class Board implements Serializable{
 		}
 	}
 	
-	
+	/**
+	 * This method will set the player on the board
+	 * @param player the character object representing the player
+	 * @param x an integer value that indicates the row
+	 * @param y an integer value that indicates the column
+	 */
 	public void set(Character player, int x, int y) {
 		room[x][y].setCharacter(player, x, y);
 		player.setX(x);
@@ -106,16 +177,30 @@ public class Board implements Serializable{
 		return briefcaseY;
 	}
 	
+	/**
+	 * 
+	 * @param hasRadar
+	 */
 	public void debugMode(boolean hasRadar) {
 		debugMode = !debugMode;
 		room[briefcaseX][briefcaseY].briefExist(debugMode, hasRadar);
 		
 	}
 	
+	/**
+	 * This function sets {@link #room} to empty state
+	 * @param x integer that is the x-coordinate
+	 * @param y integer that is the y-coordinate
+	 */
 	public void setEmpty( int x, int y) {
 		room[x][y].setEmpty();
 	}
 	
+	/**
+	 * This method removes the ninja from the board
+	 * @param x integer that is the x-coordinate of ninja
+	 * @param y integer that is the y-coordinate of ninja
+	 */
 	public void removeNinja(int x, int y) {
 		room[x][y].removeNinja();
 	}

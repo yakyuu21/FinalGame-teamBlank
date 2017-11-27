@@ -1,3 +1,25 @@
+/**
+ * CS 141: Intro to Programming and Problem Solving
+ * Professor: Edwin Rodr&iacute;guez
+ *
+ * Programming Assignment #N
+ *
+ * <description-of-assignment>
+ * This is a team project in which we implement a 2D game containing
+ * various objects: rooms, power ups, player, and ninjas.
+ * The goal of this game is to have the user interact with different 
+ * entities in the program and to complete the objective of finding
+ * the briefcase.
+ * 
+ * Team Blank
+ * 	
+ * Justen Minamitani
+ * Saroj Poudel
+ * Steve Marrero
+ * Aaron Lim
+ * Koshi Huynh
+ * Jon Camarillo
+ */
 package edu.cpp.cs.cs141.final_prog_assignment;
 
 import java.util.Random;
@@ -11,26 +33,56 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-
+/**
+ * This class determines all the actions that takes place within the game
+ * from player action to random ninja movments and random items spawns.
+ */
 public class GameEngine implements Serializable{
 
 	private Random random = new Random();
 
+	/**
+	 * This field represents the player the user controls. Only 1 player
+	 * may be active in the board at all times.
+	 */
 	private Character player;
+	
+	/**
+	 * This field represents the board of the game
+	 */
 	private Board board;
+	
+	/**
+	 * This field creates the 6 ninjas that are in play
+	 */
 	private Character[] ninjas = new Character[6];
+	
 	private Item radar = null;
 	private Item invincible = null;
 	private Item ammo = null;
+	
+	/**
+	 * This field represents the number of ninjas that are left on the board
+	 */
 	private int numNinja;
+	
+	/**
+	 * This field represents the difficulty of the game
+	 */
 	private String difficulty;
+	
+	/**
+	 * This field represents if the player picked up the radar or not
+	 */
 	private boolean hasRadar;
 
-	public boolean getHasRadar()
-	{
-		return hasRadar;
-	}
-	
+	/**
+	 * This method will create the board, player, items, and ninjas.
+	 * It will set the player and rooms in the initial position while
+	 * setting the items and ninjas in random spaces.
+	 * The default setting of the board does not have the radar active
+	 * making the briefcase hidden.
+	 */
 	public void createBoard() {
 		player = new Character(false,0,8);
 		board = new Board();
@@ -41,6 +93,10 @@ public class GameEngine implements Serializable{
 	}
 
 
+	/**
+	 * This method will create new ninjas {@link #ninjas} and set the on the board at
+	 * random coordinates which the {@Square} is empty
+	 */
 	public void createNinjas() {
 		int x,y;
 		int count = 0;
@@ -65,14 +121,24 @@ public class GameEngine implements Serializable{
 		}
 	}
 
+	/**
+	 * This method will create {@link Item} radar, invincible, and ammo
+	 * and set them on the board at random locations in the board
+	 */
 	private void createPowerUp() {
 		int x, y;
-		//Items weren't populated when the player chose to start another new game.  Items are initialized as null to act as a reset.
+		/**
+		 * Items weren't populated when the player chose to start another new game.  
+		 * Items are initialized as null to act as a reset.
+		 */
 		radar = null;
 		invincible = null;
 		ammo = null;
 
-		while(radar == null) { //loop until one of each item is created
+		/**
+		 * will loop until one of each item is created
+		 */
+		while(radar == null) { 
 			x = getRandom();
 			y = getRandom();
 			if(!board.at(x, y).getItem() && board.at(x, y).getEmpty() && !board.at(x, y).getRoom() && !board.at(x, y).getPlayer()) { //check if there is no item, not a room, and is empty
@@ -98,14 +164,29 @@ public class GameEngine implements Serializable{
 		}	
 	}
 
-	public int getRandom(){ //function for getting a random number 0-8
+	/**
+	 * This method will get a random number from 0 to 8
+	 * @return random integer from 0 to 8
+	 */
+	public int getRandom(){ 
 		return random.nextInt(9);
 	}
 
+	/**
+	 * This method will display the String representation of the item at x and y
+	 * @param x integer representing the x coordinate
+	 * @param y integer representing the y coordinate
+	 * @return String representation of the object at the square
+	 */
 	public String displayBoard(int x, int y){
 		return board.displayBoard(x, y);
 	}
 
+	/**
+	 * This method will allow the user to see 2 spaces ahead of them.
+	 * @param direction String input from user which indicates which direction to see wasd
+	 * @return true if spaces ahead isn't a room or wall, otherwise false
+	 */
 	public boolean look(String direction) {
 		Square[] s = new Square[3];
 		boolean clear = true;
@@ -158,7 +239,17 @@ public class GameEngine implements Serializable{
 		}
 		return clear;
 	}
-
+	
+	/**
+	 * This method moves the player 1 space in the direction indicated by the user.
+	 * It cannot move past its boundaries, and cannot walk through walls.
+	 * Walls are only accessible from the north side, and the player cannot walk over
+	 * ninja while invincible. If player walks over a power up, they will use the items
+	 * effect if valid.
+	 * @param direction String input from the user wasd
+	 * @return true if move is valid: if location isn't a room or wall
+	 * otherwise return false
+	 */
 	public boolean move(String direction) {
 		boolean moved = false;
 
@@ -250,7 +341,7 @@ public class GameEngine implements Serializable{
 	}
 
 	/**
-	 * checks if the player location is the same as the briefcase location
+	 * This method checks if the player location is the same as the briefcase location
 	 * @return boolean is true if they're the same, false if they're not
 	 */
 	public boolean checkPlayerIsBriefcase(){
@@ -260,14 +351,29 @@ public class GameEngine implements Serializable{
 			return false;
 	}
 
+	/**
+	 * This method sets the game state to debug mode, revealing the entire board
+	 */
 	public void debugMode() {
 		board.debugMode(getHasRadar());		
 	}
 	
-
+	/**
+	 * This method returns the amount of ammo the player has 
+	 * @return 1 if full ammo, 0 if no ammo
+	 */
 	public int getAmmoCount() {
 		return player.getAmmo();
 	}
+	
+	/**
+	 * This method gets a direction indicated by the user wasd and shoots in that direction.
+	 * The bullet will travel until a ninja is hit or it hits a wall or a room.
+	 * Ammo will be depleted upon firing and will indicate that you cannot fire if you attempt
+	 * with no ammo.
+	 * @param direction String input from user that indicates which direction wasd
+	 * @return String telling user what they hit
+	 */
 	public String shoot(String direction) {
 		int value = 0;
 		if(player.getAmmo() == 0)
@@ -311,6 +417,7 @@ public class GameEngine implements Serializable{
 		player.fire();
 		return "No Ninjas were killed!\n";
 	}
+
 
 	public boolean checkSpy(){
 		int x = player.getX();
@@ -378,6 +485,13 @@ public class GameEngine implements Serializable{
 		return value;
 	}
 
+	/**
+	 * This method represents when the player gets killed by the ninja but still has atleast 1 or more lives.
+	 * The player will be placed back into the initial starting position, and the location where the player
+	 * was killed will be set to empty.
+	 * @param x integer value for x coordinate
+	 * @param y integer value for y coordinate
+	 */
 	public void reset(int x,int y) {
 		player.decLives();
 		board.set(player,8, 0);
@@ -385,7 +499,12 @@ public class GameEngine implements Serializable{
 	}
 
 
-	//---------------------------------------------
+	/**
+	 * This method represents the random movement of the ninja. The random movements
+	 * depends on rng from 0 to 3.  This method will make sure the ninja will not
+	 * move out of bounds, or into rooms.  If the ninja walks over item, {@link Square}
+	 * will temporarily hold the value and upon moving, the item is returned.
+	 */
 	public void ninjaMovement() {
 		for ( int i = 0; i <= 5; i++) { 
 			if(ninjas[i].getAlive() == false)
@@ -434,6 +553,11 @@ public class GameEngine implements Serializable{
 		}
 	}
 
+	/**
+	 * This method will set the difficulty of the randomized ninja movements.  If the player
+	 * is in the Ninjas line of sight, it will follow the player until the player is out of 
+	 * its line of sight.
+	 */
 	public void useLineOfSightMovement()
 	{
 		for ( int i = 0; i <=5; i++) 
@@ -583,6 +707,10 @@ public class GameEngine implements Serializable{
 
 
 
+	/**
+	 * This method sets the ninja movement to the hardest difficulty. It will follow the player
+	 * if the player is within a radius of the ninja.
+	 */
 	public void useRadialMovement() {
 		for ( int i = 0; i <=5; i++) 
 		{ 
@@ -724,6 +852,13 @@ public class GameEngine implements Serializable{
 	}
 
 
+	/**
+	 * This method will move the ninja in the x and y coordinate of the board.
+	 * @param ninjas Character object of the ninja that has moved
+	 * @param direction integer value of the random number generated
+	 * @param x integer value for the x coordinate
+	 * @param y integer value for the y coordinate
+	 */
 	public void moveNinja( Character ninjas, int direction, int x, int y) {
 		switch(direction) {
 			case 0:					
@@ -801,6 +936,12 @@ public class GameEngine implements Serializable{
 	}
 
 
+	/**
+	 * This method will check to see if the player is within the ninjas line of sight.
+	 * @param xNinja x coordinate of the ninja
+	 * @param yNinja y coordinate of the ninja
+	 * @return true if within xNina or yNinja
+	 */
 	public boolean senseSpyInLineOfSight(int xNinja, int yNinja)
 	{
 		boolean isSpyInSight = false;
@@ -866,6 +1007,12 @@ public class GameEngine implements Serializable{
 
 
 
+	/**
+	 * This method will check to see if the player is within the radius of the ninja
+	 * @param row integer x coordinate for ninja
+	 * @param column integer y coordinate for ninja
+	 * @return return true if player is within radius, otherwise false
+	 */
 	public boolean senseSpyInRad(int row, int column) // row = x coordinate for ninja, column = y coordinate for ninja
 	{
 		boolean isSpyNearby = false;
@@ -878,20 +1025,33 @@ public class GameEngine implements Serializable{
 		return isSpyNearby;
 	}
 
-	///////---------------------------------------
-
+	/**
+	 * This method will reduce the invincible counter by 1
+	 */
 	public void decInvincibility() {
 		player.decInvincibility();
 	}
+	
+	/**
+	 * This method will return the current amount of invincible count
+	 * @return invincible count
+	 */
 	public int invCount() {
 		return player.getInvCount();
 	}
 
+	/**
+	 * This method checks to see if player is alive
+	 * @return player condition
+	 */
 	public boolean playerAlive() {
 		return player.getAlive();
 	}
-	//////////////////////----------------------------------------
-
+	
+	/**
+	 * This method checks if the item is at the player location
+	 * @return true if player is on item false if not
+	 */
 	public boolean checkItem() {
 		int x = player.getX();
 		int y = player.getY();
@@ -899,6 +1059,11 @@ public class GameEngine implements Serializable{
 			return true;
 		return false;
 	}
+	
+	/**
+	 * This method applies the item if the player walks over the item
+	 * @return integer 0 to 3
+	 */
 	public int applyItem() {
 		int x = player.getX();
 		int y = player.getY();
@@ -925,14 +1090,24 @@ public class GameEngine implements Serializable{
 		}
 	}
 
+	/**
+	 * This method applies the invincible item to the player
+	 */
 	public void applyInvincible() {
 		player.setInvincible();
 	}
+	
+	/**
+	 * This method applies the ammo to the player.
+	 */
 	public void applyAmmo() {
 		player.incAmmo();
 	}
 
 
+	/**
+	 * This method activates the radar allowing the user to see the location of the briefcase.
+	 */
 	public void applyRadar() {
 		hasRadar = true; // added: to be used in debug, briefcase will remain visible when switching debugmode on and off 
 		for(int i = 0; i < 9; i++) {
@@ -942,7 +1117,12 @@ public class GameEngine implements Serializable{
 			}
 		}
 	}
-	/////--------------------------------------------------------------
+	
+	/**
+	 * This method saves the current conditions of the game onto a .dat file
+	 * @param filename String input from user
+	 * @return true if save is successful, returns false if IOException
+	 */
 	public boolean save(String filename) {
 		try {
 			FileOutputStream ofstream = new FileOutputStream(filename + ".dat") ;
@@ -964,7 +1144,12 @@ public class GameEngine implements Serializable{
 			return false;
 		}
 	}
-
+	
+	/**
+	 * This method will load a save file and allow the player to continue from their last progress
+	 * @param filename String user input 
+	 * @return true if file exist, false if file doesnt exist, IOException, or ClassNotFoundException
+	 */
 	public boolean load(String filename) {
 		try {
 			FileInputStream ifstream = new FileInputStream(filename + ".dat");
@@ -984,6 +1169,10 @@ public class GameEngine implements Serializable{
 		}
 	}
 
+	/**
+	 * This method will set the number of ninjas that are currently on the board
+	 * by checking if the ninja object is alive or not
+	 */
 	public void setNumNinja() {
 		int counter = 0;
 		for(int i = 0; i < 6; i++) {
@@ -994,19 +1183,35 @@ public class GameEngine implements Serializable{
 		numNinja = counter;
 	}
 
+	/**
+	 * This method will return the number of ninjas left on the board.  Since the player
+	 * can fire a max of two times, the integer values should be from 4 to 6.
+	 * @return numNinjas integer value from 4 to 6.
+	 */
 	public int getNumNinja() {
 		setNumNinja();
 		return numNinja;
 	}
 
+	/**
+	 * This method will return the player object
+	 * @return player 
+	 */
 	public Character getPlayer() {
 		return player;
 	}
 
+	/**
+	 * This method will set the difficulty of the game
+	 * @param level represents the difficulty of the game
+	 */
 	public void setDifficulty(String level) {
 		difficulty = level;
 	}
 
+	/**
+	 * This method will set the ninja movements depending on the difficulty of the game
+	 */
 	public void ninjaDecision(){
 		switch(difficulty) {
 			case"1":
@@ -1023,6 +1228,10 @@ public class GameEngine implements Serializable{
 		}
 	}
 
+	public boolean getHasRadar()
+	{
+		return hasRadar;
+	}
 }
 
 
