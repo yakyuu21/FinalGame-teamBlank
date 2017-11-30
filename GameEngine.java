@@ -69,7 +69,7 @@ public class GameEngine implements Serializable{
 	/**
 	 * This field represents the difficulty of the game
 	 */
-	private String difficulty;
+	private int difficulty;
 	
 	/**
 	 * This field represents if the player picked up the radar or not
@@ -261,11 +261,8 @@ public class GameEngine implements Serializable{
 					System.out.println("WALL!");
 					moved = false;
 
-				}/*
-				else if(board.at(player.getX()-1,  player.getY()).getNinja()) {
-					System.out.println("Ninja!");
-					moved = false;
-				}*/
+				}
+				
 				else {
 					board.set(player, player.getX()-1, player.getY());
 					board.move(player.getX()+1, player.getY());
@@ -281,11 +278,7 @@ public class GameEngine implements Serializable{
 					System.out.println("WALL!");
 					moved = false;
 
-				}/*
-				else if(board.at(player.getX(),  player.getY()-1).getNinja()) {
-					System.out.println("Ninja!");
-					moved = false;
-				}*/
+				}
 				else{
 					board.set(player, player.getX(), player.getY()-1);
 					board.move(player.getX(), player.getY()+1);
@@ -301,10 +294,7 @@ public class GameEngine implements Serializable{
 					System.out.println("WALL!");
 					moved = false;
 				}
-				/*else if(board.at(player.getX()+1,  player.getY()).getNinja()) {
-					System.out.println("Ninja!");
-					moved = false;
-				}*/
+
 				else{
 					board.set(player, player.getX()+1, player.getY());
 					board.move(player.getX()-1, player.getY());
@@ -320,11 +310,8 @@ public class GameEngine implements Serializable{
 					System.out.println("WALL!");
 					moved = false;
 
-				}/*
-				else if(board.at(player.getX(),  player.getY()+1).getNinja()) {
-					System.out.println("Ninja!");
-					moved = false;
-				}*/
+				}
+				
 				else{
 					board.set(player, player.getX(), player.getY()+1);
 					board.move(player.getX(), player.getY()-1);
@@ -418,69 +405,43 @@ public class GameEngine implements Serializable{
 		return "No Ninjas were killed!\n";
 	}
 
-
-	public boolean checkSpy(){
+	/**
+	 * This method checks to see if the ninja and players are at adjacent squares
+	 * @return true if player is 1 space adjacent to ninja and false if not
+	 */
+	public boolean checkSpy() {
 		int x = player.getX();
 		int y = player.getY();
-		int a = 0;
-		int b = 0;
+		int a, b;
 		boolean value = false;
-
-		for( int count = 0; count <= 5; count ++) {
-			if(ninjas[count].getAlive() == false) //if ninja is dead - check next ninja?
+		
+		for(int count = 0; count <= 5; count++) {
+			if(!ninjas[count].getAlive())
 				continue;
 			a = ninjas[count].getX();
 			b = ninjas[count].getY();
-
-			if (board.at(x, y).getRoom())// if ninja goes into a room
+			
+			if(board.at(x, y).getRoom())
 				return value;
-
-
-			if( y == b) { //if in same vertical line
-				if(x+1 == a) { //check for horizontal match in position
-					if(!player.isInvincible()) {
+			
+			if(!player.isInvincible()) {
+				if(y == b) {
+					if(a ==(x+1) || a == (x-1)) {
 						reset(x,y);
-						return !value;
+						value = true;
 					}
-					else
-						return value;
 				}
-				else if (x-1 == a) {
-					if(!player.isInvincible()) {//if not invincible
+				else if(x == a) {
+					if(b == (y+1) || b == (y-1)) {
 						reset(x,y);
-						return !value;
+						value = true;
 					}
-					else
-						return value;
 				}
-			}
-			if ( x == a ) {
-				if( y + 1 == b) {
-					if(!player.isInvincible()) {
-						reset(x,y);
-						return !value;
-					}
-					else
-						return value;
-				}
-				else if (y - 1 == b) {
-					if(!player.isInvincible()) {
-						reset(x,y);
-						return !value;
-					}
-					else
-						return value;
-				}
-			}
-			if(x == a && y == b) {
-				if(!player.isInvincible()) {
+				else if(x == 1 && y == b) {
 					reset(x,y);
-					return(!value);
+					value = true;
 				}
-				else 
-					return value;
 			}
-
 		}
 		return value;
 	}
@@ -497,7 +458,6 @@ public class GameEngine implements Serializable{
 		board.set(player,8, 0);
 		board.setEmpty(x, y);
 	}
-
 
 	/**
 	 * This method represents the random movement of the ninja. The random movements
@@ -615,8 +575,8 @@ public class GameEngine implements Serializable{
 					// if ninja can't move there...
 					if ( (x < 0 || x > 8 || y < 0 || y > 8)
 							|| board.at(x, y).getNinja()==true
-							|| board.at(x, y).getRoom() == true
-							|| board.at(x, y).getPlayer() == true)
+							|| board.at(x, y).getRoom() == true)
+							//|| board.at(x, y).getPlayer() == true)
 					{
 						isLoop = true; // ...the do loop activates...
 						direction = random.nextInt(4); //...and a random direction is assigned.
@@ -626,8 +586,7 @@ public class GameEngine implements Serializable{
 							x = a;
 							y = b;
 						}
-					}
-
+					} 
 					else{
 						isLoop = false;
 						moveNinja(ninjas[i],direction,x,y);
@@ -705,8 +664,6 @@ public class GameEngine implements Serializable{
 		}
 	}
 
-
-
 	/**
 	 * This method sets the ninja movement to the hardest difficulty. It will follow the player
 	 * if the player is within a radius of the ninja.
@@ -767,8 +724,9 @@ public class GameEngine implements Serializable{
 					if (( x < 0 || x > 8) 
 							|| (y < 0 || y > 8)
 							|| (board.at(x, y).getNinja()==true && direction != 4)
-							|| board.at(x, y).getRoom() == true
-							|| board.at(x, y).getPlayer() == true){ //added
+							|| board.at(x, y).getRoom() == true)
+							//|| board.at(x, y).getPlayer() == true){ //added
+					{
 						isLoop = true; // ...the do loop activates...
 						direction = random.nextInt(4); //...and a random direction is assigned.
 						if (count0 >= 1 && count1 >= 1 && count2 >= 1 && count3 >= 1) { // if ninja can't move, case 4 is activated.
@@ -778,7 +736,6 @@ public class GameEngine implements Serializable{
 							y = b;
 						}
 					}
-
 					else 
 					{
 						isLoop = false;
@@ -1161,7 +1118,7 @@ public class GameEngine implements Serializable{
 			radar = (Item) infile.readObject();
 			invincible = (Item) infile.readObject();
 			ammo = (Item) infile.readObject();
-			difficulty = (String) infile.readObject();
+			difficulty = (int) infile.readObject();
 			infile.close();
 			return true;
 		}catch(IOException | ClassNotFoundException e) {
@@ -1205,7 +1162,7 @@ public class GameEngine implements Serializable{
 	 * This method will set the difficulty of the game
 	 * @param level represents the difficulty of the game
 	 */
-	public void setDifficulty(String level) {
+	public void setDifficulty(int level) {
 		difficulty = level;
 	}
 
@@ -1214,16 +1171,14 @@ public class GameEngine implements Serializable{
 	 */
 	public void ninjaDecision(){
 		switch(difficulty) {
-			case"1":
+			case 1:
 				ninjaMovement();
 				break;
-			case"2":
+			case 2:
 				useLineOfSightMovement();
 				break;
-			case"3":
+			case 3:
 				useRadialMovement();
-				break;
-			default:
 				break;
 		}
 	}
