@@ -183,13 +183,19 @@ public class GameEngine implements Serializable{
 	}
 
 	/**
-	 * This method will allow the user to see 2 spaces ahead of them.
+	 * This method will allow the user to see 2 spaces ahead of them. 
+	 * First the method checks if the player is in a room or not.
+	 * If in a room, isRoom = true, and player can only see north.
+	 * Otherwise, two squares ahead are stored and checked for ninjas.
 	 * @param direction String input from user which indicates which direction to see wasd
 	 * @return true if spaces ahead isn't a room or wall, otherwise false
 	 */
 	public boolean look(String direction) {
 		Square[] s = new Square[3];
 		boolean clear = true;
+		boolean isRoom = false;
+		if((board.at(player.getX(), player.getY()).getRoom()))
+				isRoom = true;
 		switch(direction.toLowerCase()) {
 			case "w":
 				for(int i = 1;i < 3; i++) {
@@ -199,6 +205,8 @@ public class GameEngine implements Serializable{
 				}
 				break;
 			case "a":
+				if(isRoom)
+					break;
 				for(int i = 1;i < 3; i++) {
 					if(player.getY()-i >= 0) {
 						s[i] = board.at(player.getX(), player.getY()-i);
@@ -206,6 +214,8 @@ public class GameEngine implements Serializable{
 				}
 				break;
 			case "s":
+				if(isRoom)
+					break;
 				for(int i = 1;i < 3; i++) {
 					if(player.getX()+i <= 8) {
 						s[i] = board.at(player.getX()+i, player.getY());
@@ -214,6 +224,8 @@ public class GameEngine implements Serializable{
 				break;
 
 			case "d":
+				if(isRoom)
+					break;
 				for(int i = 1;i < 3; i++) {
 					if(player.getY()+i <= 8) {
 						s[i] = board.at(player.getX(), player.getY()+i);
@@ -223,6 +235,11 @@ public class GameEngine implements Serializable{
 			default:
 				System.out.print("Error: GameEngine-look-switch");
 		}	
+		/*
+		 * This will now check whether or not the squares are Rooms, Ninjas,
+		 * or all clear! This also reveals those squares to the user
+		 * next time the board is printed.
+		 */
 		for(int i = 1; i < 3; i++) {
 			if(s[i] != null) {
 				if(s[i].getRoom()) {
