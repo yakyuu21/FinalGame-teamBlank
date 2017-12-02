@@ -312,7 +312,6 @@ public class UserInterface {
 		gameStatus = status.CONTINUE;
 		
 		while(gameStatus == status.CONTINUE) {	
-			checkSpy();
 			displayBoard();
 			printStatus();
 			lookCommand();
