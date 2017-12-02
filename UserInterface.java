@@ -52,6 +52,9 @@ public class UserInterface {
 		scan = new Scanner(System.in);	
 	}
 
+	/**
+	 * Displays the title of the game at the start.
+	 */
 	public void printTitle() {
 		System.out.println("**********************\n"
 				+ "*   Get the Cheese   *\n"
@@ -523,6 +526,9 @@ public class UserInterface {
 		return level;
 	}
 
+	/**
+	 * Used as a styling tool for the UI
+	 */
 	public void showLine() {
 		System.out.println("\n----------------------------------\n");
 	}

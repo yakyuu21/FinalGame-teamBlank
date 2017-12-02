@@ -887,7 +887,14 @@ public class GameEngine implements Serializable{
 	}
 
 
-
+	/**
+	 * Use in conjunction with useLineOfSightMovement() and useRadialMovement() to determine ninja's direction
+	 * @param row coordinate for ninja
+	 * @param column coordinate for ninja
+	 * @param i row coord for spy
+	 * @param j row coord for spy
+	 * @return int that determines direction
+	 */
 	public int getNinjaDirection(int row, int column, int i, int j) // row column = ninja, i j = spy
 	{
 		int ninjaDirection = 0;
@@ -1225,6 +1232,10 @@ public class GameEngine implements Serializable{
 		}
 	}
 
+	/**
+	 * Use for keeping the briefcase visible at all times when the player obtains the radar
+	 * @return
+	 */
 	public boolean getHasRadar()
 	{
 		return hasRadar;

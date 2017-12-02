@@ -40,6 +40,9 @@ public class Board implements Serializable{
 	 */
 	private Square[][] room = new Square[vertical][horizontal];
 	
+	/**
+	 * random object is used in conjunction with nextInt()
+	 */
 	private Random random = new Random();
 
 	/**
@@ -149,14 +152,34 @@ public class Board implements Serializable{
 		player.setX(x);
 		player.setY(y);
 	}
+	
+	/**
+	 * This method is used to move player into another location.
+	 * @param x refers to the new x location
+	 * @param y refers to the new y location
+	 */
+
 	public void move(int x, int y) {	
 		room[x][y].playerMoved(x, y);
 	}
 	
+	/**
+	 * Places the ninja at designated coordinates on the grid.
+	 * @param ninjas refers to the ninja objects
+	 * @param x refers to the row location
+	 * @param y refers to the column location
+	 */
 	public void setNinja(Character ninjas, int x, int y) {
 			room[x][y].setNinja(ninjas, x,y);
 	}
 
+	
+	/**
+	 * Places radar at designated row and column
+	 * @param radar
+	 * @param x refers to the row
+	 * @param y refers to the column
+	 */
 	public void set(Item radar, int x, int y) {
 		room[x][y].setItem(radar);
 	}
@@ -178,8 +201,8 @@ public class Board implements Serializable{
 	}
 	
 	/**
-	 * 
-	 * @param hasRadar
+	 * Used to reveal all the elements on the game board or hide them.
+	 * @param hasRadar determine whether or not the spy obtained the radar
 	 */
 	public void debugMode(boolean hasRadar) {
 		debugMode = !debugMode;

@@ -187,6 +187,9 @@ public class Square implements Serializable{
 		isBrief = false;
 	}
 	
+	/**
+	 * Control hide boolean for elements when debug mode is on/off
+	 */
 	public void toggleHide() {
 		hide = !hide;
 	}
