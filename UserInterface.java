@@ -274,7 +274,6 @@ public class UserInterface {
 	public void moveCommand() {
 		String direction = "";
 		boolean valid = false;
-		checkSpy();
 		showLine();
 		System.out.print("Make a wise choice: \nMove: ");
 		commandMenu();
@@ -287,7 +286,6 @@ public class UserInterface {
 				case "s":
 				case "d":
 					valid = game.move(direction);
-					checkSpy();
 					break;
 				case "r":
 					game.debugMode();
