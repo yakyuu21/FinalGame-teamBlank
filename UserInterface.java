@@ -22,6 +22,7 @@
  */
 package edu.cpp.cs.cs141.final_prog_assignment;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -40,10 +41,10 @@ public class UserInterface {
 	/**
 	 * This field represents difficulty of the game
 	 */
-	String level;
+	private int level;
 
 	/**
-	 * Default contructor that sets the game in motion.
+	 * Default constructor that sets the game in motion.
 	 * @param game GameEngine object
 	 */
 	public UserInterface(GameEngine game) {
@@ -52,164 +53,278 @@ public class UserInterface {
 	}
 
 	public void printTitle() {
-		System.out.println("\tGet the Cheese\n"
-				+ "===============================");
+		System.out.println("**********************\n"
+				+ "*   Get the Cheese   *\n"
+				+ "**********************");
 	}
 
 	/**
-	 * This method will display the main menu at the start of the game or when
-	 * the player quits the game.  Game will end when the player exits from
-	 * this menu.
+	 * This method will display the main menu at the start of the game or when the
+	 * player quits the game.  Game will end when the player exits from this menu.
+	 * @return userInput an integer from 1 to 4
 	 */
-	public void mainMenu() {
-		printTitle();
-		System.out.println(	"Main Menu: \n"+
-				"------------------\n"
-				+ "\t1) How to Play\n" + 
-				"\t2) Start New Game\n" + 
-				"\t3) Load Game\n" + 
-				"\t4) Exit Game\n");
-		String input = scan.next();
-		switch(input) {
-			case "1":
+	public int mainMenu() {
+		int userInput = 0;
+		boolean valid = false;
+		System.out.println(	"Main Menu: \n"
+				+ "------------------\n"
+				+ "\t[1] How to Play\n"  
+				+ "\t[2] Start New Game\n"  
+				+ "\t[3] Load Game\n" 
+				+ "\t[4] Exit Game\n");
+		while(!valid) {
+			try {
+				userInput = scan.nextInt();
+				
+				if(userInput > 0 && userInput < 5) {
+					valid = true;
+				}
+				else
+					System.out.println("Error: Enter a number from 1 to 4"
+							+ "\nTry again: ");
+			}
+			catch(InputMismatchException e) {
+				System.out.println("Error: You must enter an integer "
+						+ "\nTry again: ");
+				scan.nextLine();
+			}
+		}
+		return userInput;
+	}
+	
+	/**
+	 * This method represents an extentions of the main menu.  It will
+	 * direct the user depending on what they chose in main menu.
+	 */
+	public void startGame() {
+		boolean valid;
+		do {
+			valid = false;
+			int option = mainMenu();
+			switch(option) {
+			case 1:
 				howToPlay();
-				mainMenu();
 				break;
-			case "2":
+			case 2:
 				showLine();
-				System.out.println("You chose 2.");
+				System.out.println("New Game");
 				showLine();
-				startGame(chooseDifficulty());
+				chooseDifficulty();
+				loop(level);
 				break;
-			case "3":
-				showLine();
-				System.out.println("You chose 3.");
+			case 3:
 				showLine();
 				if(loadGame())
 					playGame(getLevel());
 				else 
-					mainMenu();
+					startGame();
 				break;
-			case "4":
+			case 4:
 				showLine();
-				System.out.println("You chose 4.\n" + "Game will close.\n" + "GOODBYE" ); ///closes/exits game
+				System.out.println("Game will close.\n" + "GOODBYE" ); ///closes/exits game
 				showLine();
 				System.exit(0);
+				valid = true;
 				break;
-			default: //when anything besides 1,2,3,4 is pressed in menu
-				showLine();
-				System.out.println("Invalid Input");
-				mainMenu();
-				break;
-		}
-
+			}
+		}while(!valid);
 	}
-	
+
 	/**
 	 * This method will create the current difficulty of the game.
 	 * @return difficulty level
 	 */
-	public String chooseDifficulty()
-	{
+	public void chooseDifficulty() {
 		System.out.println("Select Difficulty. \n"
 				+ "\t(1) lol\n"
 				+ "\t(2) Yo. Dis hard. \n"
 				+ "\t(3) DAFUQ?!\n");
 		boolean isCorrectInput = false;
-
-		do{ 
-			Scanner input = new Scanner(System.in);
-			level = input.next();
-			if (level.equals("1") || level.equals("2") || level.equals("3")) {
-				switch(level){
-					case"1":
-						game.setDifficulty("1");
-						isCorrectInput = true;
-						break;
-					case"2":
-						game.setDifficulty("2");
-						isCorrectInput = true;
-						break;
-					case"3":
-						game.setDifficulty("3");
-						isCorrectInput = true;
-						break;
+		while(!isCorrectInput) {
+			try {
+				level = scan.nextInt();
+				switch(level) {
+				case 1:
+					game.setDifficulty(1);
+					isCorrectInput = true;
+					break;
+				case 2:
+					game.setDifficulty(2);
+					isCorrectInput = true;
+					break;
+				case 3:
+					game.setDifficulty(3);
+					isCorrectInput = true;
+					break;
+				default:
+					System.out.println("Error: Must enter a number from 1 to 3."
+							+ "\nTry again: ");
 				}
-			}
-			else
-				System.out.println("Nah.  Enter 1, 2, or 3.");
-		} while(isCorrectInput == false);
-		return level;
-	}
-	// Will probably need to catch exception when a String is entered
+			}catch(InputMismatchException e) {
 
+				System.out.println("Error: Must input an integer"
+						+ "\nTry again:");
+				scan.nextLine();
+			}
+		}
+	}
 
 	/**
-	 * This method will create the board at the start of a new game.
+	 * This method represents the game loop.  It will start by creating
+	 * the board and directing the user to the game.
 	 */
-	public void startGame(String level) {
+	public void loop(int level) {
 		game.createBoard();
 		playGame(level);
 	}
 
+	/**
+	 * This method will check to see if the spy and the ninja are adjacent to
+	 * each other and display and kill the player if they are.
+	 */
+	public void checkSpy() {
+		if(game.checkSpy()) {  //ninja check method
+			showLine();
+			System.out.println("A Ninja destroyed you!");
+		}
+	}
+
+	/**
+	 * This method is an extension of the look funciion.  The user input in
+	 * the look function will direct the game to either look in a direction,
+	 * activate debug, save, or load a game.
+	 */
+	public void lookCommand() {
+		boolean valid = false;
+		while(!valid) {
+			String direction = look();
+			switch(direction) {
+			case "w":
+			case "a":
+			case "s":
+			case "d":
+				if(game.look(direction)) {
+					showLine();
+					System.out.println("All Clear!");
+				}
+				else {
+					showLine();
+					System.out.println("Ninja Ahead!");
+				}
+				valid = true;
+				break;
+			case "r":
+				game.debugMode();
+				showLine();
+				displayBoard();
+				break;
+			case "1":
+				saveGame();
+				displayBoard();
+				break;
+			case "2":
+				showLine();
+				if(loadGame())
+					playGame(getLevel());
+				else
+					System.out.println("Error: Unable to load");
+				break;
+			case "3":
+				showLine();
+				quitGame();
+				break;
+			}
+		}
+		displayBoard();
+	}
+	
+	/**
+	 * This method is called upon when the player wants to shoot their gun.
+	 * The player will shoot at a direction the user chooses. 
+	 */
+	public void shootCommand() {
+		String userInput = "";
+		System.out.println("Choose direction to shoot");
+		commandMenu();
+		boolean valid = false;
+		while(!valid) {
+			userInput = scan.next().toLowerCase();
+			switch(userInput) {
+			case "w":
+			case "a":
+			case "s":
+			case "d":
+				showLine();
+				System.out.println(game.shoot(userInput));
+				showLine();
+				valid = true;
+				break;
+			default:
+				System.out.println("Error: Invalid input. Try Again.");
+				break;
+			}
+		}
+	}
+	
+	/**
+	 * This method directs the action of the player after the look phase.
+	 * The user input commands the player to move 1 space, shoot, or activate
+	 * debug mode.
+	 */
+	public void moveCommand() {
+		String direction = "";
+		boolean valid = false;
+		showLine();
+		System.out.print("Make a wise choice: \nMove: ");
+		commandMenu();
+		System.out.println("\nF(Shoot) \nR(Debug)");
+		while(!valid) {
+			direction = scan.next().toLowerCase();
+			switch(direction) {
+				case "w":
+				case "a":
+				case "s":
+				case "d":
+					valid = game.move(direction);
+					checkSpy();
+					break;
+				case "r":
+					game.debugMode();
+					displayBoard();
+					break;
+				case "f":
+					shootCommand();
+					valid = true;
+					break;
+			}
+		}
+	}
+	
 	/**
 	 * This method will allow player to play the game on the desired difficulty. It will 
 	 * get its action from {@link GameEngine} and display messages with each command.
 	 * This method will control the flow of the game.
 	 * @param lvl String input from user that indicates the difficulty of the game.
 	 */
-	public void playGame(String lvl){
+	public void playGame(int lvl) {
 		String direction;
 		gameStatus = status.CONTINUE;
-
-		while(gameStatus == status.CONTINUE) {
-
-			direction = look();
-			if(game.look(direction))
-			{
-				showLine();
-				System.out.println("All Clear!");
-			}
-			else {
-				showLine();
-				System.out.println("Ninja Ahead!");
-			}
-
-			boolean valid = false;
-			while(!valid) { //repeat until user input a valid key -- take action(move or shoot)
-				showLine();
-				printStatus();
-				displayBoard();
-				System.out.print("\tMake a wise choice: \nMove: \n\t  W(UP)\n A(LEFT)  S(DOWN)  D(RIGHT) \nShoot: F \nDebug: R \n");
-				direction = scan.next().toLowerCase();
-				if(direction.equals("r"))
-					game.debugMode();
-				else if(direction.equals("f")) {
-					showLine();
-					System.out.print("Choose direction to fire: \n\t  W(UP)\n A(LEFT)  S(DOWN)  D(RIGHT) \n");
-					direction = scan.next();
-					showLine();
-					System.out.print(game.shoot(direction));
-					valid = true;
-				}
-				else if(direction.equals("w")|| direction.equals("a") || direction.equals("s") || direction.equals("d")){
-					valid = game.move(direction);
-				}
-				else {
-					showLine();
-					System.out.println("Invalid Input!");
-				}
-			}
-
+		
+		while(gameStatus == status.CONTINUE) {	
+			displayBoard();
+			printStatus();
+			lookCommand();
+			moveCommand();
+			
 			if (game.checkPlayerIsBriefcase() == true){
 				displayBoard();
 				showLine();
-				System.out.println("YOU FOUND THE BRIEFCASE!");
+				System.out.println("YOU FOUND THE BRIEFCASE!"
+						+"\nCONGRATS YOU WIN!");
 				showLine();
 				System.out.println("\n\n\n\n");
 				gameStatus = status.WON;
-				mainMenu(); //added
-
+				startGame(); //added
 			}
 
 			if(game.checkItem()) {
@@ -234,43 +349,45 @@ public class UserInterface {
 						break;
 				}
 			}
-			//add check item method here
-			if(game.checkSpy()) {  //ninja check method
-				showLine();
-				System.out.println("A Ninja destroyed you!");
-			}
-
+			checkSpy();
 			game.ninjaDecision();
-
 			game.decInvincibility();
 
 			if(game.playerAlive() == false) {
 				gameStatus = status.LOST;
 				showLine();
 				System.out.println("YOU LOST THE GAME! LOSER!\n");
-				mainMenu();
+				startGame();
 			}
 		}
 	}
 
-
+	/**
+	 * This method will only display the directions.  No input is necessary.
+	 */
+	public void commandMenu() {
+		System.out.println("\t W(UP)\n A(LEFT)  S(DOWN)  D(RIGHT)");
+	}
+	
+	/**
+	 * This method will get an input from the user for which direction the user wants to look,
+	 * if they want to save, if they want to load, or if they want to reload. 
+	 * @return direction a String for instructions.
+	 */
 	private String look() {
 		boolean valid = false;
 		String direction = "";
+		showLine();
+		System.out.println("Choose a direction to look");
+		commandMenu();
+		System.out.print("R(Debug)\t 1(Save)\t 2(Load) \t3(Quit)");
 		while(!valid) {
-			showLine();
-			printStatus();
-			displayBoard();
-			System.out.print("\nChoose direction to look:　\n\t  W(UP)\n A(LEFT)  S(DOWN)  D(RIGHT) \nDebug: R \nType \"save\" to save, \"quit\" to exit game.\n");
 			direction = scan.next().toLowerCase();
-			if(direction.equals("r"))
-				game.debugMode();
-			if(direction.toLowerCase().equals("w")||direction.toLowerCase().equals("a")||direction.toLowerCase().equals("s")||direction.toLowerCase().equals("d"))
+			if(direction.equals("w") || direction.equals("a") || direction.equals("s") || direction.equals("d")
+					|| direction.equals("r")|| direction.equals("1")|| direction.equals("2") || direction.equals("3"))
 				valid = true;
-			else if(direction.toLowerCase().equals("save"))
-				saveGame();
-			else if(direction.toLowerCase().equals("quit"))
-				quitGame();
+			else
+				System.out.println("Invalid Entry.  Try Again");
 		}
 		return direction;
 	}
@@ -279,10 +396,12 @@ public class UserInterface {
 	 * This method displays the current status of the player and the number of ninjas left
 	 */
 	public void printStatus() {
-		System.out.println("Invincibility: "+ game.invCount());
-		System.out.println("Ammo: "+ game.getAmmoCount());
-		System.out.println("Lives: " + game.getPlayer().getLives());
-		System.out.println("Ninjas Left: " + game.getNumNinja() + "\n");
+		System.out.println("STATUS: \n"
+				+ "-----------"
+				+ "\nInvincibility: "+ game.invCount() 
+				+ "\nAmmo: "+ game.getAmmoCount()
+				+ "\nLives: " + game.getPlayer().getLives()
+				+ "\nNinjas Left: " + game.getNumNinja() + "\n");
 	}
 
 
@@ -381,13 +500,13 @@ public class UserInterface {
 			if(userInput.toLowerCase().equals("y")) {
 				saveGame();
 				valid = true;
-				mainMenu();
+				startGame();
 			}
 			else if(userInput.toLowerCase().equals("n")) {
 				showLine();
 				System.out.println("The game will now return to main menu.\n");
 				valid = true;
-				mainMenu();
+				startGame();
 			}
 			else {
 				showLine();
@@ -401,7 +520,7 @@ public class UserInterface {
 	 * This method will return the current difficulty of the game
 	 * @return String value of the level difficulty.
 	 */
-	public String getLevel(){
+	public int getLevel(){
 		return level;
 	}
 
