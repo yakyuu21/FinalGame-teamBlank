@@ -135,7 +135,6 @@ public class UserInterface {
 
 	/**
 	 * This method will create the current difficulty of the game.
-	 * @return difficulty level
 	 */
 	public void chooseDifficulty() {
 		System.out.println("Select Difficulty. \n"
@@ -175,6 +174,7 @@ public class UserInterface {
 	/**
 	 * This method represents the game loop.  It will start by creating
 	 * the board and directing the user to the game.
+	 * @param level integer that represents the difficulty level
 	 */
 	public void loop(int level) {
 		game.createBoard();

@@ -94,8 +94,8 @@ public class GameEngine implements Serializable{
 
 
 	/**
-	 * This method will create new ninjas {@link #ninjas} and set the on the board at
-	 * random coordinates which the {@Square} is empty
+	 * This method will create new ninjas and set them on the board at
+	 * random coordinates where the space is empty
 	 */
 	public void createNinjas() {
 		int x,y;
@@ -1234,7 +1234,7 @@ public class GameEngine implements Serializable{
 
 	/**
 	 * Use for keeping the briefcase visible at all times when the player obtains the radar
-	 * @return
+	 * @return true is the player has the radar
 	 */
 	public boolean getHasRadar()
 	{
