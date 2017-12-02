@@ -274,6 +274,7 @@ public class UserInterface {
 	public void moveCommand() {
 		String direction = "";
 		boolean valid = false;
+		checkSpy();
 		showLine();
 		System.out.print("Make a wise choice: \nMove: ");
 		commandMenu();
@@ -311,6 +312,7 @@ public class UserInterface {
 		gameStatus = status.CONTINUE;
 		
 		while(gameStatus == status.CONTINUE) {	
+			checkSpy();
 			displayBoard();
 			printStatus();
 			lookCommand();
