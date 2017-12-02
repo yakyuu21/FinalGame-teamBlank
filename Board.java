@@ -176,7 +176,7 @@ public class Board implements Serializable{
 	
 	/**
 	 * Places radar at designated row and column
-	 * @param radar
+	 * @param radar object
 	 * @param x refers to the row
 	 * @param y refers to the column
 	 */

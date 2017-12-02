@@ -153,7 +153,7 @@ public class Character implements Serializable{
 	
 	
 	/**
-	 * This method sets {@link #isInvincible} when {@link item} is picked up.
+	 * This method sets isInvincible when item is picked up.
 	 */
 	public void setInvincible() {
 		isInvincible = 5;
@@ -216,8 +216,8 @@ public class Character implements Serializable{
 	}
 	
 	/**
-	 * This method represents when the player picks up {@link item} additional ammo
-	 * will only increment by 1 if the player does not any {@link #bullet}
+	 * This method represents when the player picks up additional ammo
+	 * will only increment by 1 if the player does not have a bullet
 	 */
 	public void incAmmo() {
 		if(bullet == 0) //add ammo if no ammo left
