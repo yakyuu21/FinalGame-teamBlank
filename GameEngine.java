@@ -426,39 +426,64 @@ public class GameEngine implements Serializable{
 	 * This method checks to see if the ninja and players are at adjacent squares
 	 * @return true if player is 1 space adjacent to ninja and false if not
 	 */
-	public boolean checkSpy() {
+	public boolean checkSpy(){
 		int x = player.getX();
 		int y = player.getY();
-		int a, b;
+		int a = 0;
+		int b = 0;
 		boolean value = false;
 		
-		for(int count = 0; count <= 5; count++) {
-			if(!ninjas[count].getAlive())
+		for( int count = 0; count <= 5; count ++) {
+			if(ninjas[count].getAlive() == false) //if ninja is dead - check next ninja?
 				continue;
 			a = ninjas[count].getX();
 			b = ninjas[count].getY();
-			
-			if(board.at(x, y).getRoom())
-				return value;
-			
-			if(!player.isInvincible()) {
-				if(y == b) {
-					if(a ==(x+1) || a == (x-1)) {
+
+			if( y == b) { //if in same vertical line
+				if(x+1 == a) { //check for horizontal match in position
+					if(!player.isInvincible()) {
 						reset(x,y);
-						value = true;
+						return !value;
 					}
+					else
+						return value;
 				}
-				else if(x == a) {
-					if(b == (y+1) || b == (y-1)) {
+				else if (x-1 == a) {
+					if(!player.isInvincible()) {//if not invincible
 						reset(x,y);
-						value = true;
+						return !value;
 					}
-				}
-				else if(x == 1 && y == b) {
-					reset(x,y);
-					value = true;
+					else
+						return value;
 				}
 			}
+			if ( x == a ) {
+				if( y + 1 == b) {
+					if(!player.isInvincible()) {
+						reset(x,y);
+						return !value;
+					}
+					else
+						return value;
+				}
+				else if (y - 1 == b) {
+					if(!player.isInvincible()) {
+						reset(x,y);
+						return !value;
+					}
+					else
+						return value;
+				}
+			}
+			if(x == a && y == b) {
+				if(!player.isInvincible()) {
+					reset(x,y);
+					return(!value);
+				}
+				else 
+					return value;
+			}
+			
 		}
 		return value;
 	}
